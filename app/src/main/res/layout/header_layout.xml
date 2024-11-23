@@ -2,56 +2,45 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:padding="16dp"
+    <!-- Game Name -->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/avatarIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:contentDescription="Avatar Icon"
+        android:src="@drawable/a"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
-        <!-- Avatar Icon -->
-<!--        <ImageView-->
-<!--            android:id="@+id/avatarIcon"-->
-<!--            android:layout_width="40dp"-->
-<!--            android:layout_height="40dp"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:contentDescription="Avatar Icon"-->
-<!--            android:src="@drawable/a" />-->
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/avatarIcon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:contentDescription="Avatar Icon"
-            android:src="@drawable/a"/>
+    <TextView
+        android:id="@+id/gameName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gamebox"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/settingsIcon"
+        app:layout_constraintStart_toEndOf="@id/avatarIcon"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Game Name -->
-        <TextView
-            android:id="@+id/gameName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Gamebox"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <!-- Settings Icon -->
-        <ImageView
-            android:id="@+id/settingsIcon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:contentDescription="Settings Icon"
-            android:src="@drawable/settings_24px" />
-    </RelativeLayout>
-
-
+    <!-- Settings Icon -->
+    <ImageView
+        android:id="@+id/settingsIcon"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Settings Icon"
+        android:src="@drawable/settings_24px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

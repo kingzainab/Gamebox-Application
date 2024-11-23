@@ -1,23 +1,17 @@
 package com.zsinnovations.gamebox;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.zsinnovations.gamebox.adapters.ImageAdapter;
-import com.zsinnovations.gamebox.fragments.FavoritesFragment;
-import com.zsinnovations.gamebox.fragments.GamesFragment;
+import com.zsinnovations.gamebox.ui.mainscreen.game;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView avatarImageView;
@@ -28,19 +22,27 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.d,
             R.drawable.e
     };
-    private int currentAvatarResource = R.drawable.a; // Store the current avatar resource
+    private int currentAvatarResource = R.drawable.a;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+//avatar
         avatarImageView = findViewById(R.id.avatarIcon);
-        avatarImageView.setImageResource(currentAvatarResource); // Set default avatar
+        avatarImageView.setImageResource(currentAvatarResource);
 
         avatarImageView.setOnClickListener(v -> showPredefinedImageDialog());
+        if (savedInstanceState == null) {
+            // Create an instance of the fragment
+            game gameFragment = new game();
 
-        // ... (rest of onCreate remains the same)
+            // Add the fragment dynamically into the fragmentContainer
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragmentContainer, gameFragment);
+            transaction.commit();
+        }
+
     }
 
     private void showPredefinedImageDialog() {
@@ -48,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         View dialogView = inflater.inflate(R.layout.dialog_predefined_images, null);
 
         GridView gridView = dialogView.findViewById(R.id.gridView);
-        // Pass the current avatar resource to the adapter
         gridView.setAdapter(new ImageAdapter(this, predefinedImages, currentAvatarResource));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -60,32 +61,12 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
 
         gridView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
-            currentAvatarResource = predefinedImages[position]; // Update the current avatar resource
+            currentAvatarResource = predefinedImages[position];
             avatarImageView.setImageResource(currentAvatarResource);
             Toast.makeText(this, "Avatar updated!", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
         });
     }
-    private void loadFragment(Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragmentContainer, fragment)
-                .commit();
-    }
 
-    private boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Fragment selectedFragment = null;
 
-        if (item.getItemId() == R.id.nav_games) {
-            selectedFragment = new GamesFragment();
-        } else if (item.getItemId() == R.id.nav_favorites) {
-            selectedFragment = new FavoritesFragment();
-        }
-
-        if (selectedFragment != null) {
-            loadFragment(selectedFragment);
-            return true;
-        }
-        return false;
-    }
 }
