@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemPaddingTop">0dp</item>
+        <item name="itemPaddingBottom">0dp</item>
+        <item name="itemHorizontalTranslationEnabled">false</item>
+        <item name="itemIconSize">24dp</item> <!-- Adjust icon size -->
+        <item name="labelVisibilityMode">unlabeled</item>
+    </style>
+
+</resources>
