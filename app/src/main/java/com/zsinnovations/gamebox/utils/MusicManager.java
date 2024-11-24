@@ -32,8 +32,11 @@ public class MusicManager {
         }
     }
 
-    public void resumeMusic() {
-        if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
+    public void resumeMusic(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE);
+        boolean isMusicEnabled = prefs.getBoolean("musicEnabled", true); // Default to true
+
+        if (isMusicEnabled && mediaPlayer != null && !mediaPlayer.isPlaying()) {
             mediaPlayer.start();
         }
     }
