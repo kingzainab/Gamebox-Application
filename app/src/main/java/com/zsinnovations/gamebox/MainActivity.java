@@ -1,11 +1,12 @@
 package com.zsinnovations.gamebox;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.SeekBar;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.slider.Slider;
 import com.zsinnovations.gamebox.ui.mainscreen.FavouriteFragment;
 import com.zsinnovations.gamebox.ui.mainscreen.game;
 import com.zsinnovations.gamebox.utils.AvatarManager;
@@ -22,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
     private MusicManager musicManager;
     private AvatarManager avatarManager;
+    private static final String PREF_MUSIC_VOLUME = "musicVolume";
+    private static final String PREF_MUSIC_ENABLED = "musicEnabled";
 
     private final int[] predefinedImages = {
             R.drawable.a,
@@ -60,20 +64,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupFooterNavigation() {
-        ImageView mainButton = findViewById(R.id.imageView2); // Main screen button
-        ImageView mainButtonFilled = findViewById(R.id.imageView4); // Main screen button
-        ImageView favoritesButton = findViewById(R.id.imageView3); // Favorites button
-        ImageView favoritesButtonFilled = findViewById(R.id.imageView5); // Favorites button
-        // Set listeners for footer buttons
-        mainButtonFilled.setOnClickListener(v -> {
+        ImageView mainButton = findViewById(R.id.imageView2);
+        ImageView mainButtonFilled = findViewById(R.id.imageView4);
+        ImageView favoritesButton = findViewById(R.id.imageView3);
+        ImageView favoritesButtonFilled = findViewById(R.id.imageView5);
 
+        mainButtonFilled.setOnClickListener(v -> {
             mainButton.setVisibility(View.INVISIBLE);
             favoritesButtonFilled.setVisibility(View.INVISIBLE);
             loadFragment(new game());
         });
 
         mainButton.setOnClickListener(v -> {
-
             mainButton.setVisibility(View.INVISIBLE);
             mainButtonFilled.setVisibility(View.VISIBLE);
             favoritesButtonFilled.setVisibility(View.INVISIBLE);
@@ -82,9 +84,9 @@ public class MainActivity extends AppCompatActivity {
 
         favoritesButton.setOnClickListener(v -> {
             favoritesButtonFilled.setVisibility(View.VISIBLE);
-            mainButtonFilled.setVisibility(View.INVISIBLE); // Reset other button background
+            mainButtonFilled.setVisibility(View.INVISIBLE);
             loadFragment(new FavouriteFragment());
-            mainButton.setVisibility(View.VISIBLE); // Reset other button background
+            mainButton.setVisibility(View.VISIBLE);
         });
     }
 
@@ -114,32 +116,33 @@ public class MainActivity extends AppCompatActivity {
 
     private void showSettingsDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Settings");
-
-        // Inflate custom settings dialog layout
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_settings, null);
         builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+        dialog.setView(dialogView);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
 
         // Initialize components
-        Switch musicSwitch = dialogView.findViewById(R.id.musicSwitch);
-        SeekBar volumeSeekBar = dialogView.findViewById(R.id.volumeSeekBar);
+        CheckBox musicCheckBox = dialogView.findViewById(R.id.musicCheckBox);
+        Slider volumeSlider = dialogView.findViewById(R.id.volumeSlider);
         TextView volumeLabel = dialogView.findViewById(R.id.volumeLabel);
 
         SharedPreferences prefs = getSharedPreferences("AppPreferences", MODE_PRIVATE);
 
         // Load saved music state
-        boolean isMusicEnabled = prefs.getBoolean("musicEnabled", true);
-        musicSwitch.setChecked(isMusicEnabled);
+        boolean isMusicEnabled = prefs.getBoolean(PREF_MUSIC_ENABLED, true);
+        musicCheckBox.setChecked(isMusicEnabled);
 
-        // Load saved volume level
-        int savedVolume = prefs.getInt("musicVolume", 50); // Default to 50%
-        volumeSeekBar.setProgress(savedVolume);
+        // Load saved volume level - using getInt instead of getFloat
+        int savedVolume = prefs.getInt(PREF_MUSIC_VOLUME, 50);
+        volumeSlider.setValue(savedVolume);
         volumeLabel.setText("Music Volume: " + savedVolume + "%");
 
-        // Set listeners
-        musicSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        // Set up CheckBox listener
+        musicCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("musicEnabled", isChecked);
+            editor.putBoolean(PREF_MUSIC_ENABLED, isChecked);
             editor.apply();
 
             if (isChecked) {
@@ -149,26 +152,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        volumeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                volumeLabel.setText("Music Volume: " + progress + "%");
-                musicManager.setVolume(progress / 100f); // Update music volume
-            }
+        // Set up Slider listener
+        volumeSlider.addOnChangeListener((slider, value, fromUser) -> {
+            int volume = (int) value;
+            volumeLabel.setText("Music Volume: " + volume + "%");
+            musicManager.setVolume(volume / 100f);
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
+            if (fromUser) {
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putInt("musicVolume", seekBar.getProgress());
+                editor.putInt(PREF_MUSIC_VOLUME, volume);  // Store as integer instead of float
                 editor.apply();
             }
         });
 
-        builder.setNegativeButton("Close", (dialog, which) -> dialog.dismiss());
-        builder.create().show();
+
+        dialogView.findViewById(R.id.closeButton).setOnClickListener(v -> dialog.dismiss());
+        dialog.show();
     }
 }
