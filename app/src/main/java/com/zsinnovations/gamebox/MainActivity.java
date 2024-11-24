@@ -133,10 +133,4 @@ public class MainActivity extends AppCompatActivity {
         builder.create().show();
     }
 
-    // Add click listener for the settings icon
-//    private void setupSettingsButton() {
-//        ImageView settingsIcon = findViewById(R.id.settingsIcon);
-//        settingsIcon.setOnClickListener(v -> showSettingsDialog());
-//    }
-
 }
