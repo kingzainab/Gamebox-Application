@@ -10,13 +10,16 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.zsinnovations.gamebox.ui.mainscreen.FavouriteFragment;
 import com.zsinnovations.gamebox.ui.mainscreen.game;
 import com.zsinnovations.gamebox.utils.AvatarManager;
 import com.zsinnovations.gamebox.utils.MusicManager;
 
 public class MainActivity extends AppCompatActivity {
+
     private MusicManager musicManager;
     private AvatarManager avatarManager;
 
@@ -43,16 +46,52 @@ public class MainActivity extends AppCompatActivity {
         avatarManager = new AvatarManager(this, avatarImageView, predefinedImages, currentAvatarResource);
         avatarManager.initialize();
 
-        // Add fragment dynamically
+        // Add default fragment (Main Screen)
         if (savedInstanceState == null) {
-            game gameFragment = new game();
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragmentContainer, gameFragment);
-            transaction.commit();
+            loadFragment(new game());
         }
 
+        // Set up footer navigation
+        setupFooterNavigation();
+
+        // Settings icon listener
         ImageView settingsIcon = findViewById(R.id.settingsIcon);
         settingsIcon.setOnClickListener(v -> showSettingsDialog());
+    }
+
+    private void setupFooterNavigation() {
+        ImageView mainButton = findViewById(R.id.imageView2); // Main screen button
+        ImageView mainButtonFilled = findViewById(R.id.imageView4); // Main screen button
+        ImageView favoritesButton = findViewById(R.id.imageView3); // Favorites button
+        ImageView favoritesButtonFilled = findViewById(R.id.imageView5); // Favorites button
+        // Set listeners for footer buttons
+        mainButtonFilled.setOnClickListener(v -> {
+
+            mainButton.setVisibility(View.INVISIBLE);
+            favoritesButtonFilled.setVisibility(View.INVISIBLE);
+            loadFragment(new game());
+        });
+
+        mainButton.setOnClickListener(v -> {
+
+            mainButton.setVisibility(View.INVISIBLE);
+            mainButtonFilled.setVisibility(View.VISIBLE);
+            favoritesButtonFilled.setVisibility(View.INVISIBLE);
+            loadFragment(new game());
+        });
+
+        favoritesButton.setOnClickListener(v -> {
+            favoritesButtonFilled.setVisibility(View.VISIBLE);
+            mainButtonFilled.setVisibility(View.INVISIBLE); // Reset other button background
+            loadFragment(new FavouriteFragment());
+            mainButton.setVisibility(View.VISIBLE); // Reset other button background
+        });
+    }
+
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragmentContainer, fragment);
+        transaction.commit();
     }
 
     @Override
@@ -72,8 +111,8 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         musicManager.stopMusic();
     }
+
     private void showSettingsDialog() {
-        // Create a dialog for settings
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Settings");
 
@@ -118,11 +157,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                // Save volume level
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putInt("musicVolume", seekBar.getProgress());
                 editor.apply();
@@ -132,5 +171,4 @@ public class MainActivity extends AppCompatActivity {
         builder.setNegativeButton("Close", (dialog, which) -> dialog.dismiss());
         builder.create().show();
     }
-
 }
