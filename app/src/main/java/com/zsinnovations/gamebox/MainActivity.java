@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        musicManager.resumeMusic(this);
+        musicManager.resumeMusic();
     }
 
     @Override
