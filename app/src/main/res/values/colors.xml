@@ -7,5 +7,7 @@
     <color name="avatar_selected_stroke">#4285F4</color>
     <color name="green">#4CAF50</color>
     <color name="gray">#BDBDBD</color>
+    <color name="primaryColor">#87DACD</color> <!-- Replace this with your desired primary color -->
+
 
 </resources>
