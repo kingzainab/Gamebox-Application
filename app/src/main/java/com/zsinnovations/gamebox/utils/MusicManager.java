@@ -8,17 +8,19 @@ import com.zsinnovations.gamebox.R;
 public class MusicManager {
     private MediaPlayer mediaPlayer;
 
+    private Context appContext;
+
     public void startMusic(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE);
+        this.appContext = context.getApplicationContext(); // Save the context
+        SharedPreferences prefs = appContext.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE);
         boolean isMusicEnabled = prefs.getBoolean("musicEnabled", true);
 
         if (isMusicEnabled) {
             if (mediaPlayer == null) {
-                mediaPlayer = MediaPlayer.create(context, R.raw.game_music);
+                mediaPlayer = MediaPlayer.create(appContext, R.raw.game_music);
                 mediaPlayer.setLooping(true);
             }
 
-            // Set the saved volume level
             int savedVolume = prefs.getInt("musicVolume", 50); // Default to 50%
             setVolume(savedVolume / 100f);
 
@@ -26,15 +28,22 @@ public class MusicManager {
         }
     }
 
-    public void pauseMusic() {
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.pause();
+    public void resumeMusic() {
+        if (appContext != null) {
+            SharedPreferences prefs = appContext.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE);
+            boolean isMusicEnabled = prefs.getBoolean("musicEnabled", true);
+
+            if (isMusicEnabled && mediaPlayer != null && !mediaPlayer.isPlaying()) {
+                mediaPlayer.start();
+            }
         }
     }
 
-    public void resumeMusic() {
-        if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
-            mediaPlayer.start();
+
+
+    public void pauseMusic() {
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
         }
     }
 
