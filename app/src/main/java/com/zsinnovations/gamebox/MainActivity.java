@@ -1,12 +1,14 @@
 package com.zsinnovations.gamebox;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.b,
             R.drawable.c,
             R.drawable.d,
+            R.drawable.e
     };
     private int currentAvatarResource = R.drawable.a;
 
@@ -121,9 +124,8 @@ public class MainActivity extends AppCompatActivity {
         dialog.setView(dialogView);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-
         // Initialize components
-        CheckBox musicCheckBox = dialogView.findViewById(R.id.musicCheckBox);
+        Switch toggleMusicSwitch = dialogView.findViewById(R.id.musicToggleButton);
         Slider volumeSlider = dialogView.findViewById(R.id.volumeSlider);
         TextView volumeLabel = dialogView.findViewById(R.id.volumeLabel);
 
@@ -131,18 +133,27 @@ public class MainActivity extends AppCompatActivity {
 
         // Load saved music state
         boolean isMusicEnabled = prefs.getBoolean(PREF_MUSIC_ENABLED, true);
-        musicCheckBox.setChecked(isMusicEnabled);
+        toggleMusicSwitch.setChecked(isMusicEnabled);
 
-        // Load saved volume level - using getInt instead of getFloat
+        // Customize switch color based on state
+        int enabledColor = Color.parseColor("#15BDA3"); // Green for enabled
+        int disabledColor = Color.parseColor("#9E9E9E"); // Gray for disabled
+
+
+        // Load saved volume level
         int savedVolume = prefs.getInt(PREF_MUSIC_VOLUME, 50);
         volumeSlider.setValue(savedVolume);
         volumeLabel.setText("Music Volume: " + savedVolume + "%");
 
-        // Set up CheckBox listener
-        musicCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        // Set up Switch listener
+        toggleMusicSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean(PREF_MUSIC_ENABLED, isChecked);
             editor.apply();
+
+            // Update switch colors
+            toggleMusicSwitch.setTrackTintList(ColorStateList.valueOf(isChecked ? enabledColor : disabledColor));
+            toggleMusicSwitch.setThumbTintList(ColorStateList.valueOf(isChecked ? enabledColor : disabledColor));
 
             if (isChecked) {
                 musicManager.startMusic(this);

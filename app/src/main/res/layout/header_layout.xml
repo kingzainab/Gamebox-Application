@@ -13,7 +13,9 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
+        android:background="@drawable/rounded_corners"
         android:contentDescription="Avatar Icon"
+
         android:src="@drawable/a"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

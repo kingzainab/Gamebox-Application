@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="24dp"
@@ -48,15 +49,24 @@
         </RelativeLayout>
 
         <!-- Music Enable Checkbox -->
-        <CheckBox
-            android:id="@+id/musicCheckBox"
+<!--        <CheckBox-->
+<!--            android:id="@+id/musicCheckBox"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="16dp"-->
+<!--            android:text="Enable Music"-->
+<!--            android:textColor="@android:color/black"-->
+<!--            android:buttonTint="@color/avatar_icon_border"-->
+<!--            android:paddingStart="8dp" />-->
+        <Switch
+            android:id="@+id/musicToggleButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="Enable Music"
-            android:textColor="@android:color/black"
-            android:buttonTint="@color/green"
-            android:paddingStart="8dp" />
+            android:textColor="@color/black"
+            android:trackTint="#575656"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <!-- Volume Label -->
         <TextView
@@ -76,10 +86,12 @@
             android:value="50"
             android:valueFrom="0"
             android:valueTo="100"
-            app:thumbColor="@color/green"
 
-            app:trackColorActive="@color/green"
-            app:labelBehavior="gone" />
+            app:labelBehavior="gone"
+            app:thumbColor="@color/avatar_icon_border"
+            app:trackColorActive="@color/avatar_icon_border"
+            app:trackColorInactive="#C8C3C3"
+            tools:ignore="SpeakableTextPresentCheck" />
 
 
 

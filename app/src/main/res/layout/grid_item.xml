@@ -22,12 +22,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-
                 android:paddingTop="8dp"
                 android:paddingRight="8dp"
                 android:paddingLeft="8dp"
                 android:paddingBottom="0dp"
-                android:scaleType="fitCenter"
+                android:scaleType="centerCrop"
+                android:clipToOutline="true"
                 android:src="@drawable/ic_launcher_foreground"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -59,8 +59,8 @@
 
             <ImageView
                 android:id="@+id/favourite_star_filled"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
                 android:layout_margin="5dp"
 
                 android:adjustViewBounds="true"

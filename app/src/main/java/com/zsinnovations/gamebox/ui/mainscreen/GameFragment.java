@@ -19,11 +19,11 @@ import com.zsinnovations.gamebox.adapters.GameAdapter;
 public class GameFragment extends Fragment {
 
     private final String[] gameNames = {
-            "Game 1", "Game 2", "Game 3", "Game 4"
+            "Game 1", "Game 2", "Game 3", "Game 4","Game 5"
     };
 
     private final int[] gameImages = {
-            R.drawable.a, R.drawable.b, R.drawable.c, R.drawable.d
+            R.drawable.a, R.drawable.b, R.drawable.c, R.drawable.d,R.drawable.e
     };
 
     @Nullable

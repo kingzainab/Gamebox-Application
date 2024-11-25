@@ -74,8 +74,8 @@ public class FavouriteFragment extends Fragment {
                 return R.drawable.c;
             case "Game 4":
                 return R.drawable.d;
-//            case "Matching Cards":
-//                return R.drawable.amatch;
+            case "Game 5":
+                return R.drawable.e;
 ////            case "Puzzle":
 ////                return R.drawable.apuzzle;
             default:
