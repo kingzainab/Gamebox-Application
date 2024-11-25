@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.zsinnovations.gamebox.R;
+
 import com.zsinnovations.gamebox.adapters.GameAdapter;
 
 public class game extends Fragment {
@@ -40,6 +42,7 @@ public class game extends Fragment {
         if (gameNames == null || gameImages == null || gameNames.length != gameImages.length) {
             return rootView; // Return early if data is invalid
         }
+
 
         // Set up the adapter
         GameAdapter adapter = new GameAdapter(requireContext(), gameNames, gameImages);

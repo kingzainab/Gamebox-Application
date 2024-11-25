@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.b,
             R.drawable.c,
             R.drawable.d,
-            R.drawable.e
     };
     private int currentAvatarResource = R.drawable.a;
 
