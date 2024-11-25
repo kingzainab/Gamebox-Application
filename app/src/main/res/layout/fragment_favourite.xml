@@ -8,7 +8,7 @@
 
     android:padding="16dp"
     android:gravity="center"
-    tools:context=".ui.mainscreen.game">
+    tools:context=".ui.mainscreen.GameFragment">
 
     <GridView
         android:id="@+id/gameGridView"
