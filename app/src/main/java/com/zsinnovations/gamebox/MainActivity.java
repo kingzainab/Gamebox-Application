@@ -16,7 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.slider.Slider;
 import com.zsinnovations.gamebox.ui.mainscreen.FavouriteFragment;
-import com.zsinnovations.gamebox.ui.mainscreen.game;
+import com.zsinnovations.gamebox.ui.mainscreen.GameFragment;
 import com.zsinnovations.gamebox.utils.AvatarManager;
 import com.zsinnovations.gamebox.utils.MusicManager;
 
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Add default fragment (Main Screen)
         if (savedInstanceState == null) {
-            loadFragment(new game());
+            loadFragment(new GameFragment());
         }
 
         // Set up footer navigation
@@ -71,14 +71,14 @@ public class MainActivity extends AppCompatActivity {
         mainButtonFilled.setOnClickListener(v -> {
             mainButton.setVisibility(View.INVISIBLE);
             favoritesButtonFilled.setVisibility(View.INVISIBLE);
-            loadFragment(new game());
+            loadFragment(new GameFragment());
         });
 
         mainButton.setOnClickListener(v -> {
             mainButton.setVisibility(View.INVISIBLE);
             mainButtonFilled.setVisibility(View.VISIBLE);
             favoritesButtonFilled.setVisibility(View.INVISIBLE);
-            loadFragment(new game());
+            loadFragment(new GameFragment());
         });
 
         favoritesButton.setOnClickListener(v -> {

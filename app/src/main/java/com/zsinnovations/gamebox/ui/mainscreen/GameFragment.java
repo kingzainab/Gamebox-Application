@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,7 +16,7 @@ import com.zsinnovations.gamebox.R;
 
 import com.zsinnovations.gamebox.adapters.GameAdapter;
 
-public class game extends Fragment {
+public class GameFragment extends Fragment {
 
     private final String[] gameNames = {
             "Game 1", "Game 2", "Game 3", "Game 4"
