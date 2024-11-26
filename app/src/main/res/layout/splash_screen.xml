@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- drawable/image_1.xml -->
+
+    <View
+        android:id="@+id/image_1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/splash_screen"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="261dp"
+        android:layout_height="69dp"
+        android:layout_marginBottom="84dp"
+        app:layout_constraintBottom_toBottomOf="@+id/image_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/gamebox_name_white" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="72dp"
+        android:layout_height="69dp"
+        android:layout_marginTop="84dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/gamebox_logo" />
+
+    <ProgressBar
+        android:id="@+id/loading_spinner"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="36dp"
+        android:indeterminate="true"
+        android:visibility="visible"
+        android:indeterminateDrawable="@drawable/dotted_spinner"
+
+        app:layout_constraintBottom_toTopOf="@+id/imageView6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
