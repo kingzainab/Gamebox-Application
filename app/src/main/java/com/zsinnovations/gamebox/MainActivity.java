@@ -75,41 +75,42 @@ public class MainActivity extends AppCompatActivity {
             mainButton.setVisibility(View.INVISIBLE);
             mainButtonFilled.setVisibility(View.VISIBLE);
             favoritesButtonFilled.setVisibility(View.INVISIBLE);
-            loadFragmentGame(new GameFragment());
+            loadFragment(new GameFragment());
         });
 
         favoritesButton.setOnClickListener(v -> {
             favoritesButtonFilled.setVisibility(View.VISIBLE);
             mainButtonFilled.setVisibility(View.INVISIBLE);
-            loadFragmentFav(new FavouriteFragment());
+            loadFragment(new FavouriteFragment());
             mainButton.setVisibility(View.VISIBLE);
         });
     }
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         transaction.replace(R.id.fragmentContainer, fragment);
         transaction.commit();
     }
-    private void loadFragmentGame(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(
-                R.anim.slide_in_left,
-                R.anim.slide_out_right
-
-        );
-        transaction.replace(R.id.fragmentContainer, fragment);
-        transaction.commit();
-    }
-    private void loadFragmentFav(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(
-                R.anim.slide_in_right,
-                R.anim.slide_out_left
-        );
-        transaction.replace(R.id.fragmentContainer, fragment);
-        transaction.commit();
-    }
+//    private void loadFragmentGame(Fragment fragment) {
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.setCustomAnimations(
+//                R.anim.slide_in_left,
+//                R.anim.slide_out_right
+//
+//        );
+//        transaction.replace(R.id.fragmentContainer, fragment);
+//        transaction.commit();
+//    }
+//    private void loadFragmentFav(Fragment fragment) {
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.setCustomAnimations(
+//                R.anim.slide_in_right,
+//                R.anim.slide_out_left
+//        );
+//        transaction.replace(R.id.fragmentContainer, fragment);
+//        transaction.commit();
+//    }
 
     @Override
     protected void onPause() {
