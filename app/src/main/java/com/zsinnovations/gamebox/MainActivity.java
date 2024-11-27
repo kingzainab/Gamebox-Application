@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.zsinnovations.gamebox.ui.mainscreen.FavouriteFragment;
 import com.zsinnovations.gamebox.ui.mainscreen.GameFragment;
 import com.zsinnovations.gamebox.utils.AvatarManager;
+import com.zsinnovations.gamebox.utils.MusicManager;
 import com.zsinnovations.gamebox.utils.SettingsManager;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,29 +32,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         // Initialize SettingsManager
         settingsManager = new SettingsManager(this);
+
+        // Start or resume music only if not already playing
+        if (!MusicManager.isPlaying()) {
+            settingsManager.startMusic();
+        }
+
+        // Load default fragment
+        if (savedInstanceState == null) {
+            loadFragment(new GameFragment());
+        }
+
 
         ImageView avatarImageView = findViewById(R.id.avatarIcon);
         avatarManager = new AvatarManager(this, avatarImageView, predefinedImages, currentAvatarResource);
         avatarManager.initialize();
 
-        // Start music if enabled in SharedPreferences
-        settingsManager.startMusic();
-
-        // Add default fragment (Main Screen)
-        if (savedInstanceState == null) {
-            loadFragment(new GameFragment());
-        }
-
-        // Set up footer navigation
-        setupFooterNavigation();
-
         // Settings icon listener
         ImageView settingsIcon = findViewById(R.id.settingsIcon);
         ImageView avatarIcon=findViewById(R.id.avatarIcon);
         settingsIcon.setOnClickListener(v -> settingsManager.showSettingsDialog(this));
+
+
+        setupFooterNavigation();
     }
 
     private void setupFooterNavigation() {
@@ -72,19 +75,38 @@ public class MainActivity extends AppCompatActivity {
             mainButton.setVisibility(View.INVISIBLE);
             mainButtonFilled.setVisibility(View.VISIBLE);
             favoritesButtonFilled.setVisibility(View.INVISIBLE);
-            loadFragment(new GameFragment());
+            loadFragmentGame(new GameFragment());
         });
 
         favoritesButton.setOnClickListener(v -> {
             favoritesButtonFilled.setVisibility(View.VISIBLE);
             mainButtonFilled.setVisibility(View.INVISIBLE);
-            loadFragment(new FavouriteFragment());
+            loadFragmentFav(new FavouriteFragment());
             mainButton.setVisibility(View.VISIBLE);
         });
     }
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragmentContainer, fragment);
+        transaction.commit();
+    }
+    private void loadFragmentGame(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(
+                R.anim.slide_in_left,
+                R.anim.slide_out_right
+
+        );
+        transaction.replace(R.id.fragmentContainer, fragment);
+        transaction.commit();
+    }
+    private void loadFragmentFav(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left
+        );
         transaction.replace(R.id.fragmentContainer, fragment);
         transaction.commit();
     }

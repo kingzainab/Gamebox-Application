@@ -39,6 +39,11 @@ public class SettingsManager {
             musicManager.setVolume(savedVolume / 100f); // Set volume (0.0f to 1.0f)
             musicManager.startMusic(context); // Start music
         }
+        else{
+            int savedVolume = prefs.getInt(PREF_MUSIC_VOLUME, 50); // Default volume 50
+            musicManager.setVolume(savedVolume / 100f); // Set volume (0.0f to 1.0f)
+            musicManager.startMusic(context);
+        }
     }
 
     // Method to stop music

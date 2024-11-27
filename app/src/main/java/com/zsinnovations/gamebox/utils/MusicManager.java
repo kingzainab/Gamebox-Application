@@ -6,7 +6,8 @@ import android.media.MediaPlayer;
 import com.zsinnovations.gamebox.R;
 
 public class MusicManager {
-    private MediaPlayer mediaPlayer;
+    private static MediaPlayer mediaPlayer; // Change this to static
+
     private Context appContext;
 
     public void startMusic(Context context) {
@@ -27,6 +28,9 @@ public class MusicManager {
         }
     }
 
+    public static boolean isPlaying() {
+        return mediaPlayer != null && mediaPlayer.isPlaying();
+    }
     public void resumeMusic() {
         if (appContext != null) {
             SharedPreferences prefs = appContext.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE);

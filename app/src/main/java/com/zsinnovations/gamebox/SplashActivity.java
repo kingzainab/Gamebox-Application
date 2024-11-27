@@ -3,12 +3,12 @@ package com.zsinnovations.gamebox;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.zsinnovations.gamebox.utils.MusicManager;
 import com.zsinnovations.gamebox.utils.SettingsManager;
 
 public class SplashActivity extends AppCompatActivity {
@@ -16,20 +16,24 @@ public class SplashActivity extends AppCompatActivity {
     private SettingsManager settingsManager;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash); // Replace with your splash layout file
 
         // Initialize SettingsManager
         settingsManager = new SettingsManager(this);
-        settingsManager.startMusic();
+
+        // Start music only if not already playing
+        if (!MusicManager.isPlaying()) {
+            settingsManager.startMusic();
+        }
 
         // PLAY Button: Navigate to MainActivity
         Button playButton = findViewById(R.id.play_btn_home);
         playButton.setOnClickListener(v -> {
-            // Check if music is enabled, and start music if it's not already playing
             if (isMusicEnabled()) {
-                settingsManager.startMusic(); // Ensure music starts if enabled
+                settingsManager.resumeMusic(); // Resume music if paused
             }
 
             // Navigate to MainActivity
