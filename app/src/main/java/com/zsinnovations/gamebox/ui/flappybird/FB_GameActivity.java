@@ -238,4 +238,88 @@ public class FB_GameActivity extends AppCompatActivity
         coin2.setX(coin2x);
         coin2.setY(coin2y);
     }
+
+    public void collisionControl()
+    {
+        // Enemy 1 Collision
+        int centerEnemy1x = enemy1x + enemy1.getWidth() / 2;
+        int centerEnemy1y = enemy1y + enemy1.getHeight() / 2;
+
+        if (centerEnemy1x >= birdX &&
+                centerEnemy1x <= (birdX + bird.getWidth()) &&
+                centerEnemy1y >= birdY &&
+                centerEnemy1y <= (birdY + bird.getHeight()))
+        {
+            enemy1x = screenWidth + 200;
+            right--;
+        }
+
+        // Enemy 2 Collision
+        int centerEnemy2x = enemy2x + enemy2.getWidth() / 2;
+        int centerEnemy2y = enemy2y + enemy2.getHeight() / 2;
+
+        if (centerEnemy2x >= birdX &&
+                centerEnemy2x <= (birdX + bird.getWidth()) &&
+                centerEnemy2y >= birdY &&
+                centerEnemy2y <= (birdY + bird.getHeight()))
+        {
+            enemy2x = screenWidth + 200;
+            right--;
+        }
+
+        // Enemy 3 Collision
+        int centerEnemy3x = enemy3x + enemy3.getWidth() / 2;
+        int centerEnemy3y = enemy3y + enemy3.getHeight() / 2;
+
+        if (centerEnemy3x >= birdX &&
+                centerEnemy3x <= (birdX + bird.getWidth()) &&
+                centerEnemy3y >= birdY &&
+                centerEnemy3y <= (birdY + bird.getHeight()))
+        {
+            enemy3x = screenWidth + 200;
+            right--;
+        }
+
+        // Coin 1 Collision
+        int centerCoin1x = coin1x + coin1.getWidth() / 2;
+        int centerCoin1y = coin1y + coin1.getHeight() / 2;
+        if (centerCoin1x >= birdX &&
+                centerCoin1x <= (birdX + bird.getWidth()) &&
+                centerCoin1y >= birdY &&
+                centerCoin1y <= (birdY + bird.getHeight()))
+        {
+            coin1x = screenWidth + 200;
+            score += 10;
+            textViewScore.setText(String.valueOf(score));
+        }
+
+        // Coin 2 Collision
+        int centerCoin2x = coin2x + coin2.getWidth() / 2;
+        int centerCoin2y = coin2y + coin2.getHeight() / 2;
+
+        if (centerCoin2x >= birdX &&
+                centerCoin2x <= (birdX + bird.getWidth()) &&
+                centerCoin2y >= birdY &&
+                centerCoin2y <= (birdY + bird.getHeight()))
+        {
+            coin2x = screenWidth + 200;
+            score += 10;
+            textViewScore.setText(String.valueOf(score));
+        }
+
+        // Rights and endgame handling
+        if (right > 0 && score < 200)
+        {
+            if (right == 2) right1.setImageResource(R.drawable.health_empty);
+            if (right == 1) right2.setImageResource(R.drawable.health_empty);
+        }
+        else if (score >= 200)
+        {
+            endGame(true);
+        }
+        else if (right == 0)
+        {
+            endGame(false);
+        }
+    }
 }
