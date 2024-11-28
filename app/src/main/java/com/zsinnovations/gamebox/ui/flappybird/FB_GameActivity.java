@@ -41,7 +41,8 @@ public class FB_GameActivity extends AppCompatActivity
     int score = 0;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_fb_game);
@@ -107,5 +108,27 @@ public class FB_GameActivity extends AppCompatActivity
             return true;
         });
     }
+
+    public void moveToBird()
+    {
+        if (touchControl)
+        {
+            birdY -= (screenHeight / 50);
+        }
+        else
+        {
+            birdY += (screenHeight / 50);
+        }
+
+        // Boundary checks
+        if (birdY <= 0)
+        {
+            birdY = 0;
+        }
+        if (birdY >= (screenHeight - bird.getHeight()))
+        {
+            birdY = (screenHeight - bird.getHeight());
+        }
+        bird.setY(birdY);
     }
 }
