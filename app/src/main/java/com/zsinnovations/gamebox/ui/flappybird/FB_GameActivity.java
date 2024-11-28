@@ -131,4 +131,111 @@ public class FB_GameActivity extends AppCompatActivity
         }
         bird.setY(birdY);
     }
+
+    public void enemyControl()
+    {
+        enemy1.setVisibility(View.VISIBLE);
+        enemy2.setVisibility(View.VISIBLE);
+        enemy3.setVisibility(View.VISIBLE);
+        coin1.setVisibility(View.VISIBLE);
+        coin2.setVisibility(View.VISIBLE);
+
+        // Enemy 1 Movement
+        enemy1x -= (screenWidth / 150);
+
+        if (score >= 100)
+        {
+            enemy1x -= (screenWidth / 130);
+        }
+
+        if (enemy1x < 0)
+        {
+            enemy1x = screenWidth + 200;
+            enemy1y = (int) Math.floor(Math.random() * screenHeight);
+
+            if (enemy1y <= 0)
+                enemy1y = 0;
+
+            if (enemy1y >= (screenHeight - enemy1.getHeight()))
+                enemy1y = (screenHeight - enemy1.getHeight());
+        }
+        enemy1.setX(enemy1x);
+        enemy1.setY(enemy1y);
+
+        // Enemy 2 Movement
+        enemy2x -= (screenWidth / 140);
+
+        if (score >= 100)
+        {
+            enemy1x -= (screenWidth / 120);
+        }
+
+        if (enemy2x < 0)
+        {
+            enemy2x = screenWidth + 200;
+            enemy2y = (int) Math.floor(Math.random() * screenHeight);
+
+            if (enemy2y <= 0)
+                enemy2y = 0;
+
+            if (enemy2y >= (screenHeight - enemy2.getHeight()))
+                enemy2y = (screenHeight - enemy2.getHeight());
+        }
+        enemy2.setX(enemy2x);
+        enemy2.setY(enemy2y);
+
+        // Enemy 3 Movement
+        enemy3x -= (screenWidth / 130);
+
+        if (score >= 100)
+        {
+            enemy1x -= (screenWidth / 110);
+        }
+
+        if (enemy3x < 0)
+        {
+            enemy3x = screenWidth + 200;
+            enemy3y = (int) Math.floor(Math.random() * screenHeight);
+
+            if (enemy3y <= 0)
+                enemy3y = 0;
+
+            if (enemy3y >= (screenHeight - enemy3.getHeight()))
+                enemy3y = (screenHeight - enemy3.getHeight());
+        }
+        enemy3.setX(enemy3x);
+        enemy3.setY(enemy3y);
+
+        // Coin 1 Movement
+        coin1x -= (screenWidth / 120);
+        if (coin1x < 0)
+        {
+            coin1x = screenWidth + 200;
+            coin1y = (int) Math.floor(Math.random() * screenHeight);
+
+            if (coin1y <= 0)
+                coin1y = 0;
+
+            if (coin1y >= (screenHeight - coin1.getHeight()))
+                coin1y = (screenHeight - coin1.getHeight());
+        }
+        coin1.setX(coin1x);
+        coin1.setY(coin1y);
+
+        // Coin 2 Movement
+        coin2x -= (screenWidth / 110);
+        if (coin2x < 0)
+        {
+            coin2x = screenWidth + 200;
+            coin2y = (int) Math.floor(Math.random() * screenHeight);
+
+            if (coin2y <= 0)
+                coin2y = 0;
+
+            if (coin2y >= (screenHeight - coin2.getHeight()))
+                coin2y = (screenHeight - coin2.getHeight());
+        }
+        coin2.setX(coin2x);
+        coin2.setY(coin2y);
+    }
 }
