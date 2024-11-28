@@ -2,4 +2,6 @@
     <string name="app_name">Gamebox</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="info">The innocent flappy bird needs 500 points in order to\nescape the enemies
+        and reach its nest!\nCan you help the bird in this challenging task?</string>
 </resources>

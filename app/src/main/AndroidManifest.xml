@@ -13,6 +13,18 @@
         android:theme="@style/Theme.Gamebox"
         tools:targetApi="31">
         <activity
+            android:name=".ui.flappybird.FB_ResultActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".ui.flappybird.FB_GameActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".ui.flappybird.FB_MainActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"/>
+        <activity
             android:name=".SplashScreen"
             android:exported="true">
             <intent-filter>
