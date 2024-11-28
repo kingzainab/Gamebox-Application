@@ -57,4 +57,45 @@ public class FB_MainActivity extends AppCompatActivity
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mediaPlayer = MediaPlayer.create(FB_MainActivity.this, R.raw.FB_audio);
+        mediaPlayer.start();
+
+        volume.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if (!status)
+                {
+                    mediaPlayer.setVolume(0,0);
+                    volume.setImageResource(R.drawable.volume_down);
+                    status = true;
+                }
+                else
+                {
+                    mediaPlayer.setVolume(1,1);
+                    volume.setImageResource(R.drawable.volume_icon);
+                    status = false;
+                }
+            }
+        });
+
+        buttonStart.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                mediaPlayer.reset();
+                volume.setImageResource(R.drawable.volume_icon);
+
+                Intent intent = new Intent(FB_MainActivity.this, FB_GameActivity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
 }
