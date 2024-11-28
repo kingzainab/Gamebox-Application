@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".FB_GameActivity">
+    tools:context=".ui.flappybird.FB_GameActivity">
 
     <ImageView
         android:id="@+id/ImageViewBird"
