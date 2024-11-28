@@ -84,5 +84,38 @@ public class FB_ResultActivity extends AppCompatActivity
                 finish();
             }
         });
+
+    }
+
+    @SuppressLint("MissingSuperCall")
+    public void onBackPressed()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(FB_ResultActivity.this);
+        builder.setTitle("Flappy Bird 🐥");
+        builder.setMessage("Are you sure you want to quit the game?");
+        builder.setCancelable(false);
+
+        builder.setNegativeButton("Quit", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                moveTaskToBack(true);
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(0);
+            }
+        });
+
+        builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.cancel();
+            }
+        });
+
+        builder.create().show();
+
     }
 }
