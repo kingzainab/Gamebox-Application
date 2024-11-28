@@ -45,5 +45,32 @@ public class FB_ResultActivity extends AppCompatActivity
         textViewMyScore = findViewById(R.id.textViewMyScore);
         textViewResultInfo = findViewById(R.id.textViewResultInfo);
         buttonAgain = findViewById(R.id.buttonAgain);
+
+        // Get the score from the intent
+        score = getIntent().getIntExtra("score", 0);
+        textViewMyScore.setText("Score:" + score);
+
+        // Retrieve the high score from SharedPreferences
+        sharedPreferences = this.getSharedPreferences("Score", Context.MODE_PRIVATE);
+        sharedPreferences.getInt("highScore", 0);
+
+        // Update the high score and display appropriate messages
+        if (score >= 200)
+        {
+            textViewResultInfo.setText("You won the game :)");
+            textViewHighScore.setText("High Score: " + score);
+            sharedPreferences.edit().putInt("highScore", score).apply();
+        }
+        else if (score >= highScore)
+        {
+            textViewResultInfo.setText("Not your best game just yet!");
+            textViewHighScore.setText("High Score: " + score);
+            sharedPreferences.edit().putInt("highScore", score).apply();
+        }
+        else
+        {
+            textViewResultInfo.setText("Whoops, you lost the game.");
+            textViewHighScore.setText("High Score: " + highScore);
+        }
     }
 }
