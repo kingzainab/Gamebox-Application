@@ -64,5 +64,48 @@ public class FB_GameActivity extends AppCompatActivity
         textViewScore = findViewById(R.id.TextViewScore);
         textViewStartInfo = findViewById(R.id.TextViewStartInfo);
         constraintLayout = findViewById(R.id.main);
+
+        constraintLayout.setOnTouchListener((v, event) -> {
+            textViewStartInfo.setVisibility(View.INVISIBLE);
+            if (!beginControl)
+            {
+                beginControl = true;
+
+                screenWidth = (int) constraintLayout.getWidth();
+                screenHeight = (int) constraintLayout.getHeight();
+
+                birdX = (int) bird.getX();
+                birdY = (int) bird.getY();
+
+                handler = new Handler();
+                runnable = new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        moveToBird();
+                        enemyControl();
+                        collisionControl(); // Call collision control here
+                        handler.postDelayed(this, 20); // Keep the game loop running
+                    }
+                };
+                handler.post(runnable);
+            }
+            else
+            {
+                if (event.getAction() == MotionEvent.ACTION_DOWN)
+                {
+                    touchControl = true;
+                }
+
+                if (event.getAction() == MotionEvent.ACTION_UP)
+                {
+                    touchControl = false;
+                }
+            }
+
+            return true;
+        });
+    }
     }
 }
