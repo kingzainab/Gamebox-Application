@@ -72,5 +72,17 @@ public class FB_ResultActivity extends AppCompatActivity
             textViewResultInfo.setText("Whoops, you lost the game.");
             textViewHighScore.setText("High Score: " + highScore);
         }
+
+        // Restart the game on button click
+        buttonAgain.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(FB_ResultActivity.this, FB_GameActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }
