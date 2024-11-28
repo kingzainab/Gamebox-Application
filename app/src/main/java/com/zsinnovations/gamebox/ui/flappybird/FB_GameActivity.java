@@ -322,4 +322,28 @@ public class FB_GameActivity extends AppCompatActivity
             endGame(false);
         }
     }
+
+    private void endGame(boolean isWin)
+    {
+        constraintLayout.setEnabled(false);
+        handler.removeCallbacks(runnable);
+
+        if (isWin)
+        {
+            textViewStartInfo.setVisibility(View.VISIBLE);
+            textViewStartInfo.setText("Congratulations!!!\nYou won the game :)");
+        }
+        else
+        {
+            right3.setImageResource(R.drawable.health_empty);
+        }
+
+        handler2 = new Handler();
+        handler2.postDelayed(() -> {
+            Intent intent = new Intent(FB_GameActivity.this, FB_ResultActivity.class);
+            intent.putExtra("score", score);
+            startActivity(intent);
+            finish();
+        }, 1000);
+    }
 }
