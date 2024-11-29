@@ -10,11 +10,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.zsinnovations.gamebox.MainActivity;
 import com.zsinnovations.gamebox.R;
 
 public class FB_MainActivity extends AppCompatActivity
@@ -30,7 +33,7 @@ public class FB_MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);  // Enable Edge-to-edge functionality
-        setContentView(R.layout.activity_main);  // Set the layout for this activity
+        setContentView(R.layout.activity_fb_main);  // Set the layout for this activity
 
         // Set up the padding for system bars (like status bar, navigation bar)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -55,13 +58,20 @@ public class FB_MainActivity extends AppCompatActivity
         enemy3.setAnimation(animation);
         coin.setAnimation(animation);
 
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                showExitConfirmationDialog();
+            }
+        });
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        mediaPlayer = MediaPlayer.create(FB_MainActivity.this, R.raw.FB_audio);
+        mediaPlayer = MediaPlayer.create(FB_MainActivity.this, R.raw.fb_audio);
         mediaPlayer.start();
 
         volume.setOnClickListener(new View.OnClickListener()
@@ -97,5 +107,24 @@ public class FB_MainActivity extends AppCompatActivity
             }
         });
 
+    }
+
+
+    private void showExitConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(FB_MainActivity.this);
+        builder.setTitle("Flappy Bird 🐥");
+        builder.setMessage("Are you sure you want to quit the game?");
+        builder.setCancelable(false);
+
+        builder.setNegativeButton("Quit", (dialog, which) -> {
+            mediaPlayer.stop();
+            Intent intent = new Intent(FB_MainActivity.this, MainActivity.class); // Replace with your main activity class
+            startActivity(intent);
+            finish();
+        });
+
+        builder.setPositiveButton("Cancel", (dialog, which) -> dialog.cancel());
+
+        builder.create().show();
     }
 }

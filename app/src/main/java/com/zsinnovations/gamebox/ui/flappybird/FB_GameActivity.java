@@ -3,13 +3,14 @@ package com.zsinnovations.gamebox.ui.flappybird;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
@@ -106,6 +107,12 @@ public class FB_GameActivity extends AppCompatActivity
             }
 
             return true;
+        });
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                showExitConfirmationDialog();
+            }
         });
     }
 
@@ -323,27 +330,145 @@ public class FB_GameActivity extends AppCompatActivity
         }
     }
 
-    private void endGame(boolean isWin)
-    {
-        constraintLayout.setEnabled(false);
-        handler.removeCallbacks(runnable);
+//    private void endGame(boolean isWin)
+//    {
+//        constraintLayout.setEnabled(false);
+//        handler.removeCallbacks(runnable);
+//
+//        if (isWin)
+//        {
+//            textViewStartInfo.setVisibility(View.VISIBLE);
+//            textViewStartInfo.setText("Congratulations!!!\nYou won the game :)");
+//        }
+//        else
+//        {
+//            right3.setImageResource(R.drawable.health_empty);
+//        }
+//
+//        handler2 = new Handler();
+//        handler2.postDelayed(() -> {
+//            Intent intent = new Intent(FB_GameActivity.this, FB_ResultActivity.class);
+//            intent.putExtra("score", score);
+//            startActivity(intent);
+//            finish();
+//        }, 1000);
+//    }
 
-        if (isWin)
-        {
+    private void endGame(boolean isWin) {
+        constraintLayout.setEnabled(false);
+
+        if (handler != null) handler.removeCallbacks(runnable);
+        if (handler2 != null) handler2.removeCallbacksAndMessages(null);
+
+        if (isWin) {
             textViewStartInfo.setVisibility(View.VISIBLE);
             textViewStartInfo.setText("Congratulations!!!\nYou won the game :)");
-        }
-        else
-        {
+        } else {
             right3.setImageResource(R.drawable.health_empty);
         }
+
+
 
         handler2 = new Handler();
         handler2.postDelayed(() -> {
             Intent intent = new Intent(FB_GameActivity.this, FB_ResultActivity.class);
             intent.putExtra("score", score);
+            resetGameState();
             startActivity(intent);
             finish();
-        }, 1000);
+        }, 1);
     }
+
+    private void resetGameState() {
+        score = 0;
+        right = 3;
+        birdX = birdY = 0;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (handler != null) handler.removeCallbacks(runnable);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (beginControl) handler.post(runnable);
+    }
+
+//    private void showExitConfirmationDialog() {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(FB_GameActivity.this);
+//        builder.setTitle("Flappy Bird 🐥");
+//        builder.setMessage("Are you sure you want to quit the game?");
+//        builder.setCancelable(false);
+//
+//        builder.setNegativeButton("Quit", (dialog, which) -> {
+//            onPause();
+//            Intent intent = new Intent(FB_GameActivity.this, FB_MainActivity.class); // Replace with your main activity class
+//            startActivity(intent);
+//            finish();
+//        });
+//
+//        builder.setPositiveButton("Cancel", (dialog, which) -> dialog.cancel());
+//
+//        builder.create().show();
+//    }
+
+//    private void showExitConfirmationDialog() {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(FB_GameActivity.this);
+//        builder.setTitle("Flappy Bird 🐥");
+//        builder.setMessage("Are you sure you want to quit the game?");
+//        builder.setCancelable(false);
+//
+//        builder.setNegativeButton("Quit", (dialog, which) -> {
+//            // Pause the game and navigate to the main activity
+//            onPause();
+//            Intent intent = new Intent(FB_GameActivity.this, FB_MainActivity.class); // Replace with your main activity class
+//            startActivity(intent);
+//            finish(); // Close the current activity
+//        });
+//
+//        builder.setPositiveButton("Resume", (dialog, which) -> dialog.cancel());
+//
+//        builder.create().show();
+//    }
+
+    private void showExitConfirmationDialog() {
+        // Remove callbacks to pause the game
+        if (handler != null) handler.removeCallbacks(runnable);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(FB_GameActivity.this);
+        builder.setTitle("Flappy Bird 🐥");
+        builder.setMessage("Are you sure you want to quit the game?");
+        builder.setCancelable(false);
+
+        builder.setNegativeButton("Quit", (dialog, which) -> {
+            Intent intent = new Intent(FB_GameActivity.this, FB_MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        builder.setPositiveButton("Resume", (dialog, which) -> {
+            // Restart the game loop when resuming
+            if (beginControl) {
+                handler.post(runnable);
+            }
+            dialog.dismiss();
+        });
+
+        // Disable touch interactions while dialog is open
+        constraintLayout.setEnabled(false);
+
+        builder.setOnDismissListener(dialog -> {
+            // Re-enable touch interactions and restart game loop if needed
+            constraintLayout.setEnabled(true);
+            if (beginControl) {
+                handler.post(runnable);
+            }
+        });
+
+        builder.create().show();
+    }
+
 }
