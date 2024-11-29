@@ -1,13 +1,17 @@
 package com.zsinnovations.gamebox;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.zsinnovations.gamebox.ui.flappybird.FB_MainActivity;
 import com.zsinnovations.gamebox.ui.mainscreen.FavouriteFragment;
 import com.zsinnovations.gamebox.ui.mainscreen.GameFragment;
 import com.zsinnovations.gamebox.utils.AvatarManager;
@@ -19,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private SettingsManager settingsManager;
     private AvatarManager avatarManager;
     private final int[] predefinedImages = {
-            R.drawable.a,
+            R.drawable.flappy_bird_icon,
             R.drawable.b,
             R.drawable.c,
             R.drawable.d,
@@ -57,6 +61,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         setupFooterNavigation();
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                showExitConfirmationDialog();
+            }
+        });
     }
 
     private void setupFooterNavigation() {
@@ -128,5 +138,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         settingsManager.stopMusic();
+    }
+    private void showExitConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Gamebox ");
+        builder.setMessage("Are you sure you want to quit the game?");
+        builder.setCancelable(false);
+
+        builder.setNegativeButton("Quit", (dialog, which) -> {
+            moveTaskToBack(true);
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(0);
+        });
+
+        builder.setPositiveButton("Cancel", (dialog, which) -> dialog.cancel());
+
+        builder.create().show();
     }
 }

@@ -25,7 +25,7 @@ public class GameFragment extends Fragment {
     };
 
     private final int[] gameImages = {
-            R.drawable.a, R.drawable.b, R.drawable.c, R.drawable.d,R.drawable.e
+            R.drawable.flappy_bird_icon, R.drawable.b, R.drawable.c, R.drawable.d,R.drawable.e
     };
 
     @Nullable
