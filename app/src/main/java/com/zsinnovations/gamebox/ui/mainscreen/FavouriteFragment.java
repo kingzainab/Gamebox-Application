@@ -72,7 +72,7 @@ public class FavouriteFragment extends Fragment {
 
     private int getGameImageResource(String gameName) {
         switch (gameName) {
-            case "Game 1":
+            case "Flappy Bird":
                 return R.drawable.flappy_bird;
             case "Game 2":
                 return R.drawable.b;

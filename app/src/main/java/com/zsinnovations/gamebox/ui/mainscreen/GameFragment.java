@@ -1,5 +1,6 @@
 package com.zsinnovations.gamebox.ui.mainscreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +16,12 @@ import androidx.fragment.app.Fragment;
 import com.zsinnovations.gamebox.R;
 
 import com.zsinnovations.gamebox.adapters.GameAdapter;
+import com.zsinnovations.gamebox.ui.flappybird.FB_MainActivity;
 
 public class GameFragment extends Fragment {
 
     private final String[] gameNames = {
-            "Game 1", "Game 2", "Game 3", "Game 4","Game 5"
+            "Flappy Bird", "Game 2", "Game 3", "Game 4","Game 5"
     };
 
     private final int[] gameImages = {
@@ -50,7 +52,25 @@ public class GameFragment extends Fragment {
         // Handle click events
         gameGridView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
             String gameName = gameNames[position];
-            Toast.makeText(requireContext(), "Clicked: " + gameName, Toast.LENGTH_SHORT).show();
+            switch (position) {
+                case 0:
+                    // Example: Launch a specific activity for Game 1
+                    Intent intentGame1 = new Intent(requireContext(), FB_MainActivity.class);
+                    startActivity(intentGame1);
+                    break;
+//                case 1:
+//                    // Example: Open Flappy Bird in a web browser
+//                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://flappybird.io/"));
+//                    startActivity(browserIntent);
+//                    break;
+//                case 2:
+//                    // Placeholder: Show a toast for Game 3
+//                    Toast.makeText(requireContext(), "Game 3 launching soon!", Toast.LENGTH_SHORT).show();
+//                    break;
+                default:
+                    Toast.makeText(requireContext(), "No action defined for " + gameName, Toast.LENGTH_SHORT).show();
+                    break;
+            }
         });
 
         return rootView;
