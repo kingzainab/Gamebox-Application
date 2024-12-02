@@ -16,12 +16,14 @@ import androidx.fragment.app.Fragment;
 import com.zsinnovations.gamebox.R;
 
 import com.zsinnovations.gamebox.adapters.GameAdapter;
+import com.zsinnovations.gamebox.ui.balloonburst.BG_SplashScreen;
 import com.zsinnovations.gamebox.ui.flappybird.FB_MainActivity;
+import com.zsinnovations.gamebox.ui.flappybird.FB_SplashScreen;
 
 public class GameFragment extends Fragment {
 
     private final String[] gameNames = {
-            "Flappy Bird", "Game 2", "Game 3", "Game 4","Game 5"
+            "Flappy Bird", "Balloon Burst", "Game 3", "Game 4","Game 5"
     };
 
     private final int[] gameImages = {
@@ -55,20 +57,20 @@ public class GameFragment extends Fragment {
             switch (position) {
                 case 0:
                     // Example: Launch a specific activity for Game 1
-                    Intent intentGame1 = new Intent(requireContext(), FB_MainActivity.class);
+                    Intent intentGame1 = new Intent(requireContext(), FB_SplashScreen.class);
                     startActivity(intentGame1);
                     break;
-//                case 1:
-//                    // Example: Open Flappy Bird in a web browser
-//                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://flappybird.io/"));
-//                    startActivity(browserIntent);
-//                    break;
+                case 1:
+                    // Example: Open Flappy Bird in a web browser
+                    Intent newIntent = new Intent(requireContext(), BG_SplashScreen.class);
+                    startActivity(newIntent);
+                    break;
 //                case 2:
 //                    // Placeholder: Show a toast for Game 3
 //                    Toast.makeText(requireContext(), "Game 3 launching soon!", Toast.LENGTH_SHORT).show();
 //                    break;
                 default:
-                    Toast.makeText(requireContext(), "No action defined for " + gameName, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(requireContext(), "No action defined for " + gameName, Toast.LENGTH_SHORT).show();
                     break;
             }
         });
