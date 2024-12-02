@@ -1,6 +1,7 @@
 package com.zsinnovations.gamebox.ui.mainscreen;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import androidx.fragment.app.Fragment;
 
 import com.zsinnovations.gamebox.R;
 import com.zsinnovations.gamebox.adapters.GameAdapter;
+import com.zsinnovations.gamebox.ui.balloonburst.BG_SplashScreen;
+import com.zsinnovations.gamebox.ui.flappybird.FB_SplashScreen;
 import com.zsinnovations.gamebox.utils.FavoritesManager;
 
 import java.util.List;
@@ -65,7 +68,25 @@ public class FavouriteFragment extends Fragment {
             gridView.setAdapter(adapter);
             gridView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
                 String gameName = gameNames[position];
-                Toast.makeText(requireContext(), "Clicked: " + gameName, Toast.LENGTH_SHORT).show();
+                switch (position) {
+                    case 0:
+                        // Example: Launch a specific activity for Game 1
+                        Intent intentGame1 = new Intent(requireContext(), FB_SplashScreen.class);
+                        startActivity(intentGame1);
+                        break;
+                    case 1:
+                        // Example: Open Flappy Bird in a web browser
+                        Intent newIntent = new Intent(requireContext(), BG_SplashScreen.class);
+                        startActivity(newIntent);
+                        break;
+//                case 2:
+//                    // Placeholder: Show a toast for Game 3
+//                    Toast.makeText(requireContext(), "Game 3 launching soon!", Toast.LENGTH_SHORT).show();
+//                    break;
+                    default:
+                        //Toast.makeText(requireContext(), "No action defined for " + gameName, Toast.LENGTH_SHORT).show();
+                        break;
+                }
             });
         }
     }
@@ -74,7 +95,7 @@ public class FavouriteFragment extends Fragment {
         switch (gameName) {
             case "Flappy Bird":
                 return R.drawable.flappy_bird;
-            case "Game 2":
+            case "Balloon Burst":
                 return R.drawable.b;
             case "Game 3":
                 return R.drawable.c;
