@@ -27,7 +27,7 @@ public class BG_GameActivity extends AppCompatActivity {
     private TextView textViewTime, textViewCountDown, textViewScore;
     private ImageView balloon1, balloon2, balloon3, balloon4, balloon5, balloon6, balloon7, balloon8, balloon9, mysteryBox, speakerLevelMax,speakerLevelMin,speakerZero;
     private GridLayout gridLayout;
-    private MediaPlayer mediaPlayerPop, mediaPlayerMusic;
+    private MediaPlayer mediaPlayerPop, mediaPlayerMusic,mediaPlayerMysteryBox;
     private Handler handler;
     private Runnable runnable;
     private ImageView[] balloonsArray;
@@ -57,6 +57,7 @@ public class BG_GameActivity extends AppCompatActivity {
         initializeViews();
         mediaPlayerPop = MediaPlayer.create(this, R.raw.balloon_pop);
         mediaPlayerMusic = MediaPlayer.create(this, R.raw.fb_audio);
+        mediaPlayerMysteryBox=MediaPlayer.create(this,R.raw.success);
         mediaPlayerMusic.setLooping(true);
         mediaPlayerMusic.start();
 
@@ -293,23 +294,37 @@ public class BG_GameActivity extends AppCompatActivity {
             case 0: // Add +10 score
                 score += 10;
                 mysteryBox.setImageResource(R.drawable.wow);
+                if (mediaPlayerMysteryBox != null) {
+                    if (mediaPlayerMysteryBox.isPlaying()) mediaPlayerMysteryBox.seekTo(0);
+                    mediaPlayerMysteryBox.start();
+                }
                 resultMessage = "You got +10 points!";
                 textViewScore.setText("Score : " + score);
+
                 break;
 
             case 1: // Subtract -2 seconds from timer
                 if (timeRemaining > 2000) timeRemaining -= 2000;
                 mysteryBox.setImageResource(R.drawable.wow);
-
+                if (mediaPlayerMysteryBox != null) {
+                    if (mediaPlayerMysteryBox.isPlaying()) mediaPlayerMysteryBox.seekTo(0);
+                    mediaPlayerMysteryBox.start();
+                }
                 resultMessage = "You lost 2 seconds!";
                 textViewTime.setText("Remaining Time : " + timeRemaining / 1000);
+
                 break;
 
             case 2: // Add +7 seconds to timer
                 timeRemaining += 7000;
                 mysteryBox.setImageResource(R.drawable.wow);
+                if (mediaPlayerMysteryBox != null) {
+                    if (mediaPlayerMysteryBox.isPlaying()) mediaPlayerMysteryBox.seekTo(0);
+                    mediaPlayerMysteryBox.start();
+                }
                 resultMessage = "You gained 7 seconds!";
                 textViewTime.setText("Remaining Time : " + timeRemaining / 1000);
+
                 break;
         }
 
@@ -381,5 +396,6 @@ public class BG_GameActivity extends AppCompatActivity {
         if (handler != null) handler.removeCallbacks(runnable);
         if (mediaPlayerMusic != null) mediaPlayerMusic.release();
         if (mediaPlayerPop != null) mediaPlayerPop.release();
+        if(mediaPlayerMysteryBox!=null) mediaPlayerMysteryBox.release();
     }
 }
