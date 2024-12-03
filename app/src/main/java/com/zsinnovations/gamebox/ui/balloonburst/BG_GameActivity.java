@@ -42,7 +42,7 @@ public class BG_GameActivity extends AppCompatActivity {
             R.drawable.balloon_multi
     };
     private int soundState = 0; // 0: Unmute, 1: Mute Music, 2: Mute Pop
-
+    private boolean isGamePaused = false;
     private static final float VOLUME_MUSIC_ON = 1.0f;
     private static final float VOLUME_MUSIC_OFF = 0.0f;
     private static final float VOLUME_POP_ON = 1.0f;
@@ -213,6 +213,8 @@ public class BG_GameActivity extends AppCompatActivity {
         runnable = new Runnable() {
             @Override
             public void run() {
+                if (isGamePaused) return; // Do nothing if the game is paused
+
                 // Reset all balloons to default state
                 for (ImageView balloon : balloonsArray) {
                     balloon.setVisibility(View.INVISIBLE); // Hide the balloon
@@ -248,6 +250,7 @@ public class BG_GameActivity extends AppCompatActivity {
         };
         handler.post(runnable);
     }
+
 
 
     public void increaseScoreByOne(View view) {
@@ -344,8 +347,9 @@ public class BG_GameActivity extends AppCompatActivity {
 
 
     private void showExitConfirmationDialog() {
-        if (handler != null) handler.removeCallbacks(runnable);
-        if (gameTimer != null) gameTimer.cancel();
+        isGamePaused = true; // Pause the game
+        if (handler != null) handler.removeCallbacks(runnable); // Stop animations
+        if (gameTimer != null) gameTimer.cancel(); // Pause the timer
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Balloon Burst");
@@ -358,17 +362,26 @@ public class BG_GameActivity extends AppCompatActivity {
             finish();
         });
 
-        builder.setPositiveButton("Resume", (dialog, which) -> balloonControl());
+        builder.setPositiveButton("Resume", (dialog, which) -> {
+            isGamePaused = false; // Resume the game
+            startGameTimer(); // Restart the timer
+            balloonControl(); // Restart animations
+        });
         builder.show();
     }
 
+
     private void moveMysteryBoxRandomly() {
+        if (isGamePaused) return; // Stop the movement when paused
+
         ConstraintLayout constraintLayout = findViewById(R.id.constraintLayoutBalloon);
 
         constraintLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 constraintLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                if (isGamePaused) return; // Skip positioning if paused
 
                 int layoutWidth = constraintLayout.getWidth();
                 int layoutHeight = constraintLayout.getHeight();
@@ -386,6 +399,7 @@ public class BG_GameActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
 
