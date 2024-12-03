@@ -1,5 +1,6 @@
 package com.zsinnovations.gamebox.ui.balloonburst;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -122,6 +123,15 @@ public class BG_GameActivity extends AppCompatActivity {
         }
     }
 
+    private void playMysteryBoxSound() {
+        if (mediaPlayerMysteryBox != null) {
+            if (mediaPlayerMysteryBox.isPlaying()) {
+                mediaPlayerMysteryBox.seekTo(0);
+            }
+            mediaPlayerMysteryBox.start();
+        }
+    }
+
     private void updateSpeakerIcons(int state) {
         switch (state) {
             case 0: // Unmuted state
@@ -186,9 +196,15 @@ public class BG_GameActivity extends AppCompatActivity {
     }
 
     private void startGameTimer() {
+        if (gameTimer != null) gameTimer.cancel(); // Cancel any existing timer
         gameTimer = new CountDownTimer(timeRemaining, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
+                if (isGamePaused) { // Pause functionality
+                    cancel();
+                    timeRemaining = millisUntilFinished; // Save the remaining time
+                    return;
+                }
                 timeRemaining = millisUntilFinished;
                 textViewTime.setText("Remaining Time : " + millisUntilFinished / 1000);
             }
@@ -200,8 +216,60 @@ public class BG_GameActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        }.start();
+        };
+        gameTimer.start();
     }
+
+
+
+//    private void balloonControl() {
+//        textViewCountDown.setVisibility(View.INVISIBLE);
+//        textViewTime.setVisibility(View.VISIBLE);
+//        textViewScore.setVisibility(View.VISIBLE);
+//        gridLayout.setVisibility(View.VISIBLE);
+//
+//        handler = new Handler();
+//        runnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                if (isGamePaused) return; // Do nothing if the game is paused
+//
+//                // Reset all balloons to default state
+//                for (ImageView balloon : balloonsArray) {
+//                    balloon.setVisibility(View.INVISIBLE); // Hide the balloon
+//                    balloon.setClickable(false); // Ensure it's not clickable when hidden
+//                }
+//                mysteryBox.setVisibility(View.INVISIBLE);
+//
+//                // Randomly decide to show a balloon or mystery box
+//                Random random = new Random();
+//                boolean showMysteryBox = random.nextInt(5) == 0; // 20% chance for mystery box
+//                if (showMysteryBox) {
+//                    moveMysteryBoxRandomly();
+//                    isMysteryBoxVisible = true;
+//                } else {
+//                    int randomIndex = random.nextInt(balloonsArray.length);
+//                    int randomColorIndex = random.nextInt(balloonColors.length);
+//                    balloonsArray[randomIndex].setImageResource(balloonColors[randomColorIndex]); // Assign a random color
+//                    balloonsArray[randomIndex].setVisibility(View.VISIBLE);
+//                    balloonsArray[randomIndex].setClickable(true);
+//                    isMysteryBoxVisible = false;
+//                }
+//
+//                isClickable = true;
+//
+//                // Adjust delay based on score
+//                long delay = score <= 5 ? 1800 :
+//                        score <= 10 ? 1500 :
+//                                score <= 15 ? 1200 :
+//                                        score <= 22 ? 900 : 700;
+//
+//                handler.postDelayed(this, delay);
+//            }
+//        };
+//        handler.post(runnable);
+//    }
+
 
     private void balloonControl() {
         textViewCountDown.setVisibility(View.INVISIBLE);
@@ -252,7 +320,6 @@ public class BG_GameActivity extends AppCompatActivity {
     }
 
 
-
     public void increaseScoreByOne(View view) {
         if (!isClickable) return;
 
@@ -287,69 +354,77 @@ public class BG_GameActivity extends AppCompatActivity {
 
     // New method to handle mystery box pop and display result
     private void handleMysteryBoxPop() {
-        // Generate random outcome
         Random random = new Random();
         int outcome = random.nextInt(3); // Random number between 0 and 2
 
-        // Display outcome text
         String resultMessage = "";
         switch (outcome) {
             case 0: // Add +10 score
                 score += 10;
                 mysteryBox.setImageResource(R.drawable.wow);
-                if (mediaPlayerMysteryBox != null) {
-                    if (mediaPlayerMysteryBox.isPlaying()) mediaPlayerMysteryBox.seekTo(0);
-                    mediaPlayerMysteryBox.start();
-                }
+                playMysteryBoxSound();
                 resultMessage = "You got +10 points!";
                 textViewScore.setText("Score : " + score);
-
                 break;
 
             case 1: // Subtract -2 seconds from timer
-                if (timeRemaining > 2000) timeRemaining -= 2000;
-                mysteryBox.setImageResource(R.drawable.wow);
-                if (mediaPlayerMysteryBox != null) {
-                    if (mediaPlayerMysteryBox.isPlaying()) mediaPlayerMysteryBox.seekTo(0);
-                    mediaPlayerMysteryBox.start();
+                if (timeRemaining > 2000) {
+                    timeRemaining -= 2000;
+                    restartGameTimer();
                 }
+                mysteryBox.setImageResource(R.drawable.wow);
+                playMysteryBoxSound();
                 resultMessage = "You lost 2 seconds!";
-                textViewTime.setText("Remaining Time : " + timeRemaining / 1000);
-
                 break;
 
             case 2: // Add +7 seconds to timer
                 timeRemaining += 7000;
+                restartGameTimer();
                 mysteryBox.setImageResource(R.drawable.wow);
-                if (mediaPlayerMysteryBox != null) {
-                    if (mediaPlayerMysteryBox.isPlaying()) mediaPlayerMysteryBox.seekTo(0);
-                    mediaPlayerMysteryBox.start();
-                }
+                playMysteryBoxSound();
                 resultMessage = "You gained 7 seconds!";
-                textViewTime.setText("Remaining Time : " + timeRemaining / 1000);
-
                 break;
         }
 
-        // Display the result message on screen
+        textViewTime.setText("Remaining Time : " + timeRemaining / 1000);
+
         TextView outcomeTextView = findViewById(R.id.outcomeTextView);
         outcomeTextView.setText(resultMessage);  // Set the outcome message
-        outcomeTextView.setVisibility(View.VISIBLE); // Show the TextView
+        outcomeTextView.setVisibility(View.VISIBLE);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mysteryBox.setImageResource(R.drawable.mystery_box);
-                outcomeTextView.setVisibility(View.GONE); // Hide the message after 2 seconds
-            }
-        }, 2000); // The message will disappear after 2 seconds
+        new Handler().postDelayed(() -> {
+            mysteryBox.setImageResource(R.drawable.mystery_box);
+            outcomeTextView.setVisibility(View.GONE);
+        }, 2000); // Hide message after 2 seconds
     }
 
+    private void restartGameTimer() {
+        if (gameTimer != null) {
+            gameTimer.cancel();
+        }
+
+        gameTimer = new CountDownTimer(timeRemaining, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeRemaining = millisUntilFinished;
+                textViewTime.setText("Remaining Time : " + millisUntilFinished / 1000);
+            }
+
+            @Override
+            public void onFinish() {
+                Intent intent = new Intent(BG_GameActivity.this, BG_ResultActivity.class);
+                intent.putExtra("score", score);
+                startActivity(intent);
+                finish();
+            }
+        };
+        gameTimer.start();
+    }
 
     private void showExitConfirmationDialog() {
         isGamePaused = true; // Pause the game
         if (handler != null) handler.removeCallbacks(runnable); // Stop animations
-        if (gameTimer != null) gameTimer.cancel(); // Pause the timer
+        if (gameTimer != null) gameTimer.cancel(); // Cancel the timer without losing state
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Balloon Burst");
@@ -364,11 +439,12 @@ public class BG_GameActivity extends AppCompatActivity {
 
         builder.setPositiveButton("Resume", (dialog, which) -> {
             isGamePaused = false; // Resume the game
-            startGameTimer(); // Restart the timer
+            restartGameTimer(); // Resume the timer with the remaining time
             balloonControl(); // Restart animations
         });
         builder.show();
     }
+
 
 
     private void moveMysteryBoxRandomly() {
@@ -400,16 +476,50 @@ public class BG_GameActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        SharedPreferences preferences = getSharedPreferences("MusicPrefs", MODE_PRIVATE);
+        int savedPosition = preferences.getInt("MusicPosition", 0);
+        boolean isPlaying = preferences.getBoolean("MusicPlaying", true);
 
+        if (mediaPlayerMusic == null) {
+            mediaPlayerMusic = MediaPlayer.create(this, R.raw.fb_audio);
+            mediaPlayerMusic.setLooping(true);
+        }
 
+        mediaPlayerMusic.seekTo(savedPosition);
+
+        if (isPlaying) {
+            mediaPlayerMusic.start();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveMusicState();
+    }
+
+    private void saveMusicState() {
+        if (mediaPlayerMusic != null) {
+            SharedPreferences preferences = getSharedPreferences("MusicPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("MusicPosition", mediaPlayerMusic.getCurrentPosition());
+            editor.putBoolean("MusicPlaying", mediaPlayerMusic.isPlaying());
+            editor.apply();
+            mediaPlayerMusic.pause();
+        }
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (handler != null) handler.removeCallbacks(runnable);
-        if (mediaPlayerMusic != null) mediaPlayerMusic.release();
-        if (mediaPlayerPop != null) mediaPlayerPop.release();
-        if(mediaPlayerMysteryBox!=null) mediaPlayerMysteryBox.release();
+        if (mediaPlayerMusic != null) {
+            mediaPlayerMusic.release();
+            mediaPlayerMusic = null;
+        }
     }
+
 }
