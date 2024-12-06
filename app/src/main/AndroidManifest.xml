@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:allowBackup="true"
@@ -11,8 +11,19 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Gamebox"
-        tools:targetApi="31" >
-<!--        Balloon game activities-->
+        tools:targetApi="31">
+        <activity
+            android:name=".ui.snakegame.SG_SplashScreen"
+            android:exported="false" />
+        <activity
+            android:name=".ui.snakegame.SG_MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.snakegame.SG_ResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.snakegame.SG_GameActivity"
+            android:exported="false" /> <!-- Balloon game activities -->
         <activity
             android:name=".ui.balloonburst.BG_MainActivity"
             android:exported="false" />
@@ -24,8 +35,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.balloonburst.BG_GameActivity"
-            android:exported="false" />
-<!--        flappy bird activity added-->
+            android:exported="false" /> <!-- flappy bird activity added -->
         <activity
             android:name=".ui.flappybird.FB_ResultActivity"
             android:exported="false"
@@ -41,12 +51,10 @@
         <activity
             android:name=".ui.flappybird.FB_SplashScreen"
             android:exported="true"
-            android:screenOrientation="landscape" />
-
-<!--        main splash screen-->
+            android:screenOrientation="landscape" /> <!-- main splash screen -->
         <activity
             android:name=".SplashScreen"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
