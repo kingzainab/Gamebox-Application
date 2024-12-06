@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,13 +16,13 @@ import com.zsinnovations.gamebox.R;
 
 import com.zsinnovations.gamebox.adapters.GameAdapter;
 import com.zsinnovations.gamebox.ui.balloonburst.BG_SplashScreen;
-import com.zsinnovations.gamebox.ui.flappybird.FB_MainActivity;
 import com.zsinnovations.gamebox.ui.flappybird.FB_SplashScreen;
+import com.zsinnovations.gamebox.ui.snakegame.SG_SplashScreen;
 
 public class GameFragment extends Fragment {
 
     private final String[] gameNames = {
-            "Flappy Bird", "Balloon Burst", "Game 3", "Game 4","Game 5"
+            "Flappy Bird", "Balloon Burst", "Snake Game", "Game 4","Game 5"
     };
 
     private final int[] gameImages = {
@@ -65,10 +64,9 @@ public class GameFragment extends Fragment {
                     Intent newIntent = new Intent(requireContext(), BG_SplashScreen.class);
                     startActivity(newIntent);
                     break;
-//                case 2:
-//                    // Placeholder: Show a toast for Game 3
-//                    Toast.makeText(requireContext(), "Game 3 launching soon!", Toast.LENGTH_SHORT).show();
-//                    break;
+                case 2:
+                    Intent snakeIntent = new Intent(requireContext(), SG_SplashScreen.class);
+                    startActivity(snakeIntent);
                 default:
                     //Toast.makeText(requireContext(), "No action defined for " + gameName, Toast.LENGTH_SHORT).show();
                     break;
