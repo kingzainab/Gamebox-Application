@@ -2,24 +2,17 @@ package com.zsinnovations.gamebox.ui.snakegame;
 
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.RotateDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ProgressBar;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.zsinnovations.gamebox.R;
-import com.zsinnovations.gamebox.ui.balloonburst.BG_MainActivity;
-import com.zsinnovations.gamebox.ui.balloonburst.BG_SplashScreen;
 
-public class SG_Splash_Screen extends AppCompatActivity {
+public class SG_SplashScreen extends AppCompatActivity {
 
     private static final int SPLASH_DISPLAY_LENGTH = 3000; // 3 seconds
 
@@ -41,7 +34,7 @@ public class SG_Splash_Screen extends AppCompatActivity {
         // Ensure this matches your XML layout filename
 
         new Handler().postDelayed(() -> {
-            Intent mainIntent = new Intent(SG_Splash_Screen.this, SG_GameActivity.class);
+            Intent mainIntent = new Intent(SG_SplashScreen.this, SG_GameActivity.class);
             startActivity(mainIntent);
             finish();
         }, SPLASH_DISPLAY_LENGTH);
