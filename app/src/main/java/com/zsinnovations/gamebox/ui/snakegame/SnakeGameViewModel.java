@@ -102,12 +102,13 @@ public class SnakeGameViewModel extends ViewModel {
 
         gameState.snake.add(0, newHead);
 
-        if (newHead[0] == gameState.apple[0] && newHead[1] == gameState.apple[1]) {
+        if (didEatApple()) {
             gameState.score += 10;
             spawnApple(width, height);
         } else {
             gameState.snake.remove(gameState.snake.size() - 1);
         }
+
     }
 
     private boolean isCollision(int[] head, int width, int height) {
@@ -157,5 +158,12 @@ public class SnakeGameViewModel extends ViewModel {
     public int getHighestScore(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         return prefs.getInt(HIGHEST_SCORE_KEY, 0);
+    }
+
+    public boolean didEatApple() {
+        if (gameState.snake.isEmpty()) return false;
+
+        int[] head = gameState.snake.get(0); // Snake's head position
+        return head[0] == gameState.apple[0] && head[1] == gameState.apple[1];
     }
 }
