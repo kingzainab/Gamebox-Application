@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0D0D0D"
-    tools:context=".ui.snakegame.SG_Splash_Screen">
+    tools:context=".ui.snakegame.SG_SplashScreen">
 
     <ImageView
         android:id="@+id/imageView10"
