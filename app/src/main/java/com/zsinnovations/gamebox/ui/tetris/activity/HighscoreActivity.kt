@@ -8,13 +8,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zsinnovations.gamebox.R
-import com.zsinnovations.gamebox.ui.tetris.blocks.Shape
 import com.zsinnovations.gamebox.ui.tetris.database.AppDatabase
 import com.zsinnovations.gamebox.ui.tetris.database.Score
 import kotlinx.coroutines.launch
 import nl.dionsegijn.konfetti.KonfettiView
 import nl.dionsegijn.konfetti.models.Shape
-import nl.dionsegijn.konfetti.models.Size
 
 class HighscoreActivity : AppCompatActivity() {
 
@@ -38,7 +36,7 @@ class HighscoreActivity : AppCompatActivity() {
                 .setFadeOutEnabled(true)
                 .setTimeToLive(2000L)
                 .addShapes(Shape.Square)
-                .addSizes(Size(12))
+                .addSizes(nl.dionsegijn.konfetti.models.Size(12))
                 .setPosition(-50f, 2000 + 50f, -50f, -50f)
                 .streamFor(200, 3000L)
         }
