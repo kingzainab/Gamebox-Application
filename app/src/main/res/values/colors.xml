@@ -10,5 +10,17 @@
     <color name="avatar_icon_border">#15BDA3</color>
     <color name="primaryColor">#87DACD</color> <!-- Replace this with your desired primary color -->
 
+    // Tetris Colors
+    <color name="primary">#fdb913</color>
+    <color name="primary_var">#f4791f</color>
+    <color name="accent">#cfdcec</color>
+
+    <color name="block1">#047d68</color>>
+    <color name="block2">#c1d730</color>>
+    <color name="block3">#012b5c</color>>
+    <color name="block4">#00b5cc</color>>
+    <color name="block5">#fdb913</color>>
+    <color name="block6">#f4791f</color>>
+    <color name="block7">#717073</color>>
 
 </resources>

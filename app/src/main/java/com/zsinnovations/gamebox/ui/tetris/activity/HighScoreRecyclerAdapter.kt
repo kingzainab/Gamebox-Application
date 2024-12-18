@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.zsinnovations.gamebox.ui.tetris.R
+import com.zsinnovations.gamebox.R
 import com.zsinnovations.gamebox.ui.tetris.database.Score
 
 class HighScoreRecyclerAdapter (private var scores: List<Score>) : RecyclerView.Adapter<HighScoreRecyclerAdapter.ViewHolder>(){
@@ -15,7 +15,7 @@ class HighScoreRecyclerAdapter (private var scores: List<Score>) : RecyclerView.
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.highscore_item, parent, false)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.tetris_highscore_item, parent, false)
         return ViewHolder(v)
     }
 

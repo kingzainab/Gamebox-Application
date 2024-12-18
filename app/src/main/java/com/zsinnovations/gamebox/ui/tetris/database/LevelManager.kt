@@ -2,20 +2,25 @@ package com.zsinnovations.gamebox.ui.tetris.database
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.MutablePreferences
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.createDataStore
+import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
 
-class LevelManager (context: Context) {
-    private val dataStore : DataStore<Preferences> = context.createDataStore(name = "INIT_LEVEL")
+class LevelManager(context: Context) {
+
     companion object {
+        private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "INIT_LEVEL")
         val INITIAL_LEVEL = intPreferencesKey("init_level_key")
     }
-    suspend fun setInitalLevel(level: Int) {
-        dataStore.edit { preferences: MutablePreferences -> preferences[INITIAL_LEVEL] = level }
+
+    private val dataStore = context.dataStore
+
+    suspend fun setInitialLevel(level: Int) {
+        dataStore.edit { preferences ->
+            preferences[INITIAL_LEVEL] = level
+        }
     }
 
     suspend fun getInitialLevel(): Int? {

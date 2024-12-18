@@ -3,10 +3,12 @@ package com.zsinnovations.gamebox.ui.tetris.activity;
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.annotation.Size
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.zsinnovations.gamebox.ui.tetris.R
+import com.zsinnovations.gamebox.R
+import com.zsinnovations.gamebox.ui.tetris.blocks.Shape
 import com.zsinnovations.gamebox.ui.tetris.database.AppDatabase
 import com.zsinnovations.gamebox.ui.tetris.database.Score
 import kotlinx.coroutines.launch
@@ -18,7 +20,7 @@ class HighscoreActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_highscore)
+        setContentView(R.layout.tetris_activity_highscore)
 
         val recyclerView: RecyclerView = findViewById(R.id.highscore_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
