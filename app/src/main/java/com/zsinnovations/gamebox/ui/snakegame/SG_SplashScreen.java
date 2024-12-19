@@ -34,7 +34,7 @@ public class SG_SplashScreen extends AppCompatActivity {
         // Ensure this matches your XML layout filename
 
         new Handler().postDelayed(() -> {
-            Intent mainIntent = new Intent(SG_SplashScreen.this, SG_GameActivity.class);
+            Intent mainIntent = new Intent(SG_SplashScreen.this, SG_MainActivity.class);
             startActivity(mainIntent);
             finish();
         }, SPLASH_DISPLAY_LENGTH);
