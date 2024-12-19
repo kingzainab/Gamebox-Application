@@ -20,17 +20,15 @@ import androidx.core.view.WindowInsetsCompat;
 import com.zsinnovations.gamebox.MainActivity;
 import com.zsinnovations.gamebox.R;
 
-public class FB_MainActivity extends AppCompatActivity
-{
+public class FB_MainActivity extends AppCompatActivity {
     private ImageView bird, enemy1, enemy2, enemy3, coin, volume;
     private Button buttonStart;
     private Animation animation;
     private MediaPlayer mediaPlayer;
-    boolean status = false;
+    private boolean status = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);  // Enable Edge-to-edge functionality
         setContentView(R.layout.activity_fb_main);  // Set the layout for this activity
@@ -42,7 +40,7 @@ public class FB_MainActivity extends AppCompatActivity
             return insets;
         });
 
-        // Initialize views (make sure the IDs are correct in your XML layout file)
+        // Initialize views
         bird = findViewById(R.id.bird);
         enemy1 = findViewById(R.id.enemy1);
         enemy2 = findViewById(R.id.enemy2);
@@ -64,51 +62,64 @@ public class FB_MainActivity extends AppCompatActivity
                 showExitConfirmationDialog();
             }
         });
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        mediaPlayer = MediaPlayer.create(FB_MainActivity.this, R.raw.fb_audio);
+        if (mediaPlayer == null) {
+            mediaPlayer = MediaPlayer.create(FB_MainActivity.this, R.raw.fb_audio);
+        }
         mediaPlayer.start();
 
-        volume.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                if (!status)
-                {
-                    mediaPlayer.setVolume(0,0);
-                    volume.setImageResource(R.drawable.volume_down);
-                    status = true;
-                }
-                else
-                {
-                    mediaPlayer.setVolume(1,1);
-                    volume.setImageResource(R.drawable.volume_icon);
-                    status = false;
-                }
-            }
-        });
-
-        buttonStart.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                mediaPlayer.reset();
+        volume.setOnClickListener(v -> {
+            if (!status) {
+                mediaPlayer.setVolume(0, 0);
+                volume.setImageResource(R.drawable.volume_down);
+                status = true;
+            } else {
+                mediaPlayer.setVolume(1, 1);
                 volume.setImageResource(R.drawable.volume_icon);
-
-                Intent intent = new Intent(FB_MainActivity.this, FB_GameActivity.class);
-                startActivity(intent);
+                status = false;
             }
         });
 
+        buttonStart.setOnClickListener(v -> {
+            if (mediaPlayer != null) {
+                mediaPlayer.reset();
+            }
+            volume.setImageResource(R.drawable.volume_icon);
+
+            Intent intent = new Intent(FB_MainActivity.this, FB_GameActivity.class);
+            startActivity(intent);
+        });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
 
     private void showExitConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(FB_MainActivity.this);
@@ -117,8 +128,12 @@ public class FB_MainActivity extends AppCompatActivity
         builder.setCancelable(false);
 
         builder.setNegativeButton("Quit", (dialog, which) -> {
-            mediaPlayer.stop();
-            Intent intent = new Intent(FB_MainActivity.this, MainActivity.class); // Replace with your main activity class
+            if (mediaPlayer != null) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+                mediaPlayer = null;
+            }
+            Intent intent = new Intent(FB_MainActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         });
