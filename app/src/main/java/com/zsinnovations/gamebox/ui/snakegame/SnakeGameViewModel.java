@@ -5,14 +5,15 @@ import android.content.SharedPreferences;
 
 import androidx.lifecycle.ViewModel;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class SnakeGameViewModel extends ViewModel {
 
     private static final String PREFS_NAME = "SnakeGamePrefs";
     private static final String HIGHEST_SCORE_KEY = "HighestScore";
+
     public enum Direction {
         UP, DOWN, LEFT, RIGHT;
 
@@ -25,13 +26,13 @@ public class SnakeGameViewModel extends ViewModel {
     }
 
     private static class GameState {
-        List<int[]> snake;
+        Deque<int[]> snake;
         int[] apple;
         int score;
         boolean isGameOver;
 
         GameState() {
-            snake = new ArrayList<>();
+            snake = new LinkedList<>();
             snake.add(new int[]{20, 20});
             snake.add(new int[]{19, 20});
             snake.add(new int[]{18, 20});
@@ -43,8 +44,9 @@ public class SnakeGameViewModel extends ViewModel {
 
     private final GameState gameState = new GameState();
     private Direction currentDirection = Direction.RIGHT;
+    private String temporaryMessage = null;
 
-    public List<int[]> getSnake() {
+    public Deque<int[]> getSnake() {
         return gameState.snake;
     }
 
@@ -74,10 +76,10 @@ public class SnakeGameViewModel extends ViewModel {
         spawnApple(width, height);
     }
 
-    public void updateGame(int width, int height) {
-        if (gameState.isGameOver) return;
+    public boolean updateGame(int width, int height) {
+        if (gameState.isGameOver) return false;
 
-        int[] head = gameState.snake.get(0);
+        int[] head = gameState.snake.getFirst();
         int[] newHead = new int[]{head[0], head[1]};
 
         switch (currentDirection) {
@@ -97,18 +99,19 @@ public class SnakeGameViewModel extends ViewModel {
 
         if (isCollision(newHead, width, height)) {
             gameState.isGameOver = true;
-            return;
+            return false;
         }
 
-        gameState.snake.add(0, newHead);
+        gameState.snake.addFirst(newHead);
 
         if (didEatApple()) {
             gameState.score += 10;
             spawnApple(width, height);
+            return true; // Apple was eaten
         } else {
-            gameState.snake.remove(gameState.snake.size() - 1);
+            gameState.snake.removeLast();
+            return false; // No apple eaten
         }
-
     }
 
     private boolean isCollision(int[] head, int width, int height) {
@@ -116,8 +119,8 @@ public class SnakeGameViewModel extends ViewModel {
             return true;
         }
 
-        for (int i = 1; i < gameState.snake.size(); i++) {
-            if (head[0] == gameState.snake.get(i)[0] && head[1] == gameState.snake.get(i)[1]) {
+        for (int[] snakePart : gameState.snake) {
+            if (head[0] == snakePart[0] && head[1] == snakePart[1]) {
                 return true;
             }
         }
@@ -133,7 +136,6 @@ public class SnakeGameViewModel extends ViewModel {
             appleY = random.nextInt(height);
             validApplePosition = true;
 
-            // Check if apple spawns on snake
             for (int[] snakePart : gameState.snake) {
                 if (snakePart[0] == appleX && snakePart[1] == appleY) {
                     validApplePosition = false;
@@ -163,7 +165,7 @@ public class SnakeGameViewModel extends ViewModel {
     public boolean didEatApple() {
         if (gameState.snake.isEmpty()) return false;
 
-        int[] head = gameState.snake.get(0); // Snake's head position
+        int[] head = gameState.snake.getFirst();
         return head[0] == gameState.apple[0] && head[1] == gameState.apple[1];
     }
 }
