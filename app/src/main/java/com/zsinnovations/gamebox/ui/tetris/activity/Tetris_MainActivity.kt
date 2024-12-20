@@ -21,7 +21,7 @@ import com.zsinnovations.gamebox.ui.tetris.database.LevelManager
 import com.zsinnovations.gamebox.ui.tetris.database.Score
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity(), GameObserver {
+class Tetris_MainActivity : AppCompatActivity(), GameObserver {
         private var surfaceHolder: SurfaceHolder? = null
         private var nextSurfaceHolder: SurfaceHolder? = null
         private var paintArray: Array<Paint>? = null
@@ -160,7 +160,7 @@ class MainActivity : AppCompatActivity(), GameObserver {
             setNegativeButton("Back"
             ) { _, _ ->
                 Game.getGame().end()
-                val intent = Intent(this@MainActivity, StartActivity::class.java)
+                val intent = Intent(this@Tetris_MainActivity, StartActivity::class.java)
                 startActivity(intent)
             }
         }

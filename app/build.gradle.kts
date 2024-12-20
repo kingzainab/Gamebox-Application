@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id ("kotlin-kapt")
+    id("kotlin-kapt") // Ensure kapt is enabled for Room and other annotation processors
 }
 
 android {
@@ -16,6 +16,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        dataBinding = true // Enable data binding
     }
 
     buildTypes {
@@ -37,53 +41,49 @@ android {
 }
 
 dependencies {
+    // Core Android dependencies
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.core.ktx)
+
+    // Additional libraries
     implementation(libs.gson)
     implementation(libs.circleimageview)
     implementation(libs.firebase.crashlytics.buildtools)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
     implementation(libs.gridlayout)
-    implementation(libs.core.ktx)
-    implementation(libs.datastore.preferences) // Added dependency
+
+    // Test dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    implementation (libs.org.jetbrains.kotlin.kotlin.stdlib)
-    implementation (libs.core.ktx.v132)
-    implementation (libs.appcompat.v120)
-    implementation (libs.material.v130)
-    implementation (libs.constraintlayout.v204)
-    testImplementation (libs.junit)
-    androidTestImplementation (libs.junit.v112)
-    androidTestImplementation (libs.espresso.core.v330)
+    // Kotlin and Coroutines
+    implementation(libs.org.jetbrains.kotlin.kotlin.stdlib)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 
-    // Datastore
-    implementation (libs.datastore.preferences.v100alpha06)
-
-    // Coroutines
-    implementation (libs.kotlinx.coroutines.core)
-    implementation (libs.kotlinx.coroutines.android)
-
-    // Coroutine Lifecycle Scopes
-    implementation (libs.lifecycle.viewmodel.ktx)
-    implementation (libs.lifecycle.runtime.ktx)
+    // Lifecycle components
+    implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.lifecycle.runtime.ktx)
 
     // Room components
-    implementation (libs.room.ktx)
-    kapt (libs.androidx.room.compiler)
-    androidTestImplementation (libs.androidx.room.testing)
+    implementation(libs.room.ktx)
+    kapt(libs.androidx.room.compiler)
+    androidTestImplementation(libs.androidx.room.testing)
 
     // Card View
-    implementation (libs.androidx.cardview)
+    implementation(libs.androidx.cardview)
 
-    //Lottie
-    implementation (libs.lottie)
+    // Lottie for animations
+    implementation(libs.lottie)
 
-    //Konfetti
-    implementation (libs.konfetti)
+    // Konfetti for celebrations
+    implementation(libs.konfetti)
+
+    // Datastore
+    implementation(libs.datastore.preferences)
 }
