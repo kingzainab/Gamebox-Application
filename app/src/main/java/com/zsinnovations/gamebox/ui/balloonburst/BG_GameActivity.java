@@ -57,7 +57,7 @@ public class BG_GameActivity extends AppCompatActivity {
 
         initializeViews();
         mediaPlayerPop = MediaPlayer.create(this, R.raw.balloon_pop);
-        mediaPlayerMusic = MediaPlayer.create(this, R.raw.fb_audio);
+        mediaPlayerMusic = MediaPlayer.create(this, R.raw.bb_audio);
         mediaPlayerMysteryBox=MediaPlayer.create(this,R.raw.success);
         mediaPlayerMusic.setLooping(true);
         mediaPlayerMusic.start();

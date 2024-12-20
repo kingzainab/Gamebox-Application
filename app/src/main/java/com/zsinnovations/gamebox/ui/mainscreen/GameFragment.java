@@ -22,11 +22,11 @@ import com.zsinnovations.gamebox.ui.snakegame.SG_SplashScreen;
 public class GameFragment extends Fragment {
 
     private final String[] gameNames = {
-            "Flappy Bird", "Balloon Burst", "Snake Game", "Game 4","Game 5"
+            "Flappy Bird", "Balloon Zap", "Snake Game", "Game 4","Game 5"
     };
 
     private final int[] gameImages = {
-            R.drawable.flappy_bird_icon, R.drawable.b, R.drawable.c, R.drawable.d,R.drawable.e
+            R.drawable.flappy_bird_logo, R.drawable.balloon_icon, R.drawable.snake_game_icon, R.drawable.d,R.drawable.e
     };
 
     @Nullable
