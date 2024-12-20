@@ -65,8 +65,8 @@ public class FB_GameActivity extends AppCompatActivity {
         textViewScore = findViewById(R.id.TextViewScore);
         textViewStartInfo = findViewById(R.id.TextViewStartInfo);
         constraintLayout = findViewById(R.id.main);
-        coinCollectSound = MediaPlayer.create(this, R.raw.success);
-        collisionSound = MediaPlayer.create(this, R.raw.balloon_pop);
+        coinCollectSound = MediaPlayer.create(this, R.raw.coin_collect);
+        collisionSound = MediaPlayer.create(this, R.raw.enemy_hit);
 
         constraintLayout.setOnTouchListener((v, event) -> {
             textViewStartInfo.setVisibility(View.INVISIBLE);

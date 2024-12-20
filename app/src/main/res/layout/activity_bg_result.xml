@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryColor"
+    android:background="@drawable/balloon_background_3"
     tools:context=".ui.balloonburst.BG_ResultActivity">
 
 
@@ -62,8 +62,9 @@
             android:layout_width="325dp"
             android:layout_height="71dp"
             android:layout_marginBottom="32dp"
-            android:backgroundTint="#196419"
+            android:backgroundTint="#02c39a"
             android:text="Play Again"
+            android:textColor="@color/black"
             android:textSize="28sp"
             app:layout_constraintBottom_toTopOf="@+id/buttonQuitGame"
             app:layout_constraintEnd_toEndOf="parent"
@@ -74,7 +75,7 @@
             android:layout_width="325dp"
             android:layout_height="71dp"
             android:layout_marginBottom="64dp"
-            android:backgroundTint="#DB1111"
+            android:backgroundTint="#da1e37"
             android:text="Quit Game"
             android:textSize="28dp"
             app:layout_constraintBottom_toBottomOf="parent"

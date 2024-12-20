@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#18FF65"
+    android:background="@drawable/background"
     tools:context=".ui.flappybird.FB_SplashScreen">
 
     <ImageView
@@ -22,7 +22,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Help the Innocent Bird"
+        android:text="Flappy Bird"
         android:textColor="@color/black"
         android:textSize="48sp"
         android:textStyle="bold"
