@@ -12,6 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Game Over"
+        android:textStyle="bold"
+        android:textColor="@color/black"
         android:textSize="32sp"
         android:layout_marginBottom="32dp"/>
 
@@ -33,14 +35,21 @@
 
     <Button
         android:id="@+id/restartButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Restart Game"
-        android:layout_marginBottom="16dp"/>
+        android:layout_width="325dp"
+        android:layout_height="71dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/playBtnColor"
+        android:text="Play Again"
+        android:textColor="@color/black"
+        android:textSize="28sp"/>
 
     <Button
         android:id="@+id/mainMenuButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Main Menu"/>
+        android:layout_width="325dp"
+        android:layout_height="71dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/quitBtnColor"
+        android:text="Quit Game"
+        android:textColor="@color/white"
+        android:textSize="28sp"/>
 </LinearLayout>

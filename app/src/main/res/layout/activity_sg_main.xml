@@ -61,11 +61,14 @@
 
     <Button
         android:id="@+id/startButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:backgroundTint="#902A2A"
         android:text="Play"
+        android:layout_width="325dp"
+        android:layout_height="71dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/playBtnColor"
+        android:textColor="@color/black"
+        android:textSize="28sp"
         android:textColorLink="#D32A2A"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

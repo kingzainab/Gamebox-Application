@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/balloon_background_3"
+    android:background="@color/white"
     tools:context=".ui.balloonburst.BG_ResultActivity">
 
 
@@ -18,13 +18,13 @@
 
         <TextView
             android:id="@+id/textViewInfo"
-            android:layout_width="362dp"
-            android:layout_height="66dp"
+            android:layout_width="365dp"
+            android:layout_height="87dp"
             android:layout_marginTop="144dp"
             android:text="Would You Love to Play Again ?"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="22dp"
+            android:textSize="32dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
@@ -39,7 +39,6 @@
             android:text="Your Score : 30"
             android:textColor="@color/black"
             android:textSize="28sp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewInfo" />
@@ -48,11 +47,10 @@
             android:id="@+id/textViewHighestScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="24dp"
             android:text="Highest Score : 50"
             android:textColor="@color/black"
             android:textSize="28dp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewScoreResult" />
@@ -62,7 +60,7 @@
             android:layout_width="325dp"
             android:layout_height="71dp"
             android:layout_marginBottom="32dp"
-            android:backgroundTint="#02c39a"
+            android:backgroundTint="@color/playBtnColor"
             android:text="Play Again"
             android:textColor="@color/black"
             android:textSize="28sp"
@@ -75,7 +73,7 @@
             android:layout_width="325dp"
             android:layout_height="71dp"
             android:layout_marginBottom="64dp"
-            android:backgroundTint="#da1e37"
+            android:backgroundTint="@color/quitBtnColor"
             android:text="Quit Game"
             android:textSize="28dp"
             app:layout_constraintBottom_toBottomOf="parent"
