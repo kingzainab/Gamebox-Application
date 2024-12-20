@@ -80,7 +80,7 @@ public class BG_MainActivity extends AppCompatActivity {
         boolean isPlaying = preferences.getBoolean("MusicPlaying", true);
 
         if (mediaPlayer == null) {
-            mediaPlayer = MediaPlayer.create(BG_MainActivity.this, R.raw.fb_audio);
+            mediaPlayer = MediaPlayer.create(BG_MainActivity.this, R.raw.bb_audio);
             mediaPlayer.setLooping(true);
         }
 

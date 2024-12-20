@@ -5,14 +5,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/balloon_background_3"
-    tools:context=".ui.balloonburst.BG_MainActivity">
+    android:background="@color/material_dynamic_neutral_variant20"
+    tools:context=".ui.snakegame.SG_MainActivity">
 
     <ImageView
         android:id="@+id/level_two_sound"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="16dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.714"
@@ -20,6 +21,7 @@
 
     <ImageView
         android:id="@+id/level_one_sound"
+
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="16dp"
@@ -42,45 +44,34 @@
         app:srcCompat="@drawable/zero_sound"
         android:visibility="invisible"/>
 
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="196dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/balloon" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:fontFamily="@font/urbanist_medium"
-        android:text="Balloon Zap "
-        android:textColor="@color/black"
+        android:layout_marginTop="312dp"
+        android:text="Snake Game"
+        android:textColor="#EDE6E6"
         android:textSize="48sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/startButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView10"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/startButton"
+        android:layout_marginTop="48dp"
+        android:text="Play"
         android:layout_width="325dp"
         android:layout_height="71dp"
-        android:layout_marginBottom="188dp"
-        android:backgroundTint="#02c39a"
-        android:text="Play"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/playBtnColor"
         android:textColor="@color/black"
-        android:textColorLink="#D32A2A"
         android:textSize="28sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColorLink="#D32A2A"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

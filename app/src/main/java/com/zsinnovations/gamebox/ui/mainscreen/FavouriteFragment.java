@@ -95,7 +95,7 @@ public class FavouriteFragment extends Fragment {
         switch (gameName) {
             case "Flappy Bird":
                 return R.drawable.flappy_bird;
-            case "Balloon Burst":
+            case "Balloon Zap":
                 return R.drawable.b;
             case "Game 3":
                 return R.drawable.c;
