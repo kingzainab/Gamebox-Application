@@ -1,9 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- Base application theme -->
     <style name="Base.Theme.Gamebox" parent="Theme.Material3.Light.NoActionBar">
-        <!-- Customize your light theme here. -->
+        <!-- Primary brand color -->
         <item name="colorPrimary">@color/primaryColor</item>
+
+        <!-- Default font family for the entire app -->
+        <item name="android:fontFamily">@font/baloo_bhaijaan_2_medium</item>
+        <item name="fontFamily">@font/baloo_bhaijaan_2_medium</item>
+
+        <!-- Apply font to specific text appearances -->
+        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
+        <item name="android:buttonStyle">@style/RobotoButtonStyle</item>
+        <item name="textAppearanceButton">@style/TextAppearance.AppFont.Button</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.AppFont.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.AppFont.Body2</item>
+        <item name="textAppearanceHeadline1">@style/TextAppearance.AppFont.H1</item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.AppFont.H2</item>
+        <item name="textAppearanceHeadline3">@style/TextAppearance.AppFont.H3</item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.AppFont.H4</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.AppFont.H5</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.AppFont.H6</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.AppFont.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.AppFont.Subtitle2</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.AppFont.Caption</item>
     </style>
 
     <style name="Theme.Gamebox" parent="Base.Theme.Gamebox" />
+
+    <!-- Text Appearance styles -->
+    <style name="TextAppearance.AppFont.Button" parent="TextAppearance.MaterialComponents.Button">
+        <item name="fontFamily">@font/baloo_bhaijaan_2_medium</item>
+    </style>
+
+    <style name="TextAppearance.AppFont.Body1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="fontFamily">@font/baloo_bhaijaan_2_medium</item>
+    </style>
+
+    <style name="TextAppearance.AppFont.Body2" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="fontFamily">@font/baloo_bhaijaan_2_medium</item>
+    </style>
+
+    <style name="TextAppearance.AppFont.H1" parent="TextAppearance.MaterialComponents.Headline1">
+        <item name="fontFamily">@font/baloo_bhaijaan_2_medium</item>
+    </style>
+
+    <style name="TextAppearance.AppFont.H2" parent="TextAppearance.MaterialComponents.Headline2">
+        <item name="fontFamily">@font/baloo_bhaijaan_2_medium</item>
+    </style>
+
+    <style name="TextAppearance.AppFont.H3" parent="TextAppearance.MaterialComponents.Headline3">
+        <item name="fontFamily">@font/baloo_bhaijaan_2_medium</item>
+    </style>
+
+    <style name="TextAppearance.AppFont.H4" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="fontFamily">@font/baloo_bhaijaan_2_medium</item>
+    </style>
+
+    <style name="TextAppearance.AppFont.H5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="fontFamily">@font/baloo_bhaijaan_2_medium</item>
+    </style>
+
+    <style name="TextAppearance.AppFont.H6" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="fontFamily">@font/baloo_bhaijaan_2_medium</item>
+    </style>
+
+    <style name="TextAppearance.AppFont.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="fontFamily">@font/baloo_bhaijaan_2_medium</item>
+    </style>
+
+    <style name="TextAppearance.AppFont.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="fontFamily">@font/baloo_bhaijaan_2_medium</item>
+    </style>
+
+    <style name="TextAppearance.AppFont.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="fontFamily">@font/baloo_bhaijaan_2_medium</item>
+    </style>
+
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/baloo_bhaijaan_2_medium</item>
+    </style>
+
+    <style name="RobotoButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">@font/baloo_bhaijaan_2_medium</item>
+    </style>
 </resources>

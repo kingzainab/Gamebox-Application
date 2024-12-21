@@ -18,15 +18,17 @@ import com.zsinnovations.gamebox.adapters.GameAdapter;
 import com.zsinnovations.gamebox.ui.balloonburst.BG_SplashScreen;
 import com.zsinnovations.gamebox.ui.flappybird.FB_SplashScreen;
 import com.zsinnovations.gamebox.ui.snakegame.SG_SplashScreen;
+import com.zsinnovations.gamebox.ui.tiktak.TT_AddPlayer;
+import com.zsinnovations.gamebox.ui.tiktak.TT_SplashScreen;
 
 public class GameFragment extends Fragment {
 
     private final String[] gameNames = {
-            "Flappy Bird", "Balloon Zap", "Grow the Snake", "Game 4","Game 5"
+            "Flappy Bird", "Balloon Zap", "Grow the Snake", "Tic-Tac-Toe","Game 5"
     };
 
     private final int[] gameImages = {
-            R.drawable.flappy_bird_logo, R.drawable.balloon_icon, R.drawable.snake_game_icon, R.drawable.d,R.drawable.e
+            R.drawable.flappy_bird_logo, R.drawable.balloon_icon, R.drawable.snake_game_icon, R.drawable.tic_tac_logo,R.drawable.e
     };
 
     @Nullable
@@ -67,6 +69,10 @@ public class GameFragment extends Fragment {
                 case 2:
                     Intent snakeIntent = new Intent(requireContext(), SG_SplashScreen.class);
                     startActivity(snakeIntent);
+                    break;
+                case 3:
+                    Intent TtIntent = new Intent(requireContext(), TT_SplashScreen.class);
+                    startActivity(TtIntent);
                 default:
 
                     break;

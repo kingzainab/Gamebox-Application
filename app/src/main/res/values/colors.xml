@@ -11,6 +11,10 @@
     <color name="primaryColor">#87DACD</color>
     <color name="playBtnColor">#02c39a</color>
     <color name="quitBtnColor">#da1e37</color>
+    <color name="lavender">#5C69D3</color>
+    <color name="transparent">#00000000</color>
+
+<!--    <color name="lavender">#8692f7</color>-->
 
 
 </resources>
