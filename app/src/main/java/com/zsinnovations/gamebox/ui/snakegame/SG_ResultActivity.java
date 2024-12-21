@@ -40,7 +40,7 @@ public class SG_ResultActivity extends AppCompatActivity {
 
         // Return to main menu
         mainMenuButton.setOnClickListener(v -> {
-            // Replace with your main menu activity
+
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();

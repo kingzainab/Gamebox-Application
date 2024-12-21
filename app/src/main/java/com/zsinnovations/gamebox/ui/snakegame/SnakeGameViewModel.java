@@ -44,7 +44,6 @@ public class SnakeGameViewModel extends ViewModel {
 
     private final GameState gameState = new GameState();
     private Direction currentDirection = Direction.RIGHT;
-    private String temporaryMessage = null;
 
     public Deque<int[]> getSnake() {
         return gameState.snake;

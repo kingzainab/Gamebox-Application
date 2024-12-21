@@ -97,10 +97,7 @@ public class SG_GameActivity extends ComponentActivity {
         int[] screenMetrics = getScreenMetrics();
         int screenWidth = screenMetrics[0];
         int screenHeight = screenMetrics[1];
-
-        // Initialize game grid
         viewModel.startGame(screenWidth / 40, (screenHeight / 40) - 2);
-
         setupGameLoop();
     }
 
@@ -151,8 +148,6 @@ public class SG_GameActivity extends ComponentActivity {
         viewModel.updateGame(screenWidth / 40, (screenHeight / 40) - 2);
         gameView.invalidate();
     }
-
-
 
     private void handleGameOverState() {
 
@@ -245,7 +240,7 @@ public class SG_GameActivity extends ComponentActivity {
         isGamePaused = true;
 
         new AlertDialog.Builder(this)
-                .setTitle("Snake Game")
+                .setTitle("Grow the Snake")
                 .setMessage("Are you sure you want to quit the game?")
                 .setCancelable(false)
                 .setNegativeButton("Quit", (dialog, which) -> {
@@ -279,8 +274,4 @@ public class SG_GameActivity extends ComponentActivity {
         }
 
     }
-
-
-
-
 }

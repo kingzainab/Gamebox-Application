@@ -190,7 +190,7 @@ public class SG_MainActivity extends AppCompatActivity {
 
     private void showExitConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Snake Game");
+        builder.setTitle("Grow the Snake");
         builder.setMessage("Are you sure you want to quit the game?");
         builder.setCancelable(false);
 

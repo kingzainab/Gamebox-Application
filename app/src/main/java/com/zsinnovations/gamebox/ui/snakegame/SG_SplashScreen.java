@@ -22,16 +22,12 @@ public class SG_SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_sg_splash_screen);
         ProgressBar spinner = findViewById(R.id.loading_spinner2);
 
-        // Get the RotateDrawable from the ProgressBar
         RotateDrawable rotateDrawable = (RotateDrawable) spinner.getIndeterminateDrawable();
 
-        // Access the GradientDrawable inside RotateDrawable
         GradientDrawable gradientDrawable = (GradientDrawable) rotateDrawable.getDrawable();
 
-        // Update the end color dynamically
-        int newEndColor = ContextCompat.getColor(this, R.color.white); // Use ContextCompat.getColor()
-        gradientDrawable.setColors(new int[]{gradientDrawable.getColors()[0], newEndColor}); // Update the end color
-        // Ensure this matches your XML layout filename
+        int newEndColor = ContextCompat.getColor(this, R.color.white);
+        gradientDrawable.setColors(new int[]{gradientDrawable.getColors()[0], newEndColor});
 
         new Handler().postDelayed(() -> {
             Intent mainIntent = new Intent(SG_SplashScreen.this, SG_MainActivity.class);
