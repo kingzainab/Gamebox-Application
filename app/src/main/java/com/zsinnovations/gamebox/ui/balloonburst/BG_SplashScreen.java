@@ -7,13 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.zsinnovations.gamebox.R;
 
 public class BG_SplashScreen extends AppCompatActivity {
-    private static final int SPLASH_DISPLAY_LENGTH = 3000; // 3 seconds
+    private static final int SPLASH_DISPLAY_LENGTH = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Ensure this matches your XML layout filename
         setContentView(R.layout.activity_bg_splash_screen);
 
         new Handler().postDelayed(() -> {

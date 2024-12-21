@@ -34,13 +34,13 @@ public class BG_MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bg_main);  // Set the layout for this activity
+        setContentView(R.layout.activity_bg_main);
 
 
         startButton= findViewById(R.id.startButton);
-        sound_max_level = findViewById(R.id.level_two_sound);  // Add this line
-        sound_min_level = findViewById(R.id.level_one_sound);  // Add this line
-        sound_mute = findViewById(R.id.zero_sound);  // Add this line
+        sound_max_level = findViewById(R.id.level_two_sound);
+        sound_min_level = findViewById(R.id.level_one_sound);
+        sound_mute = findViewById(R.id.zero_sound);
         animation = AnimationUtils.loadAnimation(BG_MainActivity.this, R.anim.scale_animation);
         startButton.setAnimation(animation);
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {

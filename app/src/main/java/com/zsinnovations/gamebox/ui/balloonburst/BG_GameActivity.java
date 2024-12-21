@@ -101,22 +101,22 @@ public class BG_GameActivity extends AppCompatActivity {
     private void toggleVolume() {
         switch (soundState) {
             case 0: // All Unmuted -> Mute Music
-                mediaPlayerMusic.setVolume(VOLUME_MUSIC_OFF, VOLUME_MUSIC_OFF); // Mute music
-                mediaPlayerPop.setVolume(VOLUME_POP_ON, VOLUME_POP_ON);        // Keep pop sound unmuted
+                mediaPlayerMusic.setVolume(VOLUME_MUSIC_OFF, VOLUME_MUSIC_OFF);
+                mediaPlayerPop.setVolume(VOLUME_POP_ON, VOLUME_POP_ON);
                 updateSpeakerIcons(1);
                 soundState = 1;
                 break;
 
             case 1: // Music Muted -> Mute Pop Sound
-                mediaPlayerMusic.setVolume(VOLUME_MUSIC_OFF, VOLUME_MUSIC_OFF); // Keep music muted
-                mediaPlayerPop.setVolume(VOLUME_POP_OFF, VOLUME_POP_OFF);       // Mute pop sound
+                mediaPlayerMusic.setVolume(VOLUME_MUSIC_OFF, VOLUME_MUSIC_OFF);
+                mediaPlayerPop.setVolume(VOLUME_POP_OFF, VOLUME_POP_OFF);
                 updateSpeakerIcons(2);
                 soundState = 2;
                 break;
 
             case 2: // All Muted -> Unmute All
-                mediaPlayerMusic.setVolume(VOLUME_MUSIC_ON, VOLUME_MUSIC_ON);   // Unmute music
-                mediaPlayerPop.setVolume(VOLUME_POP_ON, VOLUME_POP_ON);         // Unmute pop sound
+                mediaPlayerMusic.setVolume(VOLUME_MUSIC_ON, VOLUME_MUSIC_ON);
+                mediaPlayerPop.setVolume(VOLUME_POP_ON, VOLUME_POP_ON);
                 updateSpeakerIcons(0);
                 soundState = 0;
                 break;
@@ -202,7 +202,7 @@ public class BG_GameActivity extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 if (isGamePaused) { // Pause functionality
                     cancel();
-                    timeRemaining = millisUntilFinished; // Save the remaining time
+                    timeRemaining = millisUntilFinished;
                     return;
                 }
                 timeRemaining = millisUntilFinished;
@@ -219,58 +219,6 @@ public class BG_GameActivity extends AppCompatActivity {
         };
         gameTimer.start();
     }
-
-
-
-//    private void balloonControl() {
-//        textViewCountDown.setVisibility(View.INVISIBLE);
-//        textViewTime.setVisibility(View.VISIBLE);
-//        textViewScore.setVisibility(View.VISIBLE);
-//        gridLayout.setVisibility(View.VISIBLE);
-//
-//        handler = new Handler();
-//        runnable = new Runnable() {
-//            @Override
-//            public void run() {
-//                if (isGamePaused) return; // Do nothing if the game is paused
-//
-//                // Reset all balloons to default state
-//                for (ImageView balloon : balloonsArray) {
-//                    balloon.setVisibility(View.INVISIBLE); // Hide the balloon
-//                    balloon.setClickable(false); // Ensure it's not clickable when hidden
-//                }
-//                mysteryBox.setVisibility(View.INVISIBLE);
-//
-//                // Randomly decide to show a balloon or mystery box
-//                Random random = new Random();
-//                boolean showMysteryBox = random.nextInt(5) == 0; // 20% chance for mystery box
-//                if (showMysteryBox) {
-//                    moveMysteryBoxRandomly();
-//                    isMysteryBoxVisible = true;
-//                } else {
-//                    int randomIndex = random.nextInt(balloonsArray.length);
-//                    int randomColorIndex = random.nextInt(balloonColors.length);
-//                    balloonsArray[randomIndex].setImageResource(balloonColors[randomColorIndex]); // Assign a random color
-//                    balloonsArray[randomIndex].setVisibility(View.VISIBLE);
-//                    balloonsArray[randomIndex].setClickable(true);
-//                    isMysteryBoxVisible = false;
-//                }
-//
-//                isClickable = true;
-//
-//                // Adjust delay based on score
-//                long delay = score <= 5 ? 1800 :
-//                        score <= 10 ? 1500 :
-//                                score <= 15 ? 1200 :
-//                                        score <= 22 ? 900 : 700;
-//
-//                handler.postDelayed(this, delay);
-//            }
-//        };
-//        handler.post(runnable);
-//    }
-
-
     private void balloonControl() {
         textViewCountDown.setVisibility(View.INVISIBLE);
         textViewTime.setVisibility(View.VISIBLE);
@@ -281,16 +229,15 @@ public class BG_GameActivity extends AppCompatActivity {
         runnable = new Runnable() {
             @Override
             public void run() {
-                if (isGamePaused) return; // Do nothing if the game is paused
+                if (isGamePaused) return;
 
                 // Reset all balloons to default state
                 for (ImageView balloon : balloonsArray) {
-                    balloon.setVisibility(View.INVISIBLE); // Hide the balloon
-                    balloon.setClickable(false); // Ensure it's not clickable when hidden
+                    balloon.setVisibility(View.INVISIBLE);
+                    balloon.setClickable(false);
                 }
                 mysteryBox.setVisibility(View.INVISIBLE);
 
-                // Randomly decide to show a balloon or mystery box
                 Random random = new Random();
                 boolean showMysteryBox = random.nextInt(5) == 0; // 20% chance for mystery box
                 if (showMysteryBox) {
@@ -338,13 +285,13 @@ public class BG_GameActivity extends AppCompatActivity {
 
             for (ImageView balloon : balloonsArray) {
                 if (view.getId() == balloon.getId()) {
-                    balloon.setImageResource(R.drawable.boom); // Show "pop" image
+                    balloon.setImageResource(R.drawable.boom);
 
                     // Reset balloon state after a delay
                     new Handler().postDelayed(() -> {
-                        balloon.setImageResource(R.drawable.balloon_pink); // Reset to default image
-                        balloon.setVisibility(View.INVISIBLE); // Hide the balloon
-                    }, 500); // Delay long enough to show the "pop" animation
+                        balloon.setImageResource(R.drawable.balloon_pink);
+                        balloon.setVisibility(View.INVISIBLE);
+                    }, 500);
 
                     break;
                 }
@@ -355,11 +302,11 @@ public class BG_GameActivity extends AppCompatActivity {
     // New method to handle mystery box pop and display result
     private void handleMysteryBoxPop() {
         Random random = new Random();
-        int outcome = random.nextInt(3); // Random number between 0 and 2
+        int outcome = random.nextInt(3);
 
         String resultMessage = "";
         switch (outcome) {
-            case 0: // Add +10 score
+            case 0:
                 score += 10;
                 mysteryBox.setImageResource(R.drawable.wow);
                 playMysteryBoxSound();
@@ -389,13 +336,13 @@ public class BG_GameActivity extends AppCompatActivity {
         textViewTime.setText("Remaining Time : " + timeRemaining / 1000);
 
         TextView outcomeTextView = findViewById(R.id.outcomeTextView);
-        outcomeTextView.setText(resultMessage);  // Set the outcome message
+        outcomeTextView.setText(resultMessage);
         outcomeTextView.setVisibility(View.VISIBLE);
 
         new Handler().postDelayed(() -> {
             mysteryBox.setImageResource(R.drawable.mystery_box);
             outcomeTextView.setVisibility(View.GONE);
-        }, 2000); // Hide message after 2 seconds
+        }, 2000);
     }
 
     private void restartGameTimer() {
@@ -422,9 +369,9 @@ public class BG_GameActivity extends AppCompatActivity {
     }
 
     private void showExitConfirmationDialog() {
-        isGamePaused = true; // Pause the game
-        if (handler != null) handler.removeCallbacks(runnable); // Stop animations
-        if (gameTimer != null) gameTimer.cancel(); // Cancel the timer without losing state
+        isGamePaused = true;
+        if (handler != null) handler.removeCallbacks(runnable);
+        if (gameTimer != null) gameTimer.cancel();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Balloon Burst");
@@ -438,9 +385,9 @@ public class BG_GameActivity extends AppCompatActivity {
         });
 
         builder.setPositiveButton("Resume", (dialog, which) -> {
-            isGamePaused = false; // Resume the game
-            restartGameTimer(); // Resume the timer with the remaining time
-            balloonControl(); // Restart animations
+            isGamePaused = false;
+            restartGameTimer();
+            balloonControl();
         });
         builder.show();
     }
@@ -457,7 +404,7 @@ public class BG_GameActivity extends AppCompatActivity {
             public void onGlobalLayout() {
                 constraintLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-                if (isGamePaused) return; // Skip positioning if paused
+                if (isGamePaused) return;
 
                 int layoutWidth = constraintLayout.getWidth();
                 int layoutHeight = constraintLayout.getHeight();
