@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="312dp"
-        android:text="Snake Game"
+        android:text="Grow the Snake"
         android:textColor="#EDE6E6"
         android:textSize="48sp"
         android:textStyle="bold"
