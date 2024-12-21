@@ -100,8 +100,8 @@ public class FavouriteFragment extends Fragment {
                 return R.drawable.balloon_icon;
             case "Grow the Snake":
                 return R.drawable.snake_game_icon;
-            case "Game 4":
-                return R.drawable.d;
+            case "Tic-Tac-Toe":
+                return R.drawable.tic_tac_logo;
             case "Game 5":
                 return R.drawable.e;
 
