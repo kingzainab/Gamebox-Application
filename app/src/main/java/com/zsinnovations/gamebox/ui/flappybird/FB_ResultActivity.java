@@ -81,13 +81,6 @@ public class FB_ResultActivity extends AppCompatActivity {
             finish();
         });
 
-//        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//                showExitConfirmationDialog();
-//            }
-//        });
-
         buttonAgain.setOnClickListener(v -> {
             Intent intent = new Intent(FB_ResultActivity.this, FB_GameActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -103,21 +96,4 @@ public class FB_ResultActivity extends AppCompatActivity {
             finish();
         });
     }
-//    private void showExitConfirmationDialog() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(FB_ResultActivity.this);
-//        builder.setTitle("Flappy Bird 🐥");
-//        builder.setMessage("Are you sure you want to quit the game?");
-//        builder.setCancelable(false);
-//
-//        builder.setNegativeButton("Quit", (dialog, which) -> {
-//            onPause();
-//            Intent intent = new Intent(FB_ResultActivity.this, MainActivity.class); // Replace with your main activity class
-//            startActivity(intent);
-//            finish();
-//        });
-//
-//        builder.setPositiveButton("Cancel", (dialog, which) -> dialog.cancel());
-//
-//        builder.create().show();
-//    }
 }

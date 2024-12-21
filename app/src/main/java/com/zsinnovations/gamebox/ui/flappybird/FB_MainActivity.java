@@ -30,10 +30,9 @@ public class FB_MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);  // Enable Edge-to-edge functionality
-        setContentView(R.layout.activity_fb_main);  // Set the layout for this activity
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_fb_main);
 
-        // Set up the padding for system bars (like status bar, navigation bar)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
