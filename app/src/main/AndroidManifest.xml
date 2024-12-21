@@ -13,16 +13,16 @@
         android:theme="@style/Theme.Gamebox"
         tools:targetApi="31">
         <activity
-            android:name=".ui.tiktak.TT_SplashScreen"
+            android:name=".ui.tictac.TT_SplashScreen"
             android:exported="false" />
         <activity
-            android:name=".ui.tiktak.TT_ResultDialog"
+            android:name=".ui.tictac.TT_ResultDialog"
             android:exported="false" />
         <activity
-            android:name=".ui.tiktak.TT_MainActivity"
+            android:name=".ui.tictac.TT_MainActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.tiktak.TT_AddPlayer"
+            android:name=".ui.tictac.TT_AddPlayer"
             android:exported="false" />
         <activity
             android:name=".ui.snakegame.SG_SplashScreen"

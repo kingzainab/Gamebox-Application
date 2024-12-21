@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/pagebkg"
-    tools:context="com.zsinnovations.gamebox.ui.tiktak.TT_MainActivity">
+    tools:context="com.zsinnovations.gamebox.ui.tictac.TT_MainActivity">
 
 
     <LinearLayout

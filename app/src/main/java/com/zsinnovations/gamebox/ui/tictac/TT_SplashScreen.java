@@ -1,18 +1,12 @@
-package com.zsinnovations.gamebox.ui.tiktak;
+package com.zsinnovations.gamebox.ui.tictac;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.zsinnovations.gamebox.R;
-import com.zsinnovations.gamebox.ui.balloonburst.BG_MainActivity;
-import com.zsinnovations.gamebox.ui.balloonburst.BG_SplashScreen;
 
 public class TT_SplashScreen extends AppCompatActivity {
 
