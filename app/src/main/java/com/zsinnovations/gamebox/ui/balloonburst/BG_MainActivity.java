@@ -54,7 +54,7 @@ public class BG_MainActivity extends AppCompatActivity {
 
     private void showExitConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(BG_MainActivity.this);
-        builder.setTitle("Balloon Burst ");
+        builder.setTitle("Balloon Zap ");
         builder.setMessage("Are you sure you want to quit the game?");
         builder.setCancelable(false);
 

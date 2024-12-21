@@ -374,7 +374,7 @@ public class BG_GameActivity extends AppCompatActivity {
         if (gameTimer != null) gameTimer.cancel();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Balloon Burst");
+        builder.setTitle("Balloon Zap");
         builder.setMessage("Are you sure you want to quit the game?");
         builder.setCancelable(false);
 
