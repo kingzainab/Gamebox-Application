@@ -12,59 +12,45 @@ import com.zsinnovations.gamebox.utils.MusicManager;
 import com.zsinnovations.gamebox.utils.SettingsManager;
 
 public class SplashActivity extends AppCompatActivity {
-
     private SettingsManager settingsManager;
-
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash); // Replace with your splash layout file
-
-        // Initialize SettingsManager
+        setContentView(R.layout.activity_splash);
         settingsManager = new SettingsManager(this);
-
-        // Start music only if not already playing
         if (!MusicManager.isPlaying()) {
             settingsManager.startMusic();
         }
-
-        // PLAY Button: Navigate to MainActivity
         Button playButton = findViewById(R.id.play_btn_home);
         playButton.setOnClickListener(v -> {
             if (isMusicEnabled()) {
-                settingsManager.resumeMusic(); // Resume music if paused
+                settingsManager.resumeMusic();
             }
-
-            // Navigate to MainActivity
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             startActivity(intent);
-            finish(); // Optional: Close SplashActivity
+            finish();
         });
-
-        // Settings Icon: Display settings dialog
+        // Settings Icon
         ImageView settingsIcon = findViewById(R.id.settingsIconSplashActivity);
         settingsIcon.setOnClickListener(v -> settingsManager.showSettingsDialog(this));
     }
 
-    // Check if music is enabled
     private boolean isMusicEnabled() {
         SharedPreferences prefs = getSharedPreferences("AppPreferences", MODE_PRIVATE);
-        return prefs.getBoolean(SettingsManager.PREF_MUSIC_ENABLED, true); // Default to true if not set
+        return prefs.getBoolean(SettingsManager.PREF_MUSIC_ENABLED, true);
     }
-
 
     @Override
     protected void onPause() {
         super.onPause();
-        settingsManager.pauseMusic(); // Pause music if any
+        settingsManager.pauseMusic();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if (isMusicEnabled()) {
-            settingsManager.resumeMusic(); // Resume music if enabled
+            settingsManager.resumeMusic();
         }
     }
 }

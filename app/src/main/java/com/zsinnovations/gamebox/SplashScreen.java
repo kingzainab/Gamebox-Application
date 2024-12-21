@@ -12,15 +12,12 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
 
-        // Delay for a few seconds before moving to MainActivity
-        int SPLASH_DISPLAY_LENGTH = 3000; // 3000ms = 3 seconds
+        int SPLASH_DISPLAY_LENGTH = 3000;
 
         new Handler().postDelayed(() -> {
-            // Start MainActivity
+
             Intent mainIntent = new Intent(SplashScreen.this, SplashActivity.class);
             startActivity(mainIntent);
-
-            // Close the splash screen activity
             finish();
         }, SPLASH_DISPLAY_LENGTH);
     }

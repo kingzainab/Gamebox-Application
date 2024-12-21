@@ -40,12 +40,10 @@ public class MainActivity extends AppCompatActivity {
         if (!MusicManager.isPlaying()) {
             settingsManager.startMusic();
         }
-
         // Load default fragment
         if (savedInstanceState == null) {
             loadFragment(new GameFragment());
         }
-
 
         ImageView avatarImageView = findViewById(R.id.avatarIcon);
         avatarManager = new AvatarManager(this, avatarImageView, predefinedImages, currentAvatarResource);

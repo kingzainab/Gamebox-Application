@@ -37,12 +37,12 @@ public class GameFragment extends Fragment {
         // Find the GridView
         GridView gameGridView = rootView.findViewById(R.id.gameGridView);
         if (gameGridView == null) {
-            return rootView; // Return early if GridView is not found
+            return rootView;
         }
 
         // Verify arrays are valid
         if (gameNames == null || gameImages == null || gameNames.length != gameImages.length) {
-            return rootView; // Return early if data is invalid
+            return rootView;
         }
 
 
@@ -50,17 +50,17 @@ public class GameFragment extends Fragment {
         GameAdapter adapter = new GameAdapter(requireContext(), gameNames, gameImages);
         gameGridView.setAdapter(adapter);
 
-        // Handle click events
+
         gameGridView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
             String gameName = gameNames[position];
             switch (position) {
                 case 0:
-                    // Example: Launch a specific activity for Game 1
+
                     Intent intentGame1 = new Intent(requireContext(), FB_SplashScreen.class);
                     startActivity(intentGame1);
                     break;
                 case 1:
-                    // Example: Open Flappy Bird in a web browser
+
                     Intent newIntent = new Intent(requireContext(), BG_SplashScreen.class);
                     startActivity(newIntent);
                     break;
@@ -68,7 +68,7 @@ public class GameFragment extends Fragment {
                     Intent snakeIntent = new Intent(requireContext(), SG_SplashScreen.class);
                     startActivity(snakeIntent);
                 default:
-                    //Toast.makeText(requireContext(), "No action defined for " + gameName, Toast.LENGTH_SHORT).show();
+
                     break;
             }
         });
