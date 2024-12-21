@@ -67,7 +67,7 @@ public class BG_ResultActivity extends AppCompatActivity {
 
         // Quit Game Button
         buttonQuitGame.setOnClickListener(v -> {
-            Intent intent = new Intent(BG_ResultActivity.this, MainActivity.class);
+            Intent intent = new Intent(BG_ResultActivity.this, BG_MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();

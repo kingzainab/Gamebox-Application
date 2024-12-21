@@ -18,6 +18,7 @@ import com.zsinnovations.gamebox.R;
 import com.zsinnovations.gamebox.adapters.GameAdapter;
 import com.zsinnovations.gamebox.ui.balloonburst.BG_SplashScreen;
 import com.zsinnovations.gamebox.ui.flappybird.FB_SplashScreen;
+import com.zsinnovations.gamebox.ui.snakegame.SG_SplashScreen;
 import com.zsinnovations.gamebox.utils.FavoritesManager;
 
 import java.util.List;
@@ -68,23 +69,23 @@ public class FavouriteFragment extends Fragment {
             gridView.setAdapter(adapter);
             gridView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
                 String gameName = gameNames[position];
-                switch (position) {
-                    case 0:
-                        // Example: Launch a specific activity for Game 1
-                        Intent intentGame1 = new Intent(requireContext(), FB_SplashScreen.class);
-                        startActivity(intentGame1);
+
+                switch (gameName) {
+                    case "Flappy Bird":
+                        Intent fbIntent = new Intent(requireContext(), FB_SplashScreen.class);
+                        startActivity(fbIntent);
                         break;
-                    case 1:
-                        // Example: Open Flappy Bird in a web browser
-                        Intent newIntent = new Intent(requireContext(), BG_SplashScreen.class);
-                        startActivity(newIntent);
+                    case "Balloon Zap":
+                        Intent bzIntent = new Intent(requireContext(), BG_SplashScreen.class);
+                        startActivity(bzIntent);
                         break;
-//                case 2:
-//                    // Placeholder: Show a toast for Game 3
-//                    Toast.makeText(requireContext(), "Game 3 launching soon!", Toast.LENGTH_SHORT).show();
-//                    break;
+                    case "Grow the Snake":
+                        Intent gsIntent = new Intent(requireContext(), SG_SplashScreen.class);
+                        startActivity(gsIntent);
+                        break;
+
                     default:
-                        //Toast.makeText(requireContext(), "No action defined for " + gameName, Toast.LENGTH_SHORT).show();
+
                         break;
                 }
             });
@@ -94,19 +95,18 @@ public class FavouriteFragment extends Fragment {
     private int getGameImageResource(String gameName) {
         switch (gameName) {
             case "Flappy Bird":
-                return R.drawable.flappy_bird;
+                return R.drawable.flappy_bird_logo;
             case "Balloon Zap":
-                return R.drawable.b;
-            case "Game 3":
-                return R.drawable.c;
+                return R.drawable.balloon_icon;
+            case "Grow the Snake":
+                return R.drawable.snake_game_icon;
             case "Game 4":
                 return R.drawable.d;
             case "Game 5":
                 return R.drawable.e;
-////            case "Puzzle":
-////                return R.drawable.apuzzle;
+
             default:
-                return R.drawable.default_game; // Make sure you have a default image
+                return R.drawable.default_game;
         }
     }
 }

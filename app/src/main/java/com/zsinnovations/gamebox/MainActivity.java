@@ -1,6 +1,5 @@
 package com.zsinnovations.gamebox;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.zsinnovations.gamebox.ui.flappybird.FB_MainActivity;
 import com.zsinnovations.gamebox.ui.mainscreen.FavouriteFragment;
 import com.zsinnovations.gamebox.ui.mainscreen.GameFragment;
 import com.zsinnovations.gamebox.utils.AvatarManager;
@@ -20,16 +18,15 @@ import com.zsinnovations.gamebox.utils.SettingsManager;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SettingsManager settingsManager;
-    private AvatarManager avatarManager;
     private final int[] predefinedImages = {
-            R.drawable.flappy_bird_icon,
+            R.drawable.a,
             R.drawable.b,
             R.drawable.c,
-            R.drawable.d,
-            R.drawable.e
+            R.drawable.d
     };
-    private int currentAvatarResource = R.drawable.a;
+    private SettingsManager settingsManager;
+    private AvatarManager avatarManager;
+    private final int currentAvatarResource = R.drawable.a;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Settings icon listener
         ImageView settingsIcon = findViewById(R.id.settingsIcon);
-        ImageView avatarIcon=findViewById(R.id.avatarIcon);
+        ImageView avatarIcon = findViewById(R.id.avatarIcon);
         settingsIcon.setOnClickListener(v -> settingsManager.showSettingsDialog(this));
 
 
@@ -120,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         settingsManager.stopMusic();
     }
+
     private void showExitConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Gamebox ");
