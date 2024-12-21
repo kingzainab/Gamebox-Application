@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
     android:id="@+id/rootLayoutTT"
-    tools:context="com.zsinnovations.gamebox.ui.tiktak.TT_ResultDialog">
+    tools:context="com.zsinnovations.gamebox.ui.tictac.TT_ResultDialog">
 
     <!-- CardView to wrap the content -->
     <androidx.cardview.widget.CardView

@@ -1,16 +1,12 @@
-package com.zsinnovations.gamebox.ui.tiktak;
+package com.zsinnovations.gamebox.ui.tictac;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TextView;
 
-import com.zsinnovations.gamebox.R;
 import com.zsinnovations.gamebox.databinding.ActivityTtResultDialogBinding;
 
 public class TT_ResultDialog extends Dialog {

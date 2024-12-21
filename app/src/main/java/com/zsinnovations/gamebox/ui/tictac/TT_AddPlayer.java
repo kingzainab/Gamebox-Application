@@ -1,4 +1,4 @@
-package com.zsinnovations.gamebox.ui.tiktak;
+package com.zsinnovations.gamebox.ui.tictac;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;

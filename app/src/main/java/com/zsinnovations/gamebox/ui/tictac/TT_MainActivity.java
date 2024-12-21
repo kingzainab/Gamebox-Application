@@ -1,20 +1,16 @@
-package com.zsinnovations.gamebox.ui.tiktak;
+package com.zsinnovations.gamebox.ui.tictac;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.zsinnovations.gamebox.R;
 // Import the correct binding class
 import com.zsinnovations.gamebox.databinding.ActivityTtMainBinding;
-import com.zsinnovations.gamebox.ui.balloonburst.BG_GameActivity;
-import com.zsinnovations.gamebox.ui.balloonburst.BG_MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;

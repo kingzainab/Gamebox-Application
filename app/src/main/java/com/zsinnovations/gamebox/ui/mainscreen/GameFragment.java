@@ -18,8 +18,7 @@ import com.zsinnovations.gamebox.adapters.GameAdapter;
 import com.zsinnovations.gamebox.ui.balloonburst.BG_SplashScreen;
 import com.zsinnovations.gamebox.ui.flappybird.FB_SplashScreen;
 import com.zsinnovations.gamebox.ui.snakegame.SG_SplashScreen;
-import com.zsinnovations.gamebox.ui.tiktak.TT_AddPlayer;
-import com.zsinnovations.gamebox.ui.tiktak.TT_SplashScreen;
+import com.zsinnovations.gamebox.ui.tictac.TT_SplashScreen;
 
 public class GameFragment extends Fragment {
 
