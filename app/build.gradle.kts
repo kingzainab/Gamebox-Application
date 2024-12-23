@@ -20,6 +20,7 @@ android {
 
     buildFeatures {
         dataBinding = true // Enable data binding
+        viewBinding=true
     }
 
     buildTypes {

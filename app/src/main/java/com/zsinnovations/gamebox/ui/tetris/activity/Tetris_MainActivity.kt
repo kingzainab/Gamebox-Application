@@ -11,7 +11,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
-import com.zsinnovations.gamebox.ui.tetris.databinding.ActivityMainBinding
+import com.zsinnovations.gamebox.databinding.TetrisActivityMainBinding
 import com.zsinnovations.gamebox.ui.tetris.game.GameObserver
 import com.zsinnovations.gamebox.ui.tetris.game.Game
 import com.zsinnovations.gamebox.ui.tetris.constants.BlockColorTheme
@@ -42,7 +42,7 @@ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
         private var levels: TextView? = null
         private var scores: TextView? = null
         private var alertBuilder: AlertDialog.Builder? = null
-        private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: TetrisActivityMainBinding
         private var themeName: String = BlockColorTheme.THEME_MODERN
         private lateinit var lineAnimator: ObjectAnimator
         private lateinit var scoreAnimator: ObjectAnimator
@@ -51,7 +51,7 @@ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = TetrisActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
         val blockThemeManager = BlockThemeManager(applicationContext)
