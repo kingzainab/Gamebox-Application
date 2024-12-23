@@ -4,6 +4,16 @@
     <style name="Base.Theme.Gamebox" parent="Theme.Material3.Light.NoActionBar">
         <!-- Primary brand color -->
         <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryVariant">@color/primary_var</item>
+        <item name="colorOnPrimary">@color/black</item>
+
+        <!-- Secondary brand color -->
+        <item name="colorSecondary">@color/primaryColor</item>
+        <item name="colorSecondaryVariant">@color/primary_var</item>
+        <item name="colorOnSecondary">@color/black</item>
+
+        <!-- Status bar color -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
 
         <!-- Default font family for the entire app -->
         <item name="android:fontFamily">@font/baloo_bhaijaan_2_medium</item>
@@ -26,6 +36,7 @@
         <item name="textAppearanceCaption">@style/TextAppearance.AppFont.Caption</item>
     </style>
 
+    <!-- Application Theme -->
     <style name="Theme.Gamebox" parent="Base.Theme.Gamebox" />
 
     <!-- Text Appearance styles -->

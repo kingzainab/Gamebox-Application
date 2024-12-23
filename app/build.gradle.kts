@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    id("kotlin-kapt") // Ensure kapt is enabled for Room and other annotation processors
 }
 
 android {
@@ -16,6 +18,11 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        dataBinding = true // Enable data binding
+        viewBinding = true
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -25,30 +32,61 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    buildFeatures {
-        viewBinding = true
-    }
 
+    kotlinOptions {
+        jvmTarget = "11"
+    }
 }
 
 dependencies {
-
+    // Core Android dependencies
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.core.ktx)
+
+    // Additional libraries
     implementation("com.google.code.gson:gson:2.8.9")
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation(libs.firebase.crashlytics.buildtools)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
     implementation(libs.gridlayout)
+
+    // Test dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
+    // Kotlin and Coroutines
+    implementation(libs.org.jetbrains.kotlin.kotlin.stdlib)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+
+    // Lifecycle components
+    implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.lifecycle.runtime.ktx)
+
+    // Room components
+    implementation(libs.room.ktx)
+    kapt(libs.androidx.room.compiler)
+    androidTestImplementation(libs.androidx.room.testing)
+
+    // Card View
+    implementation(libs.androidx.cardview)
+
+    // Lottie for animations
+    implementation(libs.lottie)
+
+    // Konfetti for celebrations
+    implementation(libs.konfetti)
+
+    // Datastore
+    implementation(libs.datastore.preferences)
 }
