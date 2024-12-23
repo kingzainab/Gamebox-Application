@@ -11,7 +11,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
-import com.zsinnovations.gamebox.ui.tetris.databinding.ActivityMainBinding
+import com.zsinnovations.gamebox.databinding.ActivityMainBinding
 import com.zsinnovations.gamebox.ui.tetris.game.GameObserver
 import com.zsinnovations.gamebox.ui.tetris.game.Game
 import com.zsinnovations.gamebox.ui.tetris.constants.BlockColorTheme
