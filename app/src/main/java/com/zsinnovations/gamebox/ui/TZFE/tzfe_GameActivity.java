@@ -77,6 +77,82 @@ public class tzfe_GameActivity extends AppCompatActivity implements GestureDetec
         return true;
     }
 
+    void fillRandomNo() {
+        if (blankPairs.isEmpty())
+            return;
+        Random random = new Random();
+        int randomIndex = random.nextInt(blankPairs.size());
+        Pair<Integer, Integer> randomBlankCell = blankPairs.get(randomIndex);
+        int x = randomBlankCell.first;
+        int y = randomBlankCell.second;
+        blankPairs.remove(randomIndex);
+        int fillValue = random.nextInt(2);
+        if (fillValue == 0)
+            cellValueMatrix[x][y] = 2;
+        else
+            cellValueMatrix[x][y] = 4;
+        fillCellTextView(cellTextViewMatrix[x][y], cellValueMatrix[x][y]);
+    }
+
+    void fillCellTextView(TextView textView, int num) {
+        if (num == 0)
+            textView.setText(" ");
+        else
+            textView.setText("" + num);
+        switch (num) {
+            case 0:
+                textView.setBackgroundColor(Color.LTGRAY);
+                textView.setTextColor(Color.BLACK);
+                break;
+            case 2:
+                textView.setBackgroundColor(Color.rgb(240, 240, 240));
+                textView.setTextColor(Color.BLACK);
+                break;
+            case 4:
+                textView.setBackgroundColor(Color.rgb(255, 255, 224));
+                textView.setTextColor(Color.BLACK);
+                break;
+            case 8:
+                textView.setBackgroundColor(Color.rgb(255, 200, 100));
+                textView.setTextColor(Color.WHITE);
+                break;
+            case 16:
+                textView.setBackgroundColor(Color.rgb(255, 140, 30));
+                textView.setTextColor(Color.WHITE);
+                break;
+            case 32:
+                textView.setBackgroundColor(Color.rgb(255, 100, 65));
+                textView.setTextColor(Color.WHITE);
+                break;
+            case 64:
+                textView.setBackgroundColor(Color.rgb(250, 80, 100));
+                textView.setTextColor(Color.WHITE);
+                break;
+            case 128:
+                textView.setBackgroundColor(Color.rgb(255, 220, 0));
+                textView.setTextColor(Color.WHITE);
+                break;
+            case 256:
+                textView.setBackgroundColor(Color.rgb(240, 240, 0));
+                textView.setTextColor(Color.BLACK);
+                break;
+            case 512:
+                textView.setBackgroundColor(Color.rgb(245, 245, 0));
+                textView.setTextColor(Color.BLACK);
+                break;
+            case 1024:
+                textView.setBackgroundColor(Color.rgb(250, 250, 0));
+                textView.setTextColor(Color.BLACK);
+                break;
+            case 2048:
+                textView.setBackgroundColor(Color.rgb(255, 255, 0));
+                textView.setTextColor(Color.BLACK);
+                break;
+            default:
+                textView.setBackgroundColor(Color.rgb(255, 255, 0));
+                textView.setTextColor(Color.BLACK);
+        }
+    }
 
     @Override
     public boolean onDown(MotionEvent e) {
