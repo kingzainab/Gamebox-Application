@@ -17,67 +17,132 @@
         android:layout_alignParentTop="true"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/playerOneLayout"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="@drawable/white_box">
 
-            <TextView
-                android:id="@+id/playerOneName"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/playerOneLayout"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="52dp"
+                android:background="@drawable/white_box"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/playerTwoLayout"
+                app:layout_constraintHorizontal_bias="0.704"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/materialToolbar">
+
+                <TextView
+                    android:id="@+id/playerOneName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/baloo_bhaijaan_2"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="Player One"
+                    android:textColor="@color/lavender"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:src="@drawable/ximage" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/playerTwoLayout"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="48dp"
+                android:background="@drawable/white_box"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/materialToolbar">
+
+                <TextView
+                    android:id="@+id/playerTwoName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="Player Two"
+                    android:textColor="@color/lavender"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:src="@drawable/oimage" />
+
+            </LinearLayout>
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/materialToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/baloo_bhaijaan_2"
-                android:gravity="center"
-                android:maxLines="1"
-                android:text="Player One"
-                android:textColor="@color/lavender"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ximage"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_gravity="center"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:id="@+id/playerTwoLayout"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="@drawable/white_box">
-
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/TicTac"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Player Two"
-                android:id="@+id/playerTwoName"
-                android:textSize="20sp"
-                android:gravity="center"
+                android:fontFamily="@font/urbanist_medium"
+                android:text="Tic-Tac-Toe"
+                android:textColor="@color/black"
+                android:textSize="34sp"
                 android:textStyle="bold"
-                android:textColor="@color/lavender"
-                android:maxLines="1"/>
+                app:layout_constraintBottom_toBottomOf="@+id/materialToolbar"
+                app:layout_constraintEnd_toEndOf="@+id/materialToolbar"
+                app:layout_constraintStart_toStartOf="@+id/materialToolbar"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/oimage"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_gravity="center"/>
+                android:id="@+id/level_two_sound_tictac"
 
-        </LinearLayout>
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/materialToolbar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.714"
+                app:srcCompat="@drawable/level_two_sound" />
+
+            <ImageView
+                android:id="@+id/zero_sound_tictac"
+
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="27dp"
+                app:layout_constraintBottom_toBottomOf="@+id/materialToolbar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.714"
+                app:srcCompat="@drawable/zero_sound"
+                android:visibility="invisible"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
