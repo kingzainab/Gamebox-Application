@@ -54,12 +54,14 @@ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
         binding = TetrisActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        val blockThemeManager = BlockThemeManager(applicationContext)
-        val levelManager = LevelManager(applicationContext)
+        val blockThemeManager = BlockThemeManager(this) // Using `this` instead of applicationContext
+        val levelManager = LevelManager(this) // Using `this` instead of applicationContext
+
         lifecycleScope.launch {
-            blockThemeManager.getTheme().let { themeName = blockThemeManager.getTheme().toString() }
+            themeName = blockThemeManager.getTheme()?.toString() ?: BlockColorTheme.THEME_MODERN  //Null Check
             setPaint()
-            levelManager.getInitialLevel().let { initialLevel = levelManager.getInitialLevel()!! }
+
+            levelManager.getInitialLevel()?.let { initialLevel = it }
             binding.LevelRealTime.text = initialLevel.toString()
             Game.getGame().setInitialLevel(initialLevel)
             Game.getGame().start()
@@ -70,7 +72,6 @@ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
             }
             lastClickRotate = System.currentTimeMillis()
         }
-
         binding.leftButton.setOnClickListener {
             if (System.currentTimeMillis() - lastClickLeft > 200) {
                 Game.getGame().moveBlockLeft()
@@ -89,7 +90,7 @@ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
             if (System.currentTimeMillis() - lastClickDown > 200) {
                 Game.getGame().moveBlockDown()
             }
-                lastClickDown = System.currentTimeMillis()
+            lastClickDown = System.currentTimeMillis()
         }
 
         binding.upButton.setOnClickListener{
@@ -178,7 +179,6 @@ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
         levelAnimator.duration = ROTATEDURATION
 
     }
-
     override fun onStop() {
         Game.getGame().detach(this)
         super.onStop()
@@ -216,7 +216,14 @@ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
                 var top = i * blockWidth + (i + 1) * lineWidth
                 var right = left + blockWidth
                 var bottom = top + blockWidth
-                canvas.drawRect(left, top, right, bottom, paintArray[boardMatrix[i][j] - 1])
+                val colorIndex = boardMatrix[i][j] -1
+                if(colorIndex >= 0 && colorIndex < paintArray.size) {
+                    canvas.drawRect(left, top, right, bottom, paintArray[colorIndex])
+                } else {
+                    // Optional, draw some color or skip to better handle this out-of-bound value
+                    //canvas.drawRect(left, top, right, bottom, paintArray[0])
+                }
+
             }
         }
     }

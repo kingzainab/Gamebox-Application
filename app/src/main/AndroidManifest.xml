@@ -15,6 +15,12 @@
         <activity
             android:name=".ui.tictac.TT_SplashScreen"
             android:exported="false" />
+        <activity android:name=".ui.tetris.activity.Tetris_MainActivity" android:exported="false"/>
+        <activity android:name=".ui.tetris.activity.StartActivity" android:exported="false"/>
+        <activity android:name=".ui.tetris.activity.HighscoreActivity" android:exported="false"/>
+        <activity android:name=".ui.tetris.activity.InfoActivity" android:exported="false"/>
+        <activity android:name=".ui.tetris.activity.SettingActivity" android:exported="false"/>
+
         <activity
             android:name=".ui.tictac.TT_ResultDialog"
             android:exported="false" />

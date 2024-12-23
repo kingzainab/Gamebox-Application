@@ -18,12 +18,14 @@ import com.zsinnovations.gamebox.adapters.GameAdapter;
 import com.zsinnovations.gamebox.ui.balloonburst.BG_SplashScreen;
 import com.zsinnovations.gamebox.ui.flappybird.FB_SplashScreen;
 import com.zsinnovations.gamebox.ui.snakegame.SG_SplashScreen;
+import com.zsinnovations.gamebox.ui.tetris.activity.StartActivity;
+import com.zsinnovations.gamebox.ui.tetris.activity.Tetris_MainActivity;
 import com.zsinnovations.gamebox.ui.tictac.TT_SplashScreen;
 
 public class GameFragment extends Fragment {
 
     private final String[] gameNames = {
-            "Flappy Bird", "Balloon Zap", "Grow the Snake", "Tic-Tac-Toe","Game 5"
+            "Flappy Bird", "Balloon Zap", "Grow the Snake", "Tic-Tac-Toe","Tetris"
     };
 
     private final int[] gameImages = {
@@ -72,6 +74,11 @@ public class GameFragment extends Fragment {
                 case 3:
                     Intent TtIntent = new Intent(requireContext(), TT_SplashScreen.class);
                     startActivity(TtIntent);
+                    break;
+                case 4:
+                    Intent TetristIntent = new Intent(requireContext(), StartActivity.class);
+                    startActivity(TetristIntent);
+                    break;
                 default:
 
                     break;

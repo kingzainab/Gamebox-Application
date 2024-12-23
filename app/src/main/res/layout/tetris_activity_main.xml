@@ -14,8 +14,6 @@
             android:id="@+id/board"
             android:layout_width="244dp"
             android:layout_height="484dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -111,8 +109,8 @@
 
         <ImageButton
             android:id="@+id/upButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="62dp"
+            android:layout_height="56dp"
             android:layout_marginTop="25dp"
             android:backgroundTint="@color/primary"
             android:elevation="5dp"
@@ -125,8 +123,8 @@
 
         <ImageButton
             android:id="@+id/leftButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="62dp"
+            android:layout_height="56dp"
             android:backgroundTint="@color/primary"
             android:elevation="5dp"
             app:layout_constraintEnd_toStartOf="@+id/upButton"
@@ -137,8 +135,8 @@
 
         <ImageButton
             android:id="@+id/rightButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="62dp"
+            android:layout_height="56dp"
             android:backgroundTint="@color/primary"
             android:elevation="5dp"
             app:layout_constraintStart_toEndOf="@+id/upButton"
@@ -149,8 +147,8 @@
 
         <ImageButton
             android:id="@+id/downButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="62dp"
+            android:layout_height="56dp"
             android:backgroundTint="@color/primary"
             android:elevation="5dp"
             app:layout_constraintEnd_toStartOf="@+id/rightButton"

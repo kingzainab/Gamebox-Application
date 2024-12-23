@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.zsinnovations.gamebox"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.zsinnovations.gamebox"
@@ -14,7 +14,6 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -54,6 +53,7 @@ dependencies {
     // Additional libraries
     implementation("com.google.code.gson:gson:2.8.9")
     implementation("de.hdodenhof:circleimageview:3.1.0")
+
     implementation(libs.firebase.crashlytics.buildtools)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)

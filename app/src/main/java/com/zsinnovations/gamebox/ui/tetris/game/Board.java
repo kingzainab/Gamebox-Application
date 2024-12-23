@@ -149,12 +149,17 @@ public class Board {
         int cur = leftTop.get(0);
         //Log.e("fastdrop", dest + " " + cur);
         boolean stop = false;
-        while (dest < 20 && !stop) {
+        while (dest < BoardInfo.BOARD_HEIGHT && !stop) {
             dest++;
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
                     if (currMatrix[i][j] == 0) {
                         continue;
+                    }
+                    if (dest + i >= BoardInfo.BOARD_HEIGHT) {
+                        dest--;
+                        stop = true;
+                        break;
                     }
                     if (boardMatrix[dest + i][cur + j] != 0) {
                         if (i + 1 < size && currMatrix[i + 1][j] == currMatrix[i][j]) {
@@ -162,7 +167,11 @@ public class Board {
                         }
                         dest--;
                         stop = true;
+                        break;
                     }
+                }
+                if (stop) {
+                    break;
                 }
             }
         }
@@ -179,6 +188,7 @@ public class Board {
             }
         }
         checkFullRow(shape, dest);
+        leftTop.set(1, dest); // Update with the new value
         leftTop.set(0, -10);
         //printBoard("fast_drop");
         return leftTop;
@@ -216,12 +226,11 @@ public class Board {
         // perform rotation
         for (int i = 0; i < shape.getMatrixSize(); i++) {
             for (int j = 0; j < shape.getMatrixSize(); j++) {
-                 boardMatrix[leftTop.get(1) + i][leftTop.get(0) + j] -= currMatrix[i][j];
-                 boardMatrix[leftTop.get(1) + i][leftTop.get(0) + j] += nextMatrix[i][j];
+                boardMatrix[leftTop.get(1) + i][leftTop.get(0) + j] -= currMatrix[i][j];
+                boardMatrix[leftTop.get(1) + i][leftTop.get(0) + j] += nextMatrix[i][j];
             }
         }
     }
-
     /**
      * Move current block left by 1 unit
      * @param shape shape of the current dropping block
