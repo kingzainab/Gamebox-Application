@@ -155,6 +155,247 @@ public class tzfe_GameActivity extends AppCompatActivity implements GestureDetec
     }
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.tzfe_activity_game);
+        scoreLayout = findViewById(R.id.scoreLayout);
+        highScoreLayout = findViewById(R.id.highScoreLayout);
+        scoreTextView = scoreLayout.findViewById(R.id.scoreTextView);
+        highScoreTextView = highScoreLayout.findViewById(R.id.highScoreTextView);
+        gestureDetectorCompat = new GestureDetectorCompat(this, this);
+        score = 0;
+        scoreTextView.setText("" + score);
+        cellTextViewMatrix = new TextView[][]{
+                {findViewById(R.id.cell1), findViewById(R.id.cell2), findViewById(R.id.cell3), findViewById(R.id.cell4)},
+                {findViewById(R.id.cell5), findViewById(R.id.cell6), findViewById(R.id.cell7), findViewById(R.id.cell8)},
+                {findViewById(R.id.cell9), findViewById(R.id.cell10), findViewById(R.id.cell11), findViewById(R.id.cell12)},
+                {findViewById(R.id.cell13), findViewById(R.id.cell14), findViewById(R.id.cell15), findViewById(R.id.cell16)}
+        };
+        cellValueMatrix = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
+        blankPairs = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++)
+                blankPairs.add(new Pair<>(i, j));
+        }
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++)
+                fillCellTextView(cellTextViewMatrix[i][j], cellValueMatrix[i][j]);
+        }
+        fillRandomNo();
+        fillRandomNo();
+        playAgainButton = findViewById(R.id.playAgainButton);
+        isGame = true;
+        sharedPreferences = this.getSharedPreferences("com.example.android.a2048", MODE_PRIVATE);
+        highScore = sharedPreferences.getLong("highScore", 0);
+        highScoreTextView.setText("" + highScore);
+        correspondingColor = new HashMap<>();
+        correspondingColor.put(0, Color.argb(1, 220, 0, 0));
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        gestureDetectorCompat.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
+
+    private void onSwipeUp() {
+        if (!isGame)
+            return;
+        boolean onSwipeUpChange = false;
+        for (int j = 0; j < 4; j++) {
+            for (int i = 1; i < 4; i++) {
+                if (cellValueMatrix[i][j] == 0)
+                    continue;
+                int k = i - 1;
+                while (k >= 0 && cellValueMatrix[k][j] == 0)
+                    k--;
+                if (k == -1 || (cellValueMatrix[k][j] != cellValueMatrix[i][j] && (k + 1) != i)) {
+                    cellValueMatrix[k + 1][j] = cellValueMatrix[i][j];
+                    onSwipeUpChange = true;
+                    blankPairs.remove(new Pair<>(k + 1, j));
+                    cellValueMatrix[i][j] = 0;
+                } else if (cellValueMatrix[k][j] == cellValueMatrix[i][j]) {
+                    cellValueMatrix[k][j] += cellValueMatrix[i][j];
+                    onSwipeUpChange = true;
+                    score += 2 * cellValueMatrix[i][j];
+                    scoreTextView.setText("" + score);
+                    cellValueMatrix[i][j] = 0;
+                }
+            }
+            for (int i = 0; i < 4; i++) {
+                fillCellTextView(cellTextViewMatrix[i][j], cellValueMatrix[i][j]);
+                if (cellValueMatrix[i][j] == 0 && !blankPairs.contains(new Pair<>(i, j)))
+                    blankPairs.add(new Pair<>(i, j));
+            }
+        }
+        if (onSwipeUpChange)
+            fillRandomNo();
+        if (isGameOver()) {
+            highScore = sharedPreferences.getLong("highScore", 0);
+            if (score > highScore)
+                sharedPreferences.edit().putLong("highScore", score).apply();
+            Toast.makeText(getApplicationContext(), "Game Over", Toast.LENGTH_SHORT).show();
+            isGame = false;
+            playAgainButton.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void onSwipeDown() {
+        if (!isGame)
+            return;
+        boolean onSwipeDownChange = false;
+        for (int j = 0; j < 4; j++) {
+            for (int i = 2; i >= 0; i--) {
+                if (cellValueMatrix[i][j] == 0)
+                    continue;
+                int k = i + 1;
+                while (k <= 3 && cellValueMatrix[k][j] == 0)
+                    k++;
+                if (k == 4 || (cellValueMatrix[k][j] != cellValueMatrix[i][j] && (k - 1) != i)) {
+                    onSwipeDownChange = true;
+                    cellValueMatrix[k - 1][j] = cellValueMatrix[i][j];
+                    blankPairs.remove(new Pair<>(k - 1, j));
+                    cellValueMatrix[i][j] = 0;
+                } else if (cellValueMatrix[k][j] == cellValueMatrix[i][j]) {
+                    onSwipeDownChange = true;
+                    cellValueMatrix[k][j] += cellValueMatrix[i][j];
+                    score += 2 * cellValueMatrix[i][j];
+                    scoreTextView.setText("" + score);
+                    cellValueMatrix[i][j] = 0;
+                }
+            }
+            for (int i = 0; i < 4; i++) {
+                fillCellTextView(cellTextViewMatrix[i][j], cellValueMatrix[i][j]);
+                if (cellValueMatrix[i][j] == 0 && !blankPairs.contains(new Pair<>(i, j)))
+                    blankPairs.add(new Pair<>(i, j));
+            }
+        }
+        if (onSwipeDownChange)
+            fillRandomNo();
+        if (isGameOver()) {
+            highScore = sharedPreferences.getLong("highScore", 0);
+            if (score > highScore)
+                sharedPreferences.edit().putLong("highScore", score).apply();
+            Toast.makeText(getApplicationContext(), "Game Over", Toast.LENGTH_SHORT).show();
+            isGame = false;
+            playAgainButton.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void onSwipeLeft() {
+        if (!isGame)
+            return;
+        boolean onSwipeLeftChange = false;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 1; j < 4; j++) {
+                if (cellValueMatrix[i][j] == 0)
+                    continue;
+                int k = j - 1;
+                while (k >= 0 && cellValueMatrix[i][k] == 0)
+                    k--;
+                if (k == -1 || (cellValueMatrix[i][k] != cellValueMatrix[i][j] && (k + 1) != j)) {
+                    onSwipeLeftChange = true;
+                    cellValueMatrix[i][k + 1] = cellValueMatrix[i][j];
+                    blankPairs.remove(new Pair<>(i, k + 1));
+                    cellValueMatrix[i][j] = 0;
+                } else if (cellValueMatrix[i][k] == cellValueMatrix[i][j]) {
+                    onSwipeLeftChange = true;
+                    cellValueMatrix[i][k] += cellValueMatrix[i][j];
+                    score += 2 * cellValueMatrix[i][j];
+                    scoreTextView.setText("" + score);
+                    cellValueMatrix[i][j] = 0;
+                }
+            }
+            for (int j = 0; j < 4; j++) {
+                fillCellTextView(cellTextViewMatrix[i][j], cellValueMatrix[i][j]);
+                if (cellValueMatrix[i][j] == 0 && !blankPairs.contains(new Pair<>(i, j)))
+                    blankPairs.add(new Pair<>(i, j));
+            }
+        }
+        if (onSwipeLeftChange)
+            fillRandomNo();
+        if (isGameOver()) {
+            highScore = sharedPreferences.getLong("highScore", 0);
+            if (score > highScore)
+                sharedPreferences.edit().putLong("highScore", score).apply();
+            Toast.makeText(getApplicationContext(), "Game Over", Toast.LENGTH_SHORT).show();
+            isGame = false;
+            playAgainButton.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void onSwipeRight() {
+        if (!isGame)
+            return;
+        boolean onSwipeRightChange = false;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 2; j >= 0; j--) {
+                if (cellValueMatrix[i][j] == 0)
+                    continue;
+                int k = j + 1;
+                while (k <= 3 && cellValueMatrix[i][k] == 0)
+                    k++;
+                if (k == 4 || (cellValueMatrix[i][k] != cellValueMatrix[i][j] && (k - 1) != j)) {
+                    onSwipeRightChange = true;
+                    cellValueMatrix[i][k - 1] = cellValueMatrix[i][j];
+                    blankPairs.remove(new Pair<>(i, k - 1));
+                    cellValueMatrix[i][j] = 0;
+                } else if (cellValueMatrix[i][k] == cellValueMatrix[i][j]) {
+                    onSwipeRightChange = true;
+                    cellValueMatrix[i][k] += cellValueMatrix[i][j];
+                    score += 2 * cellValueMatrix[i][j];
+                    scoreTextView.setText("" + score);
+                    cellValueMatrix[i][j] = 0;
+                }
+            }
+            for (int j = 0; j < 4; j++) {
+                fillCellTextView(cellTextViewMatrix[i][j], cellValueMatrix[i][j]);
+                if (cellValueMatrix[i][j] == 0 && !blankPairs.contains(new Pair<>(i, j)))
+                    blankPairs.add(new Pair<>(i, j));
+            }
+        }
+        if (onSwipeRightChange)
+            fillRandomNo();
+        if (isGameOver()) {
+            highScore = sharedPreferences.getLong("highScore", 0);
+            if (score > highScore)
+                sharedPreferences.edit().putLong("highScore", score).apply();
+            Toast.makeText(getApplicationContext(), "Game Over", Toast.LENGTH_SHORT).show();
+            isGame = false;
+            playAgainButton.setVisibility(View.VISIBLE);
+        }
+    }
+
+    int getDirection(double x1, double y1, double x2, double y2) {
+        if (Math.abs(y2 - y1) > Math.abs(x2 - x1)) {
+            if (y2 > y1)
+                return DOWN;
+            else
+                return UP;
+        } else {
+            if (x2 > x1)
+                return RIGHT;
+            else
+                return LEFT;
+        }
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        int dir = getDirection(e1.getX(), e1.getY(), e2.getX(), e2.getY());
+        if (dir == UP)
+            onSwipeUp();
+        else if (dir == DOWN)
+            onSwipeDown();
+        else if (dir == LEFT)
+            onSwipeLeft();
+        else
+            onSwipeRight();
+        return true;
+    }
+
+    @Override
     public boolean onDown(MotionEvent e) {
         return false;
     }
