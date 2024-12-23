@@ -59,6 +59,23 @@ public class tzfe_GameActivity extends AppCompatActivity implements GestureDetec
         fillRandomNo();
     }
 
+    boolean isGameOver() {
+        if (cellValueMatrix[0][0] == 0)
+            return false;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 1; j < 4; j++) {
+                if (cellValueMatrix[i][j] == 0 || cellValueMatrix[i][j] == cellValueMatrix[i][j - 1])
+                    return false;
+            }
+        }
+        for (int j = 0; j < 4; j++) {
+            for (int i = 1; i < 4; i++) {
+                if (cellValueMatrix[i][j] == 0 || cellValueMatrix[i][j] == cellValueMatrix[i - 1][j])
+                    return false;
+            }
+        }
+        return true;
+    }
 
 
     @Override
