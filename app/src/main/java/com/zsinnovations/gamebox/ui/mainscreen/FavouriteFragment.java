@@ -1,6 +1,7 @@
 package com.zsinnovations.gamebox.ui.mainscreen;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,9 @@ import androidx.fragment.app.Fragment;
 
 import com.zsinnovations.gamebox.R;
 import com.zsinnovations.gamebox.adapters.GameAdapter;
+import com.zsinnovations.gamebox.ui.balloonburst.BG_SplashScreen;
+import com.zsinnovations.gamebox.ui.flappybird.FB_SplashScreen;
+import com.zsinnovations.gamebox.ui.snakegame.SG_SplashScreen;
 import com.zsinnovations.gamebox.utils.FavoritesManager;
 
 import java.util.List;
@@ -65,27 +69,44 @@ public class FavouriteFragment extends Fragment {
             gridView.setAdapter(adapter);
             gridView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
                 String gameName = gameNames[position];
-                Toast.makeText(requireContext(), "Clicked: " + gameName, Toast.LENGTH_SHORT).show();
+
+                switch (gameName) {
+                    case "Flappy Bird":
+                        Intent fbIntent = new Intent(requireContext(), FB_SplashScreen.class);
+                        startActivity(fbIntent);
+                        break;
+                    case "Balloon Zap":
+                        Intent bzIntent = new Intent(requireContext(), BG_SplashScreen.class);
+                        startActivity(bzIntent);
+                        break;
+                    case "Grow the Snake":
+                        Intent gsIntent = new Intent(requireContext(), SG_SplashScreen.class);
+                        startActivity(gsIntent);
+                        break;
+
+                    default:
+
+                        break;
+                }
             });
         }
     }
 
     private int getGameImageResource(String gameName) {
         switch (gameName) {
-            case "Game 1":
-                return R.drawable.flappy_bird;
-            case "Game 2":
-                return R.drawable.b;
-            case "Game 3":
-                return R.drawable.c;
-            case "Game 4":
-                return R.drawable.d;
+            case "Flappy Bird":
+                return R.drawable.flappy_bird_logo;
+            case "Balloon Zap":
+                return R.drawable.balloon_icon;
+            case "Grow the Snake":
+                return R.drawable.snake_game_icon;
+            case "Tic-Tac-Toe":
+                return R.drawable.tic_tac_logo;
             case "Game 5":
                 return R.drawable.e;
-////            case "Puzzle":
-////                return R.drawable.apuzzle;
+
             default:
-                return R.drawable.default_game; // Make sure you have a default image
+                return R.drawable.default_game;
         }
     }
 }

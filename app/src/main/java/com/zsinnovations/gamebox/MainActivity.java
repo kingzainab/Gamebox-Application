@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -16,16 +18,15 @@ import com.zsinnovations.gamebox.utils.SettingsManager;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SettingsManager settingsManager;
-    private AvatarManager avatarManager;
     private final int[] predefinedImages = {
             R.drawable.a,
             R.drawable.b,
             R.drawable.c,
-            R.drawable.d,
-            R.drawable.e
+            R.drawable.d
     };
-    private int currentAvatarResource = R.drawable.a;
+    private SettingsManager settingsManager;
+    private AvatarManager avatarManager;
+    private final int currentAvatarResource = R.drawable.a;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +40,10 @@ public class MainActivity extends AppCompatActivity {
         if (!MusicManager.isPlaying()) {
             settingsManager.startMusic();
         }
-
         // Load default fragment
         if (savedInstanceState == null) {
             loadFragment(new GameFragment());
         }
-
 
         ImageView avatarImageView = findViewById(R.id.avatarIcon);
         avatarManager = new AvatarManager(this, avatarImageView, predefinedImages, currentAvatarResource);
@@ -52,11 +51,17 @@ public class MainActivity extends AppCompatActivity {
 
         // Settings icon listener
         ImageView settingsIcon = findViewById(R.id.settingsIcon);
-        ImageView avatarIcon=findViewById(R.id.avatarIcon);
+        ImageView avatarIcon = findViewById(R.id.avatarIcon);
         settingsIcon.setOnClickListener(v -> settingsManager.showSettingsDialog(this));
 
 
         setupFooterNavigation();
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                showExitConfirmationDialog();
+            }
+        });
     }
 
     private void setupFooterNavigation() {
@@ -92,25 +97,6 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.fragmentContainer, fragment);
         transaction.commit();
     }
-//    private void loadFragmentGame(Fragment fragment) {
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.setCustomAnimations(
-//                R.anim.slide_in_left,
-//                R.anim.slide_out_right
-//
-//        );
-//        transaction.replace(R.id.fragmentContainer, fragment);
-//        transaction.commit();
-//    }
-//    private void loadFragmentFav(Fragment fragment) {
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.setCustomAnimations(
-//                R.anim.slide_in_right,
-//                R.anim.slide_out_left
-//        );
-//        transaction.replace(R.id.fragmentContainer, fragment);
-//        transaction.commit();
-//    }
 
     @Override
     protected void onPause() {
@@ -128,5 +114,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         settingsManager.stopMusic();
+    }
+
+    private void showExitConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Gamebox ");
+        builder.setMessage("Are you sure you want to quit the game?");
+        builder.setCancelable(false);
+
+        builder.setNegativeButton("Quit", (dialog, which) -> {
+            moveTaskToBack(true);
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(0);
+        });
+
+        builder.setPositiveButton("Cancel", (dialog, which) -> dialog.cancel());
+
+        builder.create().show();
     }
 }

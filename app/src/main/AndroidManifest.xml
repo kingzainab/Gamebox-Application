@@ -13,17 +13,57 @@
         android:theme="@style/Theme.Gamebox"
         tools:targetApi="31">
         <activity
+            android:name=".ui.tictac.TT_SplashScreen"
+            android:exported="false" />
+        <activity
+            android:name=".ui.tictac.TT_ResultDialog"
+            android:exported="false" />
+        <activity
+            android:name=".ui.tictac.TT_MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.tictac.TT_AddPlayer"
+            android:exported="false" />
+        <activity
+            android:name=".ui.snakegame.SG_SplashScreen"
+            android:exported="false" />
+        <activity
+            android:name=".ui.snakegame.SG_MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.snakegame.SG_ResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.snakegame.SG_GameActivity"
+            android:exported="false" /> <!-- Balloon game activities -->
+        <activity
+            android:name=".ui.balloonburst.BG_MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.balloonburst.BG_SplashScreen"
+            android:exported="false" />
+        <activity
+            android:name=".ui.balloonburst.BG_ResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.balloonburst.BG_GameActivity"
+            android:exported="false" /> <!-- flappy bird activity added -->
+        <activity
             android:name=".ui.flappybird.FB_ResultActivity"
             android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ui.flappybird.FB_GameActivity"
             android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ui.flappybird.FB_MainActivity"
             android:exported="true"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".ui.flappybird.FB_SplashScreen"
+            android:exported="true"
+            android:screenOrientation="landscape" /> <!-- main splash screen -->
         <activity
             android:name=".SplashScreen"
             android:exported="true">
@@ -35,6 +75,10 @@
         </activity>
         <activity android:name=".SplashActivity" />
         <activity android:name=".MainActivity" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

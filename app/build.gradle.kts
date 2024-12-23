@@ -20,7 +20,7 @@ android {
 
     buildFeatures {
         dataBinding = true // Enable data binding
-        viewBinding=true
+        viewBinding = true
     }
 
     buildTypes {
@@ -32,10 +32,12 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
@@ -50,8 +52,8 @@ dependencies {
     implementation(libs.core.ktx)
 
     // Additional libraries
-    implementation(libs.gson)
-    implementation(libs.circleimageview)
+    implementation("com.google.code.gson:gson:2.8.9")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation(libs.firebase.crashlytics.buildtools)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
