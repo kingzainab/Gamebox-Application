@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.zsinnovations.gamebox.R;
 
 import com.zsinnovations.gamebox.adapters.GameAdapter;
+import com.zsinnovations.gamebox.ui.TZFE.tzfe_MainActivity;
 import com.zsinnovations.gamebox.ui.balloonburst.BG_SplashScreen;
 import com.zsinnovations.gamebox.ui.flappybird.FB_SplashScreen;
 import com.zsinnovations.gamebox.ui.snakegame.SG_SplashScreen;
@@ -25,11 +26,11 @@ import com.zsinnovations.gamebox.ui.tictac.TT_SplashScreen;
 public class GameFragment extends Fragment {
 
     private final String[] gameNames = {
-            "Flappy Bird", "Balloon Zap", "Grow the Snake", "Tic-Tac-Toe","Tetris"
+            "Flappy Bird", "Balloon Zap", "Grow the Snake", "Tic-Tac-Toe","Tetris","2048"
     };
 
     private final int[] gameImages = {
-            R.drawable.flappy_bird_logo, R.drawable.balloon_icon, R.drawable.snake_logo, R.drawable.tic_tac_logo,R.drawable.e
+            R.drawable.flappy_bird_logo, R.drawable.balloon_icon, R.drawable.snake_logo, R.drawable.tic_tac_logo,R.drawable.tetris,R.drawable.e
     };
 
     @Nullable
@@ -78,6 +79,10 @@ public class GameFragment extends Fragment {
                 case 4:
                     Intent TetristIntent = new Intent(requireContext(), StartActivity.class);
                     startActivity(TetristIntent);
+                    break;
+                case 5:
+                    Intent TZFEIntent = new Intent(requireContext(), tzfe_MainActivity.class);
+                    startActivity(TZFEIntent);
                     break;
                 default:
 

@@ -95,15 +95,15 @@ public class FavouriteFragment extends Fragment {
     private int getGameImageResource(String gameName) {
         switch (gameName) {
             case "Flappy Bird":
-                return R.drawable.flappy_bird_logo;
+                return R.drawable.flappybird_hrz;
             case "Balloon Zap":
-                return R.drawable.balloon_icon;
+                return R.drawable.balloon_hrz;
             case "Grow the Snake":
-                return R.drawable.snake_logo;
+                return R.drawable.snake_hrz;
             case "Tic-Tac-Toe":
-                return R.drawable.tic_tac_logo;
-            case "Game 5":
-                return R.drawable.e;
+                return R.drawable.tictac_hrz;
+            case "Tetris":
+                return R.drawable.tetris_hrz;
 
             default:
                 return R.drawable.default_game;

@@ -17,7 +17,7 @@ public class tzfe_MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.tzfe_activity_main);
 
         // Initialize background music
         backgroundMusic = MediaPlayer.create(this, R.raw.tzfe_music);

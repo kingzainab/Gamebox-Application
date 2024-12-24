@@ -20,6 +20,8 @@
         <activity android:name=".ui.tetris.activity.HighscoreActivity" android:exported="false"/>
         <activity android:name=".ui.tetris.activity.InfoActivity" android:exported="false"/>
         <activity android:name=".ui.tetris.activity.SettingActivity" android:exported="false"/>
+        <activity android:name=".ui.TZFE.tzfe_GameActivity" android:exported="false"/>
+        <activity android:name=".ui.TZFE.tzfe_MainActivity" android:exported="false"/>
 
         <activity
             android:name=".ui.tictac.TT_ResultDialog"
