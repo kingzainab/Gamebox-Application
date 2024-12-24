@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#290668">
+    android:background="@drawable/bg_tzfe">
 
 
     <TextView
@@ -13,9 +13,10 @@
         android:layout_centerHorizontal="true"
         android:layout_alignStart="@id/gameLayout"
         android:layout_marginTop="44dp"
+        android:layout_marginLeft="15dp"
         android:text="2048"
         android:textSize="40sp"
-        android:textColor="#D7DAF0"/>
+        android:textColor="#B02772"/>
 
     <LinearLayout
         android:id="@+id/scoreLayout"
@@ -24,6 +25,7 @@
         android:layout_alignTop="@+id/gameName"
         android:layout_marginEnd="20dp"
         android:layout_toStartOf="@id/highScoreLayout"
+        android:textColor="B02772"
         android:orientation="vertical">
 
         <TextView
@@ -32,7 +34,7 @@
             android:layout_height="wrap_content"
             android:text="SCORE"
             android:textSize="16dp"
-            android:textColor="#D7DAF0"/>
+            android:textColor="B02772" />
 
         <TextView
             android:id="@+id/scoreTextView"
@@ -40,7 +42,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="16dp"
-            android:textColor="#D7DAF0"/>
+            android:textColor="B02772" />
     </LinearLayout>
 
     <LinearLayout
@@ -57,14 +59,14 @@
             android:layout_height="wrap_content"
             android:text="HIGH SCORE"
             android:textSize="16dp"
-            android:textColor="#D7DAF0"/>
+            android:textColor="B02772" />
 
         <TextView
             android:id="@+id/highScoreTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColor="#D7DAF0"/>
+            android:textColor="#B02772"/>
     </LinearLayout>
 
     <GridLayout
@@ -72,12 +74,11 @@
         android:layout_width="325dp"
         android:layout_height="325dp"
         android:layout_below="@+id/gameName"
-        android:background="#030937"
+        android:background="#FFEAF1"
         android:columnCount="4"
-        android:gravity="center"
         android:rowCount="4"
         android:layout_centerInParent="true"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="125dp"
         >
 
         <TextView
@@ -318,8 +319,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/gameName"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="13dp"
-        android:background="#B0BAFA"
+        android:layout_marginTop="35dp"
+        android:background="#D388A0"
         android:onClick="reset"
-        android:text="Play Again" />
+        android:text="Play Again"
+        android:textColor="FFEAF1"/>
 </RelativeLayout>
