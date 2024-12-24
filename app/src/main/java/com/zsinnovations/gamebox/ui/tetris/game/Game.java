@@ -1,5 +1,6 @@
 package com.zsinnovations.gamebox.ui.tetris.game;
 
+import com.zsinnovations.gamebox.ui.tetris.activity.Tetris_MainActivity;
 import com.zsinnovations.gamebox.ui.tetris.blocks.Shape;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicIntegerArray;
 
 public class Game {
-    Shape currentBlock = null;
+    private Shape currentBlock = null;
     private List<GameObserver> observers = new ArrayList<>();
     private int initialLevel = 1;
     private volatile int totalClearedLines = 0;
@@ -20,17 +21,18 @@ public class Game {
     private volatile AtomicIntegerArray leftTop = new AtomicIntegerArray(2); //record the coordinate of tht top left corner of the current block
     private Thread rightThread;
     private Thread leftThread;
-    private Thread rotateThread;
+    //private Thread rotateThread; // Remove this rotation thread
     private Thread dropThread;
     private Thread fastDropThread;
     private boolean levelUp = false;
     private boolean rightThreadStarted;
     private boolean leftThreadStarted;
-    private boolean rotateThreadStarted;
+    //private boolean rotateThreadStarted; //Remove this rotation thread start boolean
     private boolean dropThreadStarted;
     private boolean fastDropThreadStarted;
 
     public static Game game = new Game();
+
     private Game() {
         rightThread = new Thread(() -> {
             leftTop = Board.getBoard().moveBlockRight(currentBlock, leftTop, blockStatus);
@@ -48,16 +50,9 @@ public class Game {
             leftTop = Board.getBoard().fastDropBlock(currentBlock, leftTop, blockStatus);
             notifyObserversUpdate();
         });
-        rotateThread = new Thread(() -> {
-            Board.getBoard().rotateBlock(currentBlock, leftTop, blockStatus);
-            if (blockStatus.get() == 3) {
-                blockStatus.set(0);
-            } else {
-                blockStatus.getAndIncrement();
-            }
-            notifyObserversUpdate();
-        });
+
     }
+
     public static Game getGame() {
         return game;
     }
@@ -82,9 +77,9 @@ public class Game {
     private void scheduleTimer() {
         dropTimer = new Timer();
         int period = (20 - level) * 50;
-        dropTimer.scheduleAtFixedRate(new TimerTask(){
+        dropTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
-            public void run(){
+            public void run() {
                 if (levelUp) {
                     dropTimer.cancel();
                     levelUp = false;
@@ -131,7 +126,7 @@ public class Game {
         currentBlock = null;
         leftThread.interrupt();
         rightThread.interrupt();
-        rotateThread.interrupt();
+        //rotateThread.interrupt(); // Remove this rotation thread interruption
         dropThread.interrupt();
         fastDropThread.interrupt();
         Board.getBoard().clear();
@@ -143,6 +138,7 @@ public class Game {
 
     /**
      * Generate a new block
+     *
      * @return left top coordinate of the block
      */
     private synchronized AtomicIntegerArray generateNewBlock() {
@@ -154,6 +150,7 @@ public class Game {
 
     /**
      * Drop current block by one unit
+     *
      * @return left top coordinate of the block after dropping
      */
     private synchronized AtomicIntegerArray dropBlock() {
@@ -167,12 +164,14 @@ public class Game {
         if (leftTop.get(0) == 0 || leftTop.get(0) == -1 || leftTop.get(0) > 8) {
             return;
         }
-        if (!rotateThreadStarted) {
-            rotateThread.start();
-            rotateThreadStarted = true;
+
+        Board.getBoard().rotateBlock(currentBlock, leftTop, blockStatus);
+        if (blockStatus.get() == 3) {
+            blockStatus.set(0);
         } else {
-            rotateThread.run();
+            blockStatus.getAndIncrement();
         }
+        notifyObserversUpdate();
     }
 
     /**
@@ -232,8 +231,10 @@ public class Game {
         }
 
     }
+
     /**
      * Attach observers to the board
+     *
      * @param observer MainActivity (updating UI)
      */
     public void attach(GameObserver observer) {
@@ -242,6 +243,7 @@ public class Game {
 
     /**
      * Detach observers
+     *
      * @param observer currently no usage
      */
     public void detach(GameObserver observer) {
@@ -253,17 +255,25 @@ public class Game {
      * MainActivity (updating UI)
      */
     protected void notifyObserversUpdate() {
-        for(GameObserver observer : observers){
-            observer.updateCanvas();
+        for (GameObserver observer : observers) {
+            // observer.updateCanvas();
+            if (observer instanceof Tetris_MainActivity) {
+                ((Tetris_MainActivity) observer).runOnUiThread(() -> {
+                    observer.updateCanvas();
+                });
+            } else {
+                observer.updateCanvas();
+            }
         }
     }
 
     /**
      * Notify observers that a new block is generating, its time to update the next_block board
+     *
      * @param shapeMatrix the shape of next block
      */
     protected void notifyObserversNew(int[][] shapeMatrix) {
-        for(GameObserver observer : observers){
+        for (GameObserver observer : observers) {
             if (shapeMatrix.length == 4) {
                 observer.generateNewBlock(shapeMatrix);
                 return;
@@ -277,15 +287,37 @@ public class Game {
     }
 
     protected void notifyObserversClear(int totalCleardLines, int score, int level) {
-        for (GameObserver observer: observers) {
-            observer.updateGameInfo(totalCleardLines, score, level);
+        for (GameObserver observer : observers) {
+            if (observer instanceof Tetris_MainActivity) {
+                ((Tetris_MainActivity) observer).runOnUiThread(() -> {
+                    observer.updateGameInfo(totalCleardLines, score, level);
+                });
+            } else {
+                observer.updateGameInfo(totalCleardLines, score, level);
+            }
         }
     }
 
     protected void notifyObserversEnd(int finalScore) {
-        for (GameObserver observer: observers) {
-            observer.gameEnd(finalScore);
+        for (GameObserver observer : observers) {
+            if (observer instanceof Tetris_MainActivity) {
+                ((Tetris_MainActivity) observer).runOnUiThread(() -> {
+                    observer.gameEnd(finalScore);
+                });
+            } else {
+                observer.gameEnd(finalScore);
+            }
+
         }
+    }
+
+    // Add these public getters to allow access from MainActivity
+    public AtomicIntegerArray getLeftTop() {
+        return leftTop;
+    }
+
+    public Shape getCurrentBlock() {
+        return currentBlock;
     }
 
 }

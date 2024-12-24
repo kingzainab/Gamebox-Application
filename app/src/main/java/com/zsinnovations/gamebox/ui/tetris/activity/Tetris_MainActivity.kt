@@ -1,4 +1,4 @@
-package com.zsinnovations.gamebox.ui.tetris.activity;
+package com.zsinnovations.gamebox.ui.tetris.activity
 
 import android.animation.ObjectAnimator
 import android.content.Intent
@@ -20,45 +20,49 @@ import com.zsinnovations.gamebox.ui.tetris.database.BlockThemeManager
 import com.zsinnovations.gamebox.ui.tetris.database.LevelManager
 import com.zsinnovations.gamebox.ui.tetris.database.Score
 import kotlinx.coroutines.launch
+import com.zsinnovations.gamebox.ui.tetris.constants.BoardInfo
 
 class Tetris_MainActivity : AppCompatActivity(), GameObserver {
-        private var surfaceHolder: SurfaceHolder? = null
-        private var nextSurfaceHolder: SurfaceHolder? = null
-        private var paintArray: Array<Paint>? = null
-        private var canvasHeight: Float = 0F
-        private var canvasWidth: Float = 0F
-        private var lineWidth: Float = 0F
-        private var blockWidth: Float = 0F
-        private var nextCanvasHeight: Float = 0F
-        private var nextCanvasWidth: Float = 0F
+    private var surfaceHolder: SurfaceHolder? = null
+    private var nextSurfaceHolder: SurfaceHolder? = null
+    private var paintArray: Array<Paint>? = null
+    private var canvasHeight: Float = 0F
+    private var canvasWidth: Float = 0F
+    private var lineWidth: Float = 0F
+    private var blockWidth: Float = 0F
+    private var nextCanvasHeight: Float = 0F
+    private var nextCanvasWidth: Float = 0F
 
-        private var initialLevel: Int = 1
-        private var lastClickLeft: Long = 0
-        private var lastClickRight: Long = 0
-        private var lastClickRotate: Long = 0
-        private var lastClickDown: Long = 0
-        private var lastClickUp: Long = 0
-        private var lines: TextView? = null
-        private var levels: TextView? = null
-        private var scores: TextView? = null
-        private var alertBuilder: AlertDialog.Builder? = null
+    private var initialLevel: Int = 1
+    private var lastClickLeft: Long = 0
+    private var lastClickRight: Long = 0
+    private var lastClickRotate: Long = 0
+    private var lastClickDown: Long = 0
+    private var lastClickUp: Long = 0
+    private var lines: TextView? = null
+    private var levels: TextView? = null
+    private var scores: TextView? = null
+    private var alertBuilder: AlertDialog.Builder? = null
     private lateinit var binding: TetrisActivityMainBinding
-        private var themeName: String = BlockColorTheme.THEME_MODERN
-        private lateinit var lineAnimator: ObjectAnimator
-        private lateinit var scoreAnimator: ObjectAnimator
-        private lateinit var levelAnimator: ObjectAnimator
-        private val ROTATEDURATION: Long = 1000
+    private var themeName: String = BlockColorTheme.THEME_MODERN
+    private lateinit var lineAnimator: ObjectAnimator
+    private lateinit var scoreAnimator: ObjectAnimator
+    private lateinit var levelAnimator: ObjectAnimator
+    private val ROTATEDURATION: Long = 1000
+
+    private var isBlockOnRightEdge: Boolean = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = TetrisActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        val blockThemeManager = BlockThemeManager(this) // Using `this` instead of applicationContext
-        val levelManager = LevelManager(this) // Using `this` instead of applicationContext
+        val blockThemeManager = BlockThemeManager(this)
+        val levelManager = LevelManager(this)
 
         lifecycleScope.launch {
-            themeName = blockThemeManager.getTheme()?.toString() ?: BlockColorTheme.THEME_MODERN  //Null Check
+            themeName = blockThemeManager.getTheme()?.toString() ?: BlockColorTheme.THEME_MODERN
             setPaint()
 
             levelManager.getInitialLevel()?.let { initialLevel = it }
@@ -67,7 +71,7 @@ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
             Game.getGame().start()
         }
         binding.rotateButton.setOnClickListener {
-            if (System.currentTimeMillis() - lastClickRotate > 200) {
+            if (!isBlockOnRightEdge && System.currentTimeMillis() - lastClickRotate > 200) {
                 Game.getGame().rotateBlock()
             }
             lastClickRotate = System.currentTimeMillis()
@@ -220,7 +224,7 @@ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
                 if(colorIndex >= 0 && colorIndex < paintArray.size) {
                     canvas.drawRect(left, top, right, bottom, paintArray[colorIndex])
                 } else {
-                    // Optional, draw some color or skip to better handle this out-of-bound value
+                    //Optional, draw some color or skip to better handle this out-of-bound value
                     //canvas.drawRect(left, top, right, bottom, paintArray[0])
                 }
 
@@ -290,6 +294,12 @@ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
         drawInitialBoard(canvas)
         paintArray?.let { drawInstantBoard(canvas, matrix, it) }
         surfaceHolder!!.unlockCanvasAndPost(canvas)
+
+        //check if block is at right edge
+        val currentBlockLeft = Game.getGame().getLeftTop()[0]
+        val currentBlockSize = Game.getGame().getCurrentBlock()?.matrixSize ?: 0
+        isBlockOnRightEdge = currentBlockLeft + currentBlockSize >= BoardInfo.BOARD_WIDTH
+        binding.rotateButton.isEnabled = !isBlockOnRightEdge
     }
 
     /**
@@ -328,7 +338,4 @@ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
         }
         runOnUiThread { alertBuilder?.show() }
     }
-
 }
-
-

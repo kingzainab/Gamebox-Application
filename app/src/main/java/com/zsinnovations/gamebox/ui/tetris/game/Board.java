@@ -200,38 +200,38 @@ public class Board {
      * @param status rotation status of the current block
      */
     public synchronized void rotateBlock(Shape shape, AtomicIntegerArray leftTop, AtomicInteger status) {
-        if (shape == null) {
-            return;
-        }
+            if (shape == null) {
+                return;
+            }
 
-        int[][] currMatrix = RotationHandler.getRotationHandler().rotationHash.get(shape.getShapeCode()).get(status.get());
-        int newStatus = status.get() + 1;
-        if (newStatus == 4) {
-            newStatus = 0;
-        }
-        int[][] nextMatrix = RotationHandler.getRotationHandler().rotationHash.get(shape.getShapeCode()).get(newStatus);
-        int size = shape.getMatrixSize();
+            int[][] currMatrix = RotationHandler.getRotationHandler().rotationHash.get(shape.getShapeCode()).get(status.get());
+            int newStatus = status.get() + 1;
+            if (newStatus == 4) {
+                newStatus = 0;
+            }
+            int[][] nextMatrix = RotationHandler.getRotationHandler().rotationHash.get(shape.getShapeCode()).get(newStatus);
+            int size = shape.getMatrixSize();
 
-        // validity check
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (nextMatrix[i][j] == 0) {
-                        continue;
+            // validity check
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    if (nextMatrix[i][j] == 0) {
+                            continue;
+                        }
+                    if (boardMatrix[leftTop.get(1) + i][leftTop.get(0) + j] - currMatrix[i][j] + nextMatrix[i][j] != shape.getShapeCode()) {
+                        return;
                     }
-                if (boardMatrix[leftTop.get(1) + i][leftTop.get(0) + j] - currMatrix[i][j] + nextMatrix[i][j] != shape.getShapeCode()) {
-                    return;
                 }
             }
-        }
 
-        // perform rotation
-        for (int i = 0; i < shape.getMatrixSize(); i++) {
-            for (int j = 0; j < shape.getMatrixSize(); j++) {
-                    boardMatrix[leftTop.get(1) + i][leftTop.get(0) + j] -= currMatrix[i][j];
-                    boardMatrix[leftTop.get(1) + i][leftTop.get(0) + j] += nextMatrix[i][j];
+            // perform rotation
+            for (int i = 0; i < shape.getMatrixSize(); i++) {
+                for (int j = 0; j < shape.getMatrixSize(); j++) {
+                        boardMatrix[leftTop.get(1) + i][leftTop.get(0) + j] -= currMatrix[i][j];
+                        boardMatrix[leftTop.get(1) + i][leftTop.get(0) + j] += nextMatrix[i][j];
+                    }
                 }
-            }
-    }
+        }
     /**
      * Move current block left by 1 unit
      * @param shape shape of the current dropping block
