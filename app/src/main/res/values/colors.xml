@@ -8,7 +8,25 @@
     <color name="green">#4CAF50</color>
     <color name="gray">#BDBDBD</color>
     <color name="avatar_icon_border">#15BDA3</color>
-    <color name="primaryColor">#87DACD</color> <!-- Replace this with your desired primary color -->
+    <color name="primaryColor">#87DACD</color>
+    <color name="playBtnColor">#02c39a</color>
+    <color name="quitBtnColor">#da1e37</color>
+    <color name="lavender">#5C69D3</color>
+    <color name="transparent">#00000000</color>
 
+<!--    <color name="lavender">#8692f7</color>-->
+
+    // Tetris Colors
+    <color name="primary">#fdb913</color>
+    <color name="primary_var">#f4791f</color>
+    <color name="accent">#cfdcec</color>
+
+    <color name="block1">#047d68</color>>
+    <color name="block2">#c1d730</color>>
+    <color name="block3">#012b5c</color>>
+    <color name="block4">#00b5cc</color>>
+    <color name="block5">#fdb913</color>>
+    <color name="block6">#f4791f</color>>
+    <color name="block7">#717073</color>>
 
 </resources>

@@ -2,6 +2,28 @@
     <string name="app_name">Gamebox</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    // Flappy Bird
     <string name="info">The innocent flappy bird needs 500 points in order to\nescape the enemies
         and reach its nest!\nCan you help the bird in this challenging task?</string>
+
+    // Tetris
+    <string name="tetris_app_name">Tetris</string>
+    <string name="setting">Setting</string>
+    <string name="high_score">High Score</string>
+    <string name="new_game">New Game</string>
+    <string name="score">Score</string>
+    <string name="lines">Lines</string>
+    <string name="_0">0</string>
+    <string name="next">Next</string>
+    <string name="level">Level</string>
+    <string name="_1">1</string>
+    <string name="modern">MODERN</string>
+    <string name="monalisa">MONALISA</string>
+    <string name="theme">Theme</string>
+    <string name="belafonte">BELAFONTE</string>
+    <string name="espresso">ESPRESSO</string>
+    <string name="spectrum">SPECTRUM</string>
+    <string name="rainbow">RAINBOW</string>
+    <string name="rank">RANK</string>
 </resources>

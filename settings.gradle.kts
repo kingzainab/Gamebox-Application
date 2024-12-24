@@ -1,14 +1,16 @@
+// pluginManagement {
+//     includeBuild("build-logic") // Remove this line if not needed
+//     repositories {
+//         gradlePluginPortal()
+//         google()
+//         mavenCentral()
+//     }
+// }
 pluginManagement {
     repositories {
-        google {
-            content {
-                includeGroupByRegex("com\\.android.*")
-                includeGroupByRegex("com\\.google.*")
-                includeGroupByRegex("androidx.*")
-            }
-        }
-        mavenCentral()
         gradlePluginPortal()
+        google()
+        mavenCentral()
     }
 }
 dependencyResolutionManagement {
@@ -18,7 +20,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-
-rootProject.name = "Gamebox"
+rootProject.name = "Game Box"
 include(":app")
- 

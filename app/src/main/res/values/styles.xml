@@ -6,6 +6,15 @@
         <item name="itemHorizontalTranslationEnabled">false</item>
         <item name="itemIconSize">24dp</item> <!-- Adjust icon size -->
         <item name="labelVisibilityMode">unlabeled</item>
+        <item name="android:fontFamily">
+            @font/baloo_bhaijaan_2_medium
+        </item>
+
+    </style>
+    <style name="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:fontFamily">
+            @font/baloo_bhaijaan_2_medium
+        </item>
     </style>
 
 </resources>

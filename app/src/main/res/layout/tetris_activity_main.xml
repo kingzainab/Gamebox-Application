@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/tetris_bg"
+
+        tools:context=".activity.Tetris_MainActivity">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/materialToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/urbanist_medium"
+            android:text="Tetris"
+            android:textColor="@color/white"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/materialToolbar"
+            app:layout_constraintEnd_toEndOf="@+id/materialToolbar"
+            app:layout_constraintStart_toStartOf="@+id/materialToolbar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <SurfaceView
+            android:id="@+id/board"
+            android:layout_width="244dp"
+            android:layout_height="484dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialToolbar" />
+
+        <TextView
+            android:id="@+id/level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/baloo_bhaijaan_2_medium"
+            android:text="@string/level"
+            android:textSize="26sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/board"
+            app:layout_constraintTop_toBottomOf="@+id/materialToolbar" />
+
+        <TextView
+            android:id="@+id/LevelRealTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/baloo_bhaijaan_2_medium"
+            android:text="@string/_1"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/board"
+            app:layout_constraintTop_toBottomOf="@+id/level" />
+
+        <TextView
+            android:id="@+id/Score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/baloo_bhaijaan_2_medium"
+            android:text="@string/score"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/board"
+            app:layout_constraintTop_toBottomOf="@+id/LevelRealTime" />
+
+        <TextView
+            android:id="@+id/ScoreRealTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/baloo_bhaijaan_2_medium"
+            android:text="@string/_0"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/board"
+            app:layout_constraintTop_toBottomOf="@+id/Score" />
+
+        <TextView
+            android:id="@+id/Lines"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/baloo_bhaijaan_2_medium"
+            android:text="@string/lines"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/board"
+            app:layout_constraintTop_toBottomOf="@+id/ScoreRealTime" />
+
+        <TextView
+            android:id="@+id/RealTimeLines"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/baloo_bhaijaan_2_medium"
+            android:text="@string/_0"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/board"
+            app:layout_constraintTop_toBottomOf="@+id/Lines" />
+
+        <TextView
+            android:id="@+id/Next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/baloo_bhaijaan_2_medium"
+            android:text="@string/next"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/board"
+            app:layout_constraintTop_toBottomOf="@+id/RealTimeLines" />
+
+        <SurfaceView
+            android:id="@+id/next_board"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/board"
+            app:layout_constraintTop_toBottomOf="@+id/Next" />
+
+        <ImageButton
+            android:id="@+id/upButton"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/primary"
+            android:elevation="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/board"
+            app:srcCompat="@drawable/ic_keyboard_arrow_up_black_24dp"
+            app:tint="@color/accent"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageButton
+            android:id="@+id/leftButton"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:layout_marginStart="76dp"
+            android:backgroundTint="@color/primary"
+            android:elevation="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/downButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/upButton"
+            app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp"
+            app:tint="@color/accent"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageButton
+            android:id="@+id/rightButton"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:layout_marginEnd="76dp"
+            android:backgroundTint="@color/primary"
+            android:elevation="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/downButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/upButton"
+            app:layout_constraintVertical_bias="0.516"
+            app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"
+            app:tint="@color/accent"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageButton
+            android:id="@+id/downButton"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:backgroundTint="@color/primary"
+            android:elevation="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/rightButton"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toEndOf="@+id/leftButton"
+            app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
+            app:tint="@color/accent"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageButton
+            android:id="@+id/rotateButton"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:backgroundTint="@color/primary_var"
+            android:elevation="5dp"
+            android:scaleX="1"
+            android:scaleY="1"
+            app:layout_constraintBottom_toTopOf="@+id/downButton"
+            app:layout_constraintEnd_toStartOf="@+id/rightButton"
+            app:layout_constraintStart_toEndOf="@+id/leftButton"
+            app:layout_constraintTop_toBottomOf="@+id/upButton"
+            app:srcCompat="@drawable/ic_rotate_left_black_24dp"
+            app:tint="@color/accent"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

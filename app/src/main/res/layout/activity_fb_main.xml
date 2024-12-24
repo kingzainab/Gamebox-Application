@@ -145,12 +145,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginTop="20dp"
-        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:padding="1dp"
         android:gravity="center"
         android:text="@string/info"
         android:textColor="@android:color/holo_red_dark"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:background="@android:drawable/editbox_background_normal"
         android:alpha="0.8" />
 
@@ -158,14 +158,14 @@
     <Button
         android:id="@+id/buttonStart"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="100dp"
         android:background="@drawable/background_start_button"
-        android:padding="10dp"
+
         android:text="Start Game"
         android:textColor="@android:color/holo_red_dark"
-        android:textSize="24sp" />
+        android:textSize="20sp" />
 
 </LinearLayout>
