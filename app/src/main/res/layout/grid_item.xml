@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="24dp"
-    android:background="@android:color/white">
+    android:background="@drawable/rounded_image_bg">
 
     <LinearLayout
         android:layout_width="match_parent"

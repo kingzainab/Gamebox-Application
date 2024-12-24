@@ -29,7 +29,7 @@ public class GameFragment extends Fragment {
     };
 
     private final int[] gameImages = {
-            R.drawable.flappy_bird_logo, R.drawable.balloon_icon, R.drawable.snake_game_icon, R.drawable.tic_tac_logo,R.drawable.e
+            R.drawable.flappy_bird_logo, R.drawable.balloon_icon, R.drawable.snake_logo, R.drawable.tic_tac_logo,R.drawable.e
     };
 
     @Nullable

@@ -203,6 +203,7 @@ public class Board {
         if (shape == null) {
             return;
         }
+
         int[][] currMatrix = RotationHandler.getRotationHandler().rotationHash.get(shape.getShapeCode()).get(status.get());
         int newStatus = status.get() + 1;
         if (newStatus == 4) {
@@ -215,8 +216,8 @@ public class Board {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 if (nextMatrix[i][j] == 0) {
-                    continue;
-                }
+                        continue;
+                    }
                 if (boardMatrix[leftTop.get(1) + i][leftTop.get(0) + j] - currMatrix[i][j] + nextMatrix[i][j] != shape.getShapeCode()) {
                     return;
                 }
@@ -226,10 +227,10 @@ public class Board {
         // perform rotation
         for (int i = 0; i < shape.getMatrixSize(); i++) {
             for (int j = 0; j < shape.getMatrixSize(); j++) {
-                boardMatrix[leftTop.get(1) + i][leftTop.get(0) + j] -= currMatrix[i][j];
-                boardMatrix[leftTop.get(1) + i][leftTop.get(0) + j] += nextMatrix[i][j];
+                    boardMatrix[leftTop.get(1) + i][leftTop.get(0) + j] -= currMatrix[i][j];
+                    boardMatrix[leftTop.get(1) + i][leftTop.get(0) + j] += nextMatrix[i][j];
+                }
             }
-        }
     }
     /**
      * Move current block left by 1 unit
