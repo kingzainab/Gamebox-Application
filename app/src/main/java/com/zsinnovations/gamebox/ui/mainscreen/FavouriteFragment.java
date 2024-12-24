@@ -96,6 +96,7 @@ public class FavouriteFragment extends Fragment {
         switch (gameName) {
             case "Flappy Bird":
                 return R.drawable.flappybird_hrz;
+
             case "Balloon Zap":
                 return R.drawable.balloon_hrz;
             case "Grow the Snake":
@@ -104,7 +105,8 @@ public class FavouriteFragment extends Fragment {
                 return R.drawable.tictac_hrz;
             case "Tetris":
                 return R.drawable.tetris_hrz;
-
+            case "2048":
+                return R.drawable.tfze_hrz;
             default:
                 return R.drawable.default_game;
         }

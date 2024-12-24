@@ -26,11 +26,11 @@ import com.zsinnovations.gamebox.ui.tictac.TT_SplashScreen;
 public class GameFragment extends Fragment {
 
     private final String[] gameNames = {
-            "Flappy Bird", "Balloon Zap", "Grow the Snake", "Tic-Tac-Toe","Tetris","2048"
+            "Flappy Bird","Tetris", "Grow the Snake", "Balloon Zap","Tic-Tac-Toe","2048"
     };
 
     private final int[] gameImages = {
-            R.drawable.flappy_bird_logo, R.drawable.balloon_icon, R.drawable.snake_logo, R.drawable.tic_tac_logo,R.drawable.tetris,R.drawable.e
+            R.drawable.flappy_bird_logo, R.drawable.tetris, R.drawable.snake_logo,R.drawable.balloon_icon,R.drawable.tic_tac_logo,R.drawable.tfze_logo
     };
 
     @Nullable
