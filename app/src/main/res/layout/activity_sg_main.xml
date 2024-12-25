@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/material_dynamic_neutral_variant20"
+    android:background="#0D0D0D"
     tools:context=".ui.snakegame.SG_MainActivity">
 
     <ImageView
@@ -25,51 +25,59 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="16dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.714"
-        app:srcCompat="@drawable/level_one_sound"
-        android:visibility="invisible"/>
+        app:srcCompat="@drawable/level_one_sound" />
 
     <ImageView
         android:id="@+id/zero_sound"
-
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="27dp"
-
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.714"
-        app:srcCompat="@drawable/zero_sound"
-        android:visibility="invisible"/>
+        app:srcCompat="@drawable/zero_sound" />
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="196dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/snake_logo" />
 
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="312dp"
+        android:layout_marginTop="80dp"
         android:text="Grow the Snake"
-        android:textColor="#EDE6E6"
+        android:textColor="@color/white"
         android:textSize="48sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView10" />
 
     <Button
         android:id="@+id/startButton"
-        android:layout_marginTop="48dp"
-        android:text="Play"
         android:layout_width="325dp"
         android:layout_height="71dp"
+        android:layout_marginTop="48dp"
         android:layout_marginBottom="32dp"
         android:backgroundTint="@color/playBtnColor"
+        android:text="Play"
         android:textColor="@color/black"
-        android:textSize="28sp"
         android:textColorLink="#D32A2A"
+        android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />

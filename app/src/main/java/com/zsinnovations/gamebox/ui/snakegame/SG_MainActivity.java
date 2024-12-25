@@ -103,9 +103,9 @@ public class SG_MainActivity extends AppCompatActivity {
         startButton.setOnClickListener(v -> {
             saveMusicState();
             Intent intent = new Intent(SG_MainActivity.this, SG_GameActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
-            overridePendingTransition(0, 0);
+//            overridePendingTransition(0, 0);
         });
     }
 
