@@ -6,7 +6,7 @@ import android.media.MediaPlayer;
 import com.zsinnovations.gamebox.R;
 
 public class MusicManager {
-    private static MediaPlayer mediaPlayer; // Change this to static
+    public static MediaPlayer mediaPlayer; // Change this to static
 
     private Context appContext;
 
