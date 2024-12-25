@@ -11,29 +11,33 @@ import java.util.concurrent.atomic.AtomicIntegerArray;
 
 public class Game {
     private Shape currentBlock = null;
+    private volatile boolean isPaused = false;
+    private Timer dropTimer;
+    private TimerTask currentTask = null;
     private List<GameObserver> observers = new ArrayList<>();
     private int initialLevel = 1;
     private volatile int totalClearedLines = 0;
     private volatile int level = 1;
     private volatile int score = 0;
-    private Timer dropTimer;
-    private volatile AtomicInteger blockStatus = new AtomicInteger(0); //record status of block rotation status(0, 1, 2, 3) maybe its better to use enum for future refactor
-    private volatile AtomicIntegerArray leftTop = new AtomicIntegerArray(2); //record the coordinate of tht top left corner of the current block
+    private volatile AtomicInteger blockStatus = new AtomicInteger(0);
+    private volatile AtomicIntegerArray leftTop = new AtomicIntegerArray(2);
     private Thread rightThread;
     private Thread leftThread;
-    //private Thread rotateThread; // Remove this rotation thread
     private Thread dropThread;
     private Thread fastDropThread;
     private boolean levelUp = false;
     private boolean rightThreadStarted;
     private boolean leftThreadStarted;
-    //private boolean rotateThreadStarted; //Remove this rotation thread start boolean
     private boolean dropThreadStarted;
     private boolean fastDropThreadStarted;
 
     public static Game game = new Game();
 
     private Game() {
+        initializeThreads();
+    }
+
+    private void initializeThreads() {
         rightThread = new Thread(() -> {
             leftTop = Board.getBoard().moveBlockRight(currentBlock, leftTop, blockStatus);
             notifyObserversUpdate();
@@ -50,57 +54,100 @@ public class Game {
             leftTop = Board.getBoard().fastDropBlock(currentBlock, leftTop, blockStatus);
             notifyObserversUpdate();
         });
-
     }
 
     public static Game getGame() {
         return game;
     }
 
-
     public void setInitialLevel(int initialLevel) {
         this.initialLevel = initialLevel;
         level = initialLevel;
     }
 
-    /**
-     * Start a round of new game
-     * 1. generate new block
-     * 2. drop block
-     * Need refactor later
-     */
+    public synchronized void pause() {
+        if (!isPaused) {
+            isPaused = true;
+            if (dropTimer != null) {
+                dropTimer.cancel();
+                dropTimer = null;
+            }
+            interruptAllThreads();
+        }
+    }
+
+    private void interruptAllThreads() {
+        if (rightThread != null) rightThread.interrupt();
+        if (leftThread != null) leftThread.interrupt();
+        if (dropThread != null) dropThread.interrupt();
+        if (fastDropThread != null) fastDropThread.interrupt();
+    }
+
+    public synchronized void resume() {
+        if (isPaused) {
+            isPaused = false;
+            initializeThreads();
+            resetThreadFlags();
+            scheduleTimer();
+        }
+    }
+
+    private void resetThreadFlags() {
+        rightThreadStarted = false;
+        leftThreadStarted = false;
+        dropThreadStarted = false;
+        fastDropThreadStarted = false;
+    }
+
     public void start() {
+        isPaused = false;
         notifyObserversClear(0, 0, initialLevel);
         scheduleTimer();
     }
 
     private void scheduleTimer() {
+        if (isPaused) return;
+
+        if (dropTimer != null) {
+            dropTimer.cancel();
+        }
+
         dropTimer = new Timer();
         int period = (20 - level) * 50;
-        dropTimer.scheduleAtFixedRate(new TimerTask() {
+
+        currentTask = new TimerTask() {
             @Override
             public void run() {
+                if (isPaused) return;
+
                 if (levelUp) {
                     dropTimer.cancel();
                     levelUp = false;
                     scheduleTimer();
+                    return;
                 }
+
                 if (currentBlock == null) {
                     leftTop = generateNewBlock();
                     blockStatus.set(0);
                 }
+
                 if (leftTop.get(0) == -100) {
                     notifyObserversEnd(score);
                     dropTimer.cancel();
+                    return;
                 }
+
                 leftTop = dropBlock();
                 if (leftTop.get(0) == -10) {
                     currentBlock = null;
                 }
+
                 notifyObserversUpdate();
             }
+        };
 
-        }, period / 3, period);
+        dropTimer.scheduleAtFixedRate(currentTask, period / 3, period);
     }
 
     private void updateGameInfo(int clearedLines) {
@@ -118,29 +165,31 @@ public class Game {
     }
 
     public void end() {
+        isPaused = false;
+        if (dropTimer != null) {
+            dropTimer.cancel();
+            dropTimer = null;
+        }
+
         levelUp = false;
-        dropTimer.cancel();
         totalClearedLines = 0;
         level = initialLevel;
         score = 0;
         currentBlock = null;
-        leftThread.interrupt();
-        rightThread.interrupt();
-        //rotateThread.interrupt(); // Remove this rotation thread interruption
-        dropThread.interrupt();
-        fastDropThread.interrupt();
+
+        interruptAllThreads();
         Board.getBoard().clear();
+        resetThreadFlags();
+    }
+
+    public boolean isPaused() {
+        return isPaused;
     }
 
     public int[][] getCurrentBoardMatrix() {
         return Board.getBoard().getBoardMatrix();
     }
 
-    /**
-     * Generate a new block
-     *
-     * @return left top coordinate of the block
-     */
     private synchronized AtomicIntegerArray generateNewBlock() {
         updateGameInfo(Board.getBoard().getClearedLines());
         currentBlock = BlockGenerator.getBlockGenerator().generateBlock();
@@ -148,18 +197,10 @@ public class Game {
         return Board.getBoard().addBlock(currentBlock);
     }
 
-    /**
-     * Drop current block by one unit
-     *
-     * @return left top coordinate of the block after dropping
-     */
     private synchronized AtomicIntegerArray dropBlock() {
         return Board.getBoard().dropBlock(currentBlock, leftTop, blockStatus);
     }
 
-    /**
-     * Rotate the current block by 90 degree counter-clockwise
-     */
     public synchronized void rotateBlock() {
         if (leftTop.get(0) == 0 || leftTop.get(0) == -1 || leftTop.get(0) > 8) {
             return;
@@ -174,9 +215,6 @@ public class Game {
         notifyObserversUpdate();
     }
 
-    /**
-     * Move the current block left by one unit
-     */
     public synchronized void moveBlockLeft() {
         if (leftTop.get(0) < -2) {
             return;
@@ -189,9 +227,6 @@ public class Game {
         }
     }
 
-    /**
-     * Move the current block right by one unit
-     */
     public synchronized void moveBlockRight() {
         if (leftTop.get(0) < -2) {
             return;
@@ -202,9 +237,7 @@ public class Game {
         } else {
             rightThread.run();
         }
-
     }
-
 
     public synchronized void moveBlockDown() {
         if (leftTop.get(0) < -2 || leftTop.get(1) > 15) {
@@ -218,7 +251,6 @@ public class Game {
         }
     }
 
-
     public synchronized void moveBlockDownFast() {
         if (leftTop.get(0) < -2 || leftTop.get(1) > 15) {
             return;
@@ -229,34 +261,18 @@ public class Game {
         } else {
             fastDropThread.run();
         }
-
     }
 
-    /**
-     * Attach observers to the board
-     *
-     * @param observer MainActivity (updating UI)
-     */
     public void attach(GameObserver observer) {
         observers.add(observer);
     }
 
-    /**
-     * Detach observers
-     *
-     * @param observer currently no usage
-     */
     public void detach(GameObserver observer) {
         observers.remove(observer);
     }
 
-    /**
-     * Notify observers that the status of the board has changed
-     * MainActivity (updating UI)
-     */
     protected void notifyObserversUpdate() {
         for (GameObserver observer : observers) {
-            // observer.updateCanvas();
             if (observer instanceof Tetris_MainActivity) {
                 ((Tetris_MainActivity) observer).runOnUiThread(() -> {
                     observer.updateCanvas();
@@ -267,11 +283,6 @@ public class Game {
         }
     }
 
-    /**
-     * Notify observers that a new block is generating, its time to update the next_block board
-     *
-     * @param shapeMatrix the shape of next block
-     */
     protected void notifyObserversNew(int[][] shapeMatrix) {
         for (GameObserver observer : observers) {
             if (shapeMatrix.length == 4) {
@@ -307,11 +318,9 @@ public class Game {
             } else {
                 observer.gameEnd(finalScore);
             }
-
         }
     }
 
-    // Add these public getters to allow access from MainActivity
     public AtomicIntegerArray getLeftTop() {
         return leftTop;
     }
@@ -319,5 +328,4 @@ public class Game {
     public Shape getCurrentBlock() {
         return currentBlock;
     }
-
 }

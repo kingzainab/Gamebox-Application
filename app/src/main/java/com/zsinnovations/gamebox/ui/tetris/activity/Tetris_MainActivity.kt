@@ -21,6 +21,8 @@ import com.zsinnovations.gamebox.ui.tetris.database.LevelManager
 import com.zsinnovations.gamebox.ui.tetris.database.Score
 import kotlinx.coroutines.launch
 import com.zsinnovations.gamebox.ui.tetris.constants.BoardInfo
+import android.widget.Button
+import androidx.activity.OnBackPressedCallback
 
 class Tetris_MainActivity : AppCompatActivity(), GameObserver {
     private var surfaceHolder: SurfaceHolder? = null
@@ -51,9 +53,33 @@ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
     private val ROTATEDURATION: Long = 1000
 
     private var isBlockOnRightEdge: Boolean = false
+    private var isGamePaused: Boolean = false
+    private lateinit var pauseDialog: AlertDialog
 
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
+        val pauseDialogBuilder = AlertDialog.Builder(this)
+        pauseDialogBuilder.apply {
+            setTitle("Pause Game")
+            setMessage("Do you want to exit the game?")
+            setCancelable(false)
+            setPositiveButton("Exit") { _, _ ->
+                Game.getGame().end()
+                finish()
+            }
+            setNegativeButton("Continue") { dialog, _ ->
+                dialog.dismiss()
+                resumeGame()
+            }
+        }
+        pauseDialog = pauseDialogBuilder.create()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+        // Handle back button press
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                handleBackPress()
+            }
+        })
         super.onCreate(savedInstanceState)
         binding = TetrisActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
@@ -97,7 +123,7 @@ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
             lastClickDown = System.currentTimeMillis()
         }
 
-        binding.upButton.setOnClickListener{
+        binding.upButton.setOnClickListener {
             if (System.currentTimeMillis() - lastClickUp > 200) {
                 Game.getGame().moveBlockDownFast()
             }
@@ -107,17 +133,17 @@ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
         levels = binding.LevelRealTime
         scores = binding.ScoreRealTime
         surfaceHolder = binding.board.holder
-        surfaceHolder?.addCallback(object: SurfaceHolder.Callback {
+        surfaceHolder?.addCallback(object : SurfaceHolder.Callback {
             override fun surfaceCreated(holder: SurfaceHolder) {
                 val canvas = surfaceHolder!!.lockCanvas()
 
-                //Initialize canvas measure
+                // Initialize canvas measure
                 canvasHeight = canvas.height.toFloat()
                 canvasWidth = canvas.width.toFloat()
                 lineWidth = canvasWidth / 61
                 blockWidth = lineWidth * 5
 
-                //Draw background and lines
+                // Draw background and lines
                 drawInitialBoard(canvas)
                 surfaceHolder!!.unlockCanvasAndPost(canvas)
             }
@@ -137,7 +163,7 @@ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
             override fun surfaceCreated(holder: SurfaceHolder) {
                 val canvas = nextSurfaceHolder!!.lockCanvas()
 
-                //Initialize canvas measure
+                // Initialize canvas measure
                 nextCanvasHeight = canvas.height.toFloat()
                 nextCanvasWidth = canvas.width.toFloat()
                 drawInitialNextBoard(canvas)
@@ -173,7 +199,7 @@ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
         // Create the AlertDialog
         alertBuilder!!.create()
 
-        //Attach listener
+        // Attach listener
         Game.getGame().attach(this)
         lineAnimator = ObjectAnimator.ofFloat(lines, View.ROTATION_X, -360f, 0f)
         scoreAnimator = ObjectAnimator.ofFloat(scores, View.ROTATION_X, -360f, 0f)
@@ -183,22 +209,57 @@ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
         levelAnimator.duration = ROTATEDURATION
 
     }
+    private fun handleBackPress() {
+        if (!isGamePaused) {
+            pauseGame()
+            pauseDialog.show()
+        }
+    }
+    private fun pauseGame() {
+        isGamePaused = true
+        Game.getGame().pause()
+
+        // Disable all game control buttons
+        binding.rotateButton.isEnabled = false
+        binding.leftButton.isEnabled = false
+        binding.rightButton.isEnabled = false
+        binding.downButton.isEnabled = false
+        binding.upButton.isEnabled = false
+    }
+    private fun resumeGame() {
+        isGamePaused = false
+        Game.getGame().resume()
+
+        // Re-enable all game control buttons
+        binding.rotateButton.isEnabled = true
+        binding.leftButton.isEnabled = true
+        binding.rightButton.isEnabled = true
+        binding.downButton.isEnabled = true
+        binding.upButton.isEnabled = true
+
+        // Special handling for rotate button based on edge condition
+        binding.rotateButton.isEnabled = !isBlockOnRightEdge
+    }
+
+
     override fun onStop() {
         Game.getGame().detach(this)
         super.onStop()
     }
+
     override fun onDestroy() {
         super.onDestroy()
         Game.getGame().detach(this)
         Game.getGame().end()
     }
+
     /**
      * Draw initial background and lines
      */
     private fun drawInitialBoard(canvas: Canvas) {
         canvas.drawRGB(BlockColorTheme.getTheme(themeName)[7][1], BlockColorTheme.getTheme(themeName)[7][2], BlockColorTheme.getTheme(themeName)[7][3])
         val paint: Paint = Paint()
-        paint.setARGB(255,255,255,255)
+        paint.setARGB(255, 255, 255, 255)
         for (i in 0..10) {
             canvas.drawRect(i * (blockWidth + lineWidth), 0F, i * (blockWidth + lineWidth) + lineWidth, canvasHeight, paint)
         }
@@ -220,8 +281,8 @@ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
                 var top = i * blockWidth + (i + 1) * lineWidth
                 var right = left + blockWidth
                 var bottom = top + blockWidth
-                val colorIndex = boardMatrix[i][j] -1
-                if(colorIndex >= 0 && colorIndex < paintArray.size) {
+                val colorIndex = boardMatrix[i][j] - 1
+                if (colorIndex >= 0 && colorIndex < paintArray.size) {
                     canvas.drawRect(left, top, right, bottom, paintArray[colorIndex])
                 } else {
                     //Optional, draw some color or skip to better handle this out-of-bound value
@@ -238,7 +299,7 @@ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
     private fun drawInitialNextBoard(canvas: Canvas) {
         canvas.drawRGB(BlockColorTheme.getTheme(themeName)[7][1], BlockColorTheme.getTheme(themeName)[7][2], BlockColorTheme.getTheme(themeName)[7][3])
         val paint: Paint = Paint()
-        paint.setARGB(255,255,255,255)
+        paint.setARGB(255, 255, 255, 255)
         for (i in 0..4) {
             canvas.drawRect(i * (blockWidth + lineWidth), 0F, i * (blockWidth + lineWidth) + lineWidth, nextCanvasHeight, paint)
         }
@@ -252,7 +313,7 @@ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
      */
     private fun drawInstantNextBoard(canvas: Canvas, nextMatrix: Array<IntArray>, paintArray: Array<Paint>) {
         for (i in 0..3) {
-            for (j in 0.. 3) {
+            for (j in 0..3) {
                 if (nextMatrix[i][j] == 0) {
                     continue
                 }
@@ -313,7 +374,7 @@ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
     }
 
     override fun updateGameInfo(totalClearedLines: Int, score: Int, level: Int) {
-        runOnUiThread{
+        runOnUiThread {
             if (lines?.text != totalClearedLines.toString()) {
                 lineAnimator.start()
                 lines?.text = totalClearedLines.toString()
