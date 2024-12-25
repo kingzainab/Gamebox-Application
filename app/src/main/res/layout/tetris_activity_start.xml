@@ -13,6 +13,7 @@
         android:id="@+id/animation_view"
         android:layout_width="240dp"
         android:layout_height="240dp"
+
         android:layout_marginTop="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,36 +25,46 @@
 
     <Button
         android:id="@+id/settingButton"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
+        android:layout_width="241dp"
+        android:layout_height="71dp"
+        android:textColor="@color/white"
+        android:textSize="24dp"
+        android:textStyle="bold"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="150dp"
         android:text="@string/setting"
+        android:backgroundTint="#6055ae"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/HighScoreButton"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
+        android:layout_width="241dp"
+        android:layout_height="71dp"
+        android:textColor="@color/white"
+        android:textSize="24dp"
+        android:textStyle="bold"
         android:layout_marginBottom="25dp"
+
         android:text="@string/high_score"
+        android:backgroundTint="#6055ae"
         app:layout_constraintBottom_toTopOf="@+id/settingButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/NewGameButton"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
+        android:layout_width="241dp"
+        android:layout_height="71dp"
+        android:textColor="@color/white"
+        android:textSize="24dp"
+        android:textStyle="bold"
         android:layout_marginBottom="25dp"
+        android:backgroundTint="#6055ae"
         android:text="@string/new_game"
+
         app:layout_constraintBottom_toTopOf="@+id/HighScoreButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

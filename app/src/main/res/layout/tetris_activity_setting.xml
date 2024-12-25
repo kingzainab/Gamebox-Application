@@ -6,9 +6,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/tetris_bg"
+
     tools:context=".activity.SettingActivity">
 
     <TextView
+        android:textColor="@color/white"
         android:id="@+id/t4c6"
         android:layout_width="25dp"
         android:layout_height="40dp"
@@ -23,6 +26,7 @@
         android:id="@+id/t3c1"
         android:layout_width="25dp"
         android:layout_height="40dp"
+        android:textColor="@color/white"
         tools:viewBindingIgnore="true"
         android:layout_marginStart="16dp"
         android:layout_marginTop="18dp"
@@ -96,10 +100,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="44dp"
         android:layout_marginEnd="20dp"
         android:max="14"
         android:progress="0"
+        android:progressTint="#FFFEFE"
+        android:thumbTint="#F8F8F8"
         app:layout_constraintEnd_toStartOf="@+id/level_instant"
         app:layout_constraintStart_toEndOf="@+id/level_title"
         app:layout_constraintTop_toTopOf="parent" />
@@ -108,12 +114,13 @@
         android:id="@+id/level_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
-        android:fontFamily="sans-serif-black"
         tools:viewBindingIgnore="true"
         android:text="Level"
-        android:textSize="24sp"
+        android:textSize="28sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/seekBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -126,7 +133,8 @@
         android:layout_marginEnd="20dp"
         android:fontFamily="sans-serif-black"
         android:text="@string/_1"
-        android:textSize="18sp"
+        android:textColor="#FAF8F8"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -134,7 +142,7 @@
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="2dp"
         android:layout_marginTop="40dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
@@ -145,6 +153,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="20dp"
             android:fontFamily="sans-serif-black"
             android:text="@string/modern" />
 
@@ -153,7 +164,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:textStyle="bold"
+            android:textSize="20dp"
             android:fontFamily="sans-serif-black"
+            android:textColor="@color/white"
             android:text="@string/monalisa" />
 
         <RadioButton
@@ -162,6 +176,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:fontFamily="sans-serif-black"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="@color/white"
             android:text="@string/belafonte" />
 
         <RadioButton
@@ -169,7 +186,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:textStyle="bold"
+            android:textSize="20dp"
             android:fontFamily="sans-serif-black"
+            android:textColor="@color/white"
             android:text="@string/espresso" />
 
         <RadioButton
@@ -177,7 +197,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:textStyle="bold"
+            android:textSize="20dp"
             android:fontFamily="sans-serif-black"
+            android:textColor="@color/white"
             android:text="@string/spectrum" />
 
         <RadioButton
@@ -185,6 +208,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="@color/white"
             android:fontFamily="sans-serif-black"
             android:text="@string/rainbow" />
     </RadioGroup>
@@ -196,9 +222,11 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         tools:viewBindingIgnore="true"
+        android:textColor="@color/white"
         android:fontFamily="sans-serif-black"
         android:text="@string/theme"
-        android:textSize="24sp"
+        android:textSize="28sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/level_title" />
 

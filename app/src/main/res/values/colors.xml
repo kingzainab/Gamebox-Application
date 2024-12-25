@@ -20,6 +20,7 @@
     <color name="primary">#fdb913</color>
     <color name="primary_var">#f4791f</color>
     <color name="accent">#cfdcec</color>
+    <color name="tetrisBtnColor">#312b5a</color>
 
     <color name="block1">#047d68</color>>
     <color name="block2">#c1d730</color>>

@@ -25,7 +25,7 @@
         android:layout_alignTop="@+id/gameName"
         android:layout_marginEnd="20dp"
         android:layout_toStartOf="@id/highScoreLayout"
-        android:textColor="B02772"
+        android:textColor="#B02772"
         android:orientation="vertical">
 
         <TextView
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:text="SCORE"
             android:textSize="16dp"
-            android:textColor="B02772" />
+            android:textColor="#B02772" />
 
         <TextView
             android:id="@+id/scoreTextView"
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="16dp"
-            android:textColor="B02772" />
+            android:textColor="#B02772" />
     </LinearLayout>
 
     <LinearLayout
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:text="HIGH SCORE"
             android:textSize="16dp"
-            android:textColor="B02772" />
+            android:textColor="#B02772" />
 
         <TextView
             android:id="@+id/highScoreTextView"
@@ -323,5 +323,5 @@
         android:background="#D388A0"
         android:onClick="reset"
         android:text="Play Again"
-        android:textColor="FFEAF1"/>
+        android:textColor="#FFEAF1"/>
 </RelativeLayout>

@@ -63,7 +63,7 @@ public class GameFragment extends Fragment {
                     Intent intentGame1 = new Intent(requireContext(), FB_SplashScreen.class);
                     startActivity(intentGame1);
                     break;
-                case 1:
+                case 3:
 
                     Intent newIntent = new Intent(requireContext(), BG_SplashScreen.class);
                     startActivity(newIntent);
@@ -72,15 +72,15 @@ public class GameFragment extends Fragment {
                     Intent snakeIntent = new Intent(requireContext(), SG_SplashScreen.class);
                     startActivity(snakeIntent);
                     break;
-                case 3:
+                case 5:
                     Intent TtIntent = new Intent(requireContext(), TT_SplashScreen.class);
                     startActivity(TtIntent);
                     break;
-                case 4:
+                case 1:
                     Intent TetristIntent = new Intent(requireContext(), StartActivity.class);
                     startActivity(TetristIntent);
                     break;
-                case 5:
+                case 4:
                     Intent TZFEIntent = new Intent(requireContext(), tzfe_MainActivity.class);
                     startActivity(TZFEIntent);
                     break;
