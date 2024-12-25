@@ -12,35 +12,25 @@
         android:id="@+id/level_two_sound"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="10dp"
 
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.714"
-        app:srcCompat="@drawable/level_two_sound" />
+        app:srcCompat="@drawable/icons_speaker" />
 
-    <ImageView
-        android:id="@+id/level_one_sound"
-
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="16dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.714"
-        app:srcCompat="@drawable/level_one_sound" />
 
     <ImageView
         android:id="@+id/zero_sound"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="27dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.714"
-        app:srcCompat="@drawable/zero_sound" />
+        app:srcCompat="@drawable/icons_mute" />
+
     <ImageView
         android:id="@+id/imageView10"
         android:layout_width="140dp"

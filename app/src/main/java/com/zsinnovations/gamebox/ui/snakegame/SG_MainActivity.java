@@ -64,8 +64,8 @@ public class SG_MainActivity extends AppCompatActivity {
         sound_min_level = findViewById(R.id.level_one_sound);
         sound_mute = findViewById(R.id.zero_sound);
 
-        animation = AnimationUtils.loadAnimation(this, R.anim.scale_animation);
-        startButton.setAnimation(animation);
+//        animation = AnimationUtils.loadAnimation(this, R.anim.scale_animation);
+//        startButton.setAnimation(animation);
 
         setupClickListeners();
     }
@@ -73,7 +73,7 @@ public class SG_MainActivity extends AppCompatActivity {
     private void initializeMediaPlayer() {
         try {
             if (mediaPlayer == null) {
-                mediaPlayer = MediaPlayer.create(this, R.raw.fb_audio);
+                mediaPlayer = MediaPlayer.create(this, R.raw.snake_game_theme);
                 if (mediaPlayer != null) {
                     mediaPlayer.setLooping(true);
                     // Restore previous position

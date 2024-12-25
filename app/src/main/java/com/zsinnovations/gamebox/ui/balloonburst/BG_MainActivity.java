@@ -41,8 +41,8 @@ public class BG_MainActivity extends AppCompatActivity {
         sound_max_level = findViewById(R.id.level_two_sound);
         sound_min_level = findViewById(R.id.level_one_sound);
         sound_mute = findViewById(R.id.zero_sound);
-        animation = AnimationUtils.loadAnimation(BG_MainActivity.this, R.anim.scale_animation);
-        startButton.setAnimation(animation);
+//        animation = AnimationUtils.loadAnimation(BG_MainActivity.this, R.anim.scale_animation);
+//        startButton.setAnimation(animation);
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {

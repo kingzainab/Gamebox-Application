@@ -320,8 +320,8 @@
         android:layout_below="@+id/gameName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
-        android:background="#D388A0"
+        android:backgroundTint="#d388a0"
         android:onClick="reset"
         android:text="Play Again"
-        android:textColor="#FFEAF1"/>
+        android:textColor="#FFEAF1" />
 </RelativeLayout>

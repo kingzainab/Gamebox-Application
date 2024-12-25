@@ -81,6 +81,12 @@ public class tzfe_MainActivity extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    public void onBackPressed() {
+        showExitConfirmationDialog();
+    }
+
     private void showExitConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(tzfe_MainActivity.this);
         builder.setTitle("2048 📱");

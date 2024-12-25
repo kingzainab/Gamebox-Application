@@ -11,8 +11,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
 
@@ -235,7 +235,7 @@ public class tzfe_GameActivity extends AppCompatActivity implements GestureDetec
             highScore = sharedPreferences.getLong("highScore", 0);
             if (score > highScore)
                 sharedPreferences.edit().putLong("highScore", score).apply();
-            Toast.makeText(getApplicationContext(), "Game Over", Toast.LENGTH_SHORT).show();
+            showGameOverDialog(); // Call the method to display the dialog
             isGame = false;
             playAgainButton.setVisibility(View.VISIBLE);
         }
@@ -277,7 +277,7 @@ public class tzfe_GameActivity extends AppCompatActivity implements GestureDetec
             highScore = sharedPreferences.getLong("highScore", 0);
             if (score > highScore)
                 sharedPreferences.edit().putLong("highScore", score).apply();
-            Toast.makeText(getApplicationContext(), "Game Over", Toast.LENGTH_SHORT).show();
+            showGameOverDialog();
             isGame = false;
             playAgainButton.setVisibility(View.VISIBLE);
         }
@@ -319,7 +319,7 @@ public class tzfe_GameActivity extends AppCompatActivity implements GestureDetec
             highScore = sharedPreferences.getLong("highScore", 0);
             if (score > highScore)
                 sharedPreferences.edit().putLong("highScore", score).apply();
-            Toast.makeText(getApplicationContext(), "Game Over", Toast.LENGTH_SHORT).show();
+            showGameOverDialog();
             isGame = false;
             playAgainButton.setVisibility(View.VISIBLE);
         }
@@ -361,10 +361,47 @@ public class tzfe_GameActivity extends AppCompatActivity implements GestureDetec
             highScore = sharedPreferences.getLong("highScore", 0);
             if (score > highScore)
                 sharedPreferences.edit().putLong("highScore", score).apply();
-            Toast.makeText(getApplicationContext(), "Game Over", Toast.LENGTH_SHORT).show();
+            showGameOverDialog();
             isGame = false;
             playAgainButton.setVisibility(View.VISIBLE);
         }
+    }
+
+
+    private void showGameOverDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Game Over")
+                .setMessage("Your Score: " + score)
+                .setPositiveButton("Play Again", (dialog, which) -> {
+                    reset(null);  // Reset the game
+                    playAgainButton.setVisibility(View.GONE);
+                    dialog.dismiss();
+                })
+                .setNegativeButton("Exit", (dialog, which) -> {
+                    finish(); // Close the activity
+                })
+                .setCancelable(false) //Prevent dialog from being cancelled by back press
+                .show();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        showExitConfirmationDialog();
+    }
+
+    private void showExitConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Exit Game")
+                .setMessage("Are you sure you want to go to home screen?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    finish(); // Close the activity
+                })
+                .setNegativeButton("No", (dialog, which) -> {
+                    dialog.dismiss(); // Dismiss the dialog and stay in the game
+                })
+                .setCancelable(false)
+                .show();
     }
 
     int getDirection(double x1, double y1, double x2, double y2) {
