@@ -1,13 +1,18 @@
 package com.zsinnovations.gamebox.ui.TZFE;
 
+import static com.zsinnovations.gamebox.utils.MusicManager.mediaPlayer;
+
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Button;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.zsinnovations.gamebox.MainActivity;
 import com.zsinnovations.gamebox.R;
 
 public class tzfe_MainActivity extends AppCompatActivity {
@@ -74,5 +79,27 @@ public class tzfe_MainActivity extends AppCompatActivity {
             backgroundMusic.release();
             backgroundMusic = null;
         }
+    }
+
+    private void showExitConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(tzfe_MainActivity.this);
+        builder.setTitle("2048 📱");
+        builder.setMessage("Are you sure you want to quit the game?");
+        builder.setCancelable(false);
+
+        builder.setNegativeButton("Quit", (dialog, which) -> {
+            if (mediaPlayer != null) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+                mediaPlayer = null;
+            }
+            Intent intent = new Intent(tzfe_MainActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        builder.setPositiveButton("Cancel", (dialog, which) -> dialog.cancel());
+
+        builder.create().show();
     }
 }
