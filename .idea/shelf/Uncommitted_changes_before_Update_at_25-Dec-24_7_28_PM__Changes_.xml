@@ -1,0 +1,10 @@
+<changelist name="Uncommitted_changes_before_Update_at_25-Dec-24_7_28_PM_[Changes]" date="1735136887582" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25-Dec-24_7_28_PM_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 25-Dec-24 7:28 PM [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="app/src/main/res/drawable/tetris_bg.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/src/main/res/drawable/main_bg_gamebox.png" />
+  </binary>
+</changelist>

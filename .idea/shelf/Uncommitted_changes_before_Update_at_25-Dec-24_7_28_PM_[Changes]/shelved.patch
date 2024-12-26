@@ -1,0 +1,738 @@
+Index: app/src/main/java/com/zsinnovations/gamebox/ui/tetris/activity/StartActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.zsinnovations.gamebox.ui.tetris.activity\r\n\r\nimport android.content.Intent\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport androidx.activity.OnBackPressedCallback\r\nimport androidx.appcompat.app.AlertDialog\r\nimport com.zsinnovations.gamebox.MainActivity\r\nimport com.zsinnovations.gamebox.databinding.TetrisActivityStartBinding\r\nimport com.zsinnovations.gamebox.ui.mainscreen.GameFragment\r\n\r\nclass StartActivity : AppCompatActivity() {\r\n    private lateinit var binding: TetrisActivityStartBinding\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        binding = TetrisActivityStartBinding.inflate(layoutInflater)\r\n        setContentView(binding.root)\r\n\r\n        binding.NewGameButton.setOnClickListener {\r\n            val intent = Intent(this@StartActivity, Tetris_MainActivity::class.java)\r\n            startActivity(intent)\r\n        }\r\n\r\n        binding.settingButton.setOnClickListener {\r\n            val intent = Intent(this@StartActivity, SettingActivity::class.java)\r\n            startActivity(intent)\r\n        }\r\n\r\n        binding.HighScoreButton.setOnClickListener {\r\n            val intent = Intent(this@StartActivity, HighscoreActivity::class.java)\r\n            startActivity(intent)\r\n        }\r\n\r\n        setupOnBackPressedDispatcher()\r\n    }\r\n\r\n    private fun setupOnBackPressedDispatcher() {\r\n        val callback = object : OnBackPressedCallback(true) {\r\n            override fun handleOnBackPressed() {\r\n                showExitConfirmationDialog()\r\n            }\r\n        }\r\n        onBackPressedDispatcher.addCallback(this, callback)\r\n    }\r\n    private fun navigateToStartActivity() {\r\n        val intent = Intent(this, MainActivity::class.java)\r\n        startActivity(intent)\r\n        finish()\r\n    }\r\n\r\n    private fun showExitConfirmationDialog() {\r\n        AlertDialog.Builder(this)\r\n            .setTitle(\"Confirm Exit\")\r\n            .setMessage(\"Are you sure you want to exit the application?\")\r\n            .setPositiveButton(\"Yes\") { _, _ ->\r\n                navigateToStartActivity() // Exit the app by finishing the activity\r\n            }\r\n            .setNegativeButton(\"No\", null)\r\n            .show()\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/zsinnovations/gamebox/ui/tetris/activity/StartActivity.kt b/app/src/main/java/com/zsinnovations/gamebox/ui/tetris/activity/StartActivity.kt
+--- a/app/src/main/java/com/zsinnovations/gamebox/ui/tetris/activity/StartActivity.kt	(revision 15ab75f9568e59b86af283607a5d5582f199cfc9)
++++ b/app/src/main/java/com/zsinnovations/gamebox/ui/tetris/activity/StartActivity.kt	(date 1735127513794)
+@@ -3,11 +3,7 @@
+ import android.content.Intent
+ import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
+-import androidx.activity.OnBackPressedCallback
+-import androidx.appcompat.app.AlertDialog
+-import com.zsinnovations.gamebox.MainActivity
+ import com.zsinnovations.gamebox.databinding.TetrisActivityStartBinding
+-import com.zsinnovations.gamebox.ui.mainscreen.GameFragment
+ 
+ class StartActivity : AppCompatActivity() {
+     private lateinit var binding: TetrisActivityStartBinding
+@@ -31,33 +27,5 @@
+             val intent = Intent(this@StartActivity, HighscoreActivity::class.java)
+             startActivity(intent)
+         }
+-
+-        setupOnBackPressedDispatcher()
+-    }
+-
+-    private fun setupOnBackPressedDispatcher() {
+-        val callback = object : OnBackPressedCallback(true) {
+-            override fun handleOnBackPressed() {
+-                showExitConfirmationDialog()
+-            }
+-        }
+-        onBackPressedDispatcher.addCallback(this, callback)
+-    }
+-    private fun navigateToStartActivity() {
+-        val intent = Intent(this, MainActivity::class.java)
+-        startActivity(intent)
+-        finish()
+-    }
+-
+-    private fun showExitConfirmationDialog() {
+-        AlertDialog.Builder(this)
+-            .setTitle("Confirm Exit")
+-            .setMessage("Are you sure you want to exit the application?")
+-            .setPositiveButton("Yes") { _, _ ->
+-                navigateToStartActivity() // Exit the app by finishing the activity
+-            }
+-            .setNegativeButton("No", null)
+-            .show()
+-
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/zsinnovations/gamebox/ui/snakegame/SG_MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.zsinnovations.gamebox.ui.snakegame;\r\n\r\nimport android.annotation.SuppressLint;\r\nimport android.content.Intent;\r\nimport android.content.SharedPreferences;\r\nimport android.media.MediaPlayer;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.view.WindowManager;\r\nimport android.view.animation.Animation;\r\nimport android.view.animation.AnimationUtils;\r\nimport android.widget.Button;\r\nimport android.widget.ImageView;\r\n\r\nimport androidx.activity.EdgeToEdge;\r\nimport androidx.activity.OnBackPressedCallback;\r\nimport androidx.appcompat.app.AlertDialog;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.core.graphics.Insets;\r\nimport androidx.core.view.ViewCompat;\r\nimport androidx.core.view.WindowInsetsCompat;\r\n\r\nimport com.zsinnovations.gamebox.MainActivity;\r\nimport com.zsinnovations.gamebox.R;\r\nimport com.zsinnovations.gamebox.ui.balloonburst.BG_GameActivity;\r\nimport com.zsinnovations.gamebox.ui.balloonburst.BG_MainActivity;\r\n\r\npublic class SG_MainActivity extends AppCompatActivity {\r\n    private static final String PREFS_NAME = \"SnakeGamePrefs\";\r\n    private static final String KEY_VOLUME_STATE = \"VolumeState\";\r\n    private static final String KEY_MUSIC_POSITION = \"MusicPosition\";\r\n    private static final String KEY_MUSIC_PLAYING = \"MusicPlaying\";\r\n\r\n    private Animation animation;\r\n    private ImageView sound_max_level, sound_min_level, sound_mute;\r\n    private Button startButton;\r\n    private MediaPlayer mediaPlayer;\r\n    private boolean status = false;\r\n    private SharedPreferences preferences;\r\n\r\n    @SuppressLint(\"MissingInflatedId\")\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        getWindow().setFlags(\r\n                WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,\r\n                WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED\r\n        );\r\n        setContentView(R.layout.activity_sg_main);\r\n\r\n        // Initialize SharedPreferences\r\n        preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);\r\n        status = preferences.getBoolean(KEY_VOLUME_STATE, false);\r\n\r\n        initializeViews();\r\n        setupBackPress();\r\n        initializeMediaPlayer();\r\n        updateSoundIconsBasedOnState();\r\n    }\r\n\r\n    private void initializeViews() {\r\n        startButton = findViewById(R.id.startButton);\r\n        sound_max_level = findViewById(R.id.level_two_sound);\r\n        sound_min_level = findViewById(R.id.level_one_sound);\r\n        sound_mute = findViewById(R.id.zero_sound);\r\n\r\n        animation = AnimationUtils.loadAnimation(this, R.anim.scale_animation);\r\n        startButton.setAnimation(animation);\r\n\r\n        setupClickListeners();\r\n    }\r\n\r\n    private void initializeMediaPlayer() {\r\n        try {\r\n            if (mediaPlayer == null) {\r\n                mediaPlayer = MediaPlayer.create(this, R.raw.fb_audio);\r\n                if (mediaPlayer != null) {\r\n                    mediaPlayer.setLooping(true);\r\n                    // Restore previous position\r\n                    int savedPosition = preferences.getInt(KEY_MUSIC_POSITION, 0);\r\n                    mediaPlayer.seekTo(savedPosition);\r\n\r\n                    // Set volume based on saved state\r\n                    float volume = status ? 0.0f : 1.0f;\r\n                    mediaPlayer.setVolume(volume, volume);\r\n\r\n                    // Start playing if it was playing before\r\n                    if (preferences.getBoolean(KEY_MUSIC_PLAYING, true)) {\r\n                        mediaPlayer.start();\r\n                    }\r\n                }\r\n            }\r\n        } catch (Exception e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n\r\n    private void setupClickListeners() {\r\n        View.OnClickListener soundClickListener = v -> toggleSound();\r\n        sound_max_level.setOnClickListener(soundClickListener);\r\n        sound_mute.setOnClickListener(soundClickListener);\r\n\r\n        startButton.setOnClickListener(v -> {\r\n            saveMusicState();\r\n            Intent intent = new Intent(SG_MainActivity.this, SG_GameActivity.class);\r\n//            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);\r\n            startActivity(intent);\r\n//            overridePendingTransition(0, 0);\r\n        });\r\n    }\r\n\r\n    private void toggleSound() {\r\n        if (mediaPlayer != null) {\r\n            status = !status;\r\n            float volume = status ? 0.0f : 1.0f;\r\n            mediaPlayer.setVolume(volume, volume);\r\n\r\n            // Update UI\r\n            sound_max_level.setVisibility(status ? View.INVISIBLE : View.VISIBLE);\r\n            sound_mute.setVisibility(status ? View.VISIBLE : View.INVISIBLE);\r\n\r\n            // Save state\r\n            preferences.edit()\r\n                    .putBoolean(KEY_VOLUME_STATE, status)\r\n                    .apply();\r\n        }\r\n    }\r\n\r\n    private void updateSoundIconsBasedOnState() {\r\n        sound_max_level.setVisibility(status ? View.INVISIBLE : View.VISIBLE);\r\n        sound_mute.setVisibility(status ? View.VISIBLE : View.INVISIBLE);\r\n    }\r\n\r\n    private void setupBackPress() {\r\n        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {\r\n            @Override\r\n            public void handleOnBackPressed() {\r\n                showExitConfirmationDialog();\r\n            }\r\n        });\r\n    }\r\n\r\n    @Override\r\n    protected void onResume() {\r\n        super.onResume();\r\n        if (mediaPlayer == null) {\r\n            initializeMediaPlayer();\r\n        } else if (!mediaPlayer.isPlaying() &&\r\n                preferences.getBoolean(KEY_MUSIC_PLAYING, true)) {\r\n            mediaPlayer.start();\r\n        }\r\n    }\r\n\r\n    private void saveMusicState() {\r\n        if (mediaPlayer != null) {\r\n            SharedPreferences.Editor editor = preferences.edit();\r\n            editor.putInt(KEY_MUSIC_POSITION, mediaPlayer.getCurrentPosition());\r\n            editor.putBoolean(KEY_MUSIC_PLAYING, mediaPlayer.isPlaying());\r\n            editor.apply();\r\n        }\r\n    }\r\n\r\n    @Override\r\n    protected void onPause() {\r\n        super.onPause();\r\n        if (mediaPlayer != null && mediaPlayer.isPlaying()) {\r\n            saveMusicState();\r\n            mediaPlayer.pause();\r\n        }\r\n    }\r\n\r\n    @Override\r\n    protected void onStop() {\r\n        super.onStop();\r\n        if (mediaPlayer != null && mediaPlayer.isPlaying()) {\r\n            saveMusicState();\r\n            mediaPlayer.pause();\r\n        }\r\n    }\r\n\r\n    @Override\r\n    protected void onDestroy() {\r\n        super.onDestroy();\r\n        if (mediaPlayer != null) {\r\n            saveMusicState();\r\n            mediaPlayer.release();\r\n            mediaPlayer = null;\r\n        }\r\n    }\r\n\r\n    private void showExitConfirmationDialog() {\r\n        AlertDialog.Builder builder = new AlertDialog.Builder(this);\r\n        builder.setTitle(\"Grow the Snake\");\r\n        builder.setMessage(\"Are you sure you want to quit the game?\");\r\n        builder.setCancelable(false);\r\n\r\n        builder.setNegativeButton(\"Quit\", (dialog, which) -> {\r\n            if (mediaPlayer != null) {\r\n                if (mediaPlayer.isPlaying()) {\r\n                    mediaPlayer.stop();\r\n                }\r\n                mediaPlayer.release();\r\n                mediaPlayer = null;\r\n            }\r\n            finish();\r\n            Intent intent = new Intent(this, MainActivity.class);\r\n            startActivity(intent);\r\n        });\r\n\r\n        builder.setPositiveButton(\"Cancel\", (dialog, which) -> dialog.cancel());\r\n        builder.create().show();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/zsinnovations/gamebox/ui/snakegame/SG_MainActivity.java b/app/src/main/java/com/zsinnovations/gamebox/ui/snakegame/SG_MainActivity.java
+--- a/app/src/main/java/com/zsinnovations/gamebox/ui/snakegame/SG_MainActivity.java	(revision 15ab75f9568e59b86af283607a5d5582f199cfc9)
++++ b/app/src/main/java/com/zsinnovations/gamebox/ui/snakegame/SG_MainActivity.java	(date 1735127513791)
+@@ -103,9 +103,9 @@
+         startButton.setOnClickListener(v -> {
+             saveMusicState();
+             Intent intent = new Intent(SG_MainActivity.this, SG_GameActivity.class);
+-//            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
++            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+             startActivity(intent);
+-//            overridePendingTransition(0, 0);
++            overridePendingTransition(0, 0);
+         });
+     }
+ 
+Index: app/src/main/java/com/zsinnovations/gamebox/ui/tetris/game/Game.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.zsinnovations.gamebox.ui.tetris.game;\r\n\r\nimport com.zsinnovations.gamebox.ui.tetris.activity.Tetris_MainActivity;\r\nimport com.zsinnovations.gamebox.ui.tetris.blocks.Shape;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.util.Timer;\r\nimport java.util.TimerTask;\r\nimport java.util.concurrent.atomic.AtomicInteger;\r\nimport java.util.concurrent.atomic.AtomicIntegerArray;\r\n\r\npublic class Game {\r\n    private Shape currentBlock = null;\r\n    private volatile boolean isPaused = false;\r\n    private Timer dropTimer;\r\n    private TimerTask currentTask = null;\r\n    private List<GameObserver> observers = new ArrayList<>();\r\n    private int initialLevel = 1;\r\n    private volatile int totalClearedLines = 0;\r\n    private volatile int level = 1;\r\n    private volatile int score = 0;\r\n    private volatile AtomicInteger blockStatus = new AtomicInteger(0);\r\n    private volatile AtomicIntegerArray leftTop = new AtomicIntegerArray(2);\r\n    private Thread rightThread;\r\n    private Thread leftThread;\r\n    private Thread dropThread;\r\n    private Thread fastDropThread;\r\n    private boolean levelUp = false;\r\n    private boolean rightThreadStarted;\r\n    private boolean leftThreadStarted;\r\n    private boolean dropThreadStarted;\r\n    private boolean fastDropThreadStarted;\r\n\r\n    public static Game game = new Game();\r\n\r\n    private Game() {\r\n        initializeThreads();\r\n    }\r\n\r\n    private void initializeThreads() {\r\n        rightThread = new Thread(() -> {\r\n            leftTop = Board.getBoard().moveBlockRight(currentBlock, leftTop, blockStatus);\r\n            notifyObserversUpdate();\r\n        });\r\n        leftThread = new Thread(() -> {\r\n            leftTop = Board.getBoard().moveBlockLeft(currentBlock, leftTop, blockStatus);\r\n            notifyObserversUpdate();\r\n        });\r\n        dropThread = new Thread(() -> {\r\n            leftTop = Board.getBoard().dropBlock(currentBlock, leftTop, blockStatus);\r\n            notifyObserversUpdate();\r\n        });\r\n        fastDropThread = new Thread(() -> {\r\n            leftTop = Board.getBoard().fastDropBlock(currentBlock, leftTop, blockStatus);\r\n            notifyObserversUpdate();\r\n        });\r\n    }\r\n\r\n    public static Game getGame() {\r\n        return game;\r\n    }\r\n\r\n    public void setInitialLevel(int initialLevel) {\r\n        this.initialLevel = initialLevel;\r\n        level = initialLevel;\r\n    }\r\n\r\n    public synchronized void pause() {\r\n        if (!isPaused) {\r\n            isPaused = true;\r\n            if (dropTimer != null) {\r\n                dropTimer.cancel();\r\n                dropTimer = null;\r\n            }\r\n            interruptAllThreads();\r\n        }\r\n    }\r\n\r\n    private void interruptAllThreads() {\r\n        if (rightThread != null) rightThread.interrupt();\r\n        if (leftThread != null) leftThread.interrupt();\r\n        if (dropThread != null) dropThread.interrupt();\r\n        if (fastDropThread != null) fastDropThread.interrupt();\r\n    }\r\n\r\n    public synchronized void resume() {\r\n        if (isPaused) {\r\n            isPaused = false;\r\n            initializeThreads();\r\n            resetThreadFlags();\r\n            scheduleTimer();\r\n        }\r\n    }\r\n\r\n    private void resetThreadFlags() {\r\n        rightThreadStarted = false;\r\n        leftThreadStarted = false;\r\n        dropThreadStarted = false;\r\n        fastDropThreadStarted = false;\r\n    }\r\n\r\n    public void start() {\r\n        isPaused = false;\r\n        notifyObserversClear(0, 0, initialLevel);\r\n        scheduleTimer();\r\n    }\r\n\r\n    private void scheduleTimer() {\r\n        if (isPaused) return;\r\n\r\n        if (dropTimer != null) {\r\n            dropTimer.cancel();\r\n        }\r\n\r\n        dropTimer = new Timer();\r\n        int period = (20 - level) * 50;\r\n\r\n        currentTask = new TimerTask() {\r\n            @Override\r\n            public void run() {\r\n                if (isPaused) return;\r\n\r\n                if (levelUp) {\r\n                    dropTimer.cancel();\r\n                    levelUp = false;\r\n                    scheduleTimer();\r\n                    return;\r\n                }\r\n\r\n                if (currentBlock == null) {\r\n                    leftTop = generateNewBlock();\r\n                    blockStatus.set(0);\r\n                }\r\n\r\n                if (leftTop.get(0) == -100) {\r\n                    notifyObserversEnd(score);\r\n                    dropTimer.cancel();\r\n                    return;\r\n                }\r\n\r\n                leftTop = dropBlock();\r\n                if (leftTop.get(0) == -10) {\r\n                    currentBlock = null;\r\n                }\r\n\r\n                notifyObserversUpdate();\r\n            }\r\n        };\r\n\r\n        dropTimer.scheduleAtFixedRate(currentTask, period / 3, period);\r\n    }\r\n\r\n    private void updateGameInfo(int clearedLines) {\r\n        if (clearedLines == 0) {\r\n            return;\r\n        }\r\n        totalClearedLines += clearedLines;\r\n        score += ScoreCounter.getScoreCounter().lineToScore(clearedLines);\r\n        int newLevel = LevelCounter.getLevelCounter().lineToLevel(totalClearedLines);\r\n        if (initialLevel + newLevel > level) {\r\n            levelUp = true;\r\n        }\r\n        level = initialLevel + newLevel;\r\n        notifyObserversClear(totalClearedLines, score, level);\r\n    }\r\n\r\n    public void end() {\r\n        isPaused = false;\r\n        if (dropTimer != null) {\r\n            dropTimer.cancel();\r\n            dropTimer = null;\r\n        }\r\n\r\n        levelUp = false;\r\n        totalClearedLines = 0;\r\n        level = initialLevel;\r\n        score = 0;\r\n        currentBlock = null;\r\n\r\n        interruptAllThreads();\r\n        Board.getBoard().clear();\r\n        resetThreadFlags();\r\n    }\r\n\r\n    public boolean isPaused() {\r\n        return isPaused;\r\n    }\r\n\r\n    public int[][] getCurrentBoardMatrix() {\r\n        return Board.getBoard().getBoardMatrix();\r\n    }\r\n\r\n    private synchronized AtomicIntegerArray generateNewBlock() {\r\n        updateGameInfo(Board.getBoard().getClearedLines());\r\n        currentBlock = BlockGenerator.getBlockGenerator().generateBlock();\r\n        notifyObserversNew(BlockGenerator.getBlockGenerator().getNextBlock().getShape());\r\n        return Board.getBoard().addBlock(currentBlock);\r\n    }\r\n\r\n    private synchronized AtomicIntegerArray dropBlock() {\r\n        return Board.getBoard().dropBlock(currentBlock, leftTop, blockStatus);\r\n    }\r\n\r\n    public synchronized void rotateBlock() {\r\n        if (leftTop.get(0) == 0 || leftTop.get(0) == -1 || leftTop.get(0) > 8) {\r\n            return;\r\n        }\r\n\r\n        Board.getBoard().rotateBlock(currentBlock, leftTop, blockStatus);\r\n        if (blockStatus.get() == 3) {\r\n            blockStatus.set(0);\r\n        } else {\r\n            blockStatus.getAndIncrement();\r\n        }\r\n        notifyObserversUpdate();\r\n    }\r\n\r\n    public synchronized void moveBlockLeft() {\r\n        if (leftTop.get(0) < -2) {\r\n            return;\r\n        }\r\n        if (!leftThreadStarted) {\r\n            leftThread.start();\r\n            leftThreadStarted = true;\r\n        } else {\r\n            leftThread.run();\r\n        }\r\n    }\r\n\r\n    public synchronized void moveBlockRight() {\r\n        if (leftTop.get(0) < -2) {\r\n            return;\r\n        }\r\n        if (!rightThreadStarted) {\r\n            rightThread.start();\r\n            rightThreadStarted = true;\r\n        } else {\r\n            rightThread.run();\r\n        }\r\n    }\r\n\r\n    public synchronized void moveBlockDown() {\r\n        if (leftTop.get(0) < -2 || leftTop.get(1) > 15) {\r\n            return;\r\n        }\r\n        if (!dropThreadStarted) {\r\n            dropThread.start();\r\n            dropThreadStarted = true;\r\n        } else {\r\n            dropThread.run();\r\n        }\r\n    }\r\n\r\n    public synchronized void moveBlockDownFast() {\r\n        if (leftTop.get(0) < -2 || leftTop.get(1) > 15) {\r\n            return;\r\n        }\r\n        if (!fastDropThreadStarted) {\r\n            fastDropThread.start();\r\n            fastDropThreadStarted = true;\r\n        } else {\r\n            fastDropThread.run();\r\n        }\r\n    }\r\n\r\n    public void attach(GameObserver observer) {\r\n        observers.add(observer);\r\n    }\r\n\r\n    public void detach(GameObserver observer) {\r\n        observers.remove(observer);\r\n    }\r\n\r\n    protected void notifyObserversUpdate() {\r\n        for (GameObserver observer : observers) {\r\n            if (observer instanceof Tetris_MainActivity) {\r\n                ((Tetris_MainActivity) observer).runOnUiThread(() -> {\r\n                    observer.updateCanvas();\r\n                });\r\n            } else {\r\n                observer.updateCanvas();\r\n            }\r\n        }\r\n    }\r\n\r\n    protected void notifyObserversNew(int[][] shapeMatrix) {\r\n        for (GameObserver observer : observers) {\r\n            if (shapeMatrix.length == 4) {\r\n                observer.generateNewBlock(shapeMatrix);\r\n                return;\r\n            }\r\n            int[][] matrix = new int[4][4];\r\n            for (int i = 0; i < shapeMatrix.length; i++) {\r\n                System.arraycopy(shapeMatrix[i], 0, matrix[i + 1], 1, shapeMatrix.length);\r\n            }\r\n            observer.generateNewBlock(matrix);\r\n        }\r\n    }\r\n\r\n    protected void notifyObserversClear(int totalCleardLines, int score, int level) {\r\n        for (GameObserver observer : observers) {\r\n            if (observer instanceof Tetris_MainActivity) {\r\n                ((Tetris_MainActivity) observer).runOnUiThread(() -> {\r\n                    observer.updateGameInfo(totalCleardLines, score, level);\r\n                });\r\n            } else {\r\n                observer.updateGameInfo(totalCleardLines, score, level);\r\n            }\r\n        }\r\n    }\r\n\r\n    protected void notifyObserversEnd(int finalScore) {\r\n        for (GameObserver observer : observers) {\r\n            if (observer instanceof Tetris_MainActivity) {\r\n                ((Tetris_MainActivity) observer).runOnUiThread(() -> {\r\n                    observer.gameEnd(finalScore);\r\n                });\r\n            } else {\r\n                observer.gameEnd(finalScore);\r\n            }\r\n        }\r\n    }\r\n\r\n    public AtomicIntegerArray getLeftTop() {\r\n        return leftTop;\r\n    }\r\n\r\n    public Shape getCurrentBlock() {\r\n        return currentBlock;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/zsinnovations/gamebox/ui/tetris/game/Game.java b/app/src/main/java/com/zsinnovations/gamebox/ui/tetris/game/Game.java
+--- a/app/src/main/java/com/zsinnovations/gamebox/ui/tetris/game/Game.java	(revision 15ab75f9568e59b86af283607a5d5582f199cfc9)
++++ b/app/src/main/java/com/zsinnovations/gamebox/ui/tetris/game/Game.java	(date 1735136781923)
+@@ -11,33 +11,29 @@
+ 
+ public class Game {
+     private Shape currentBlock = null;
+-    private volatile boolean isPaused = false;
+-    private Timer dropTimer;
+-    private TimerTask currentTask = null;
+     private List<GameObserver> observers = new ArrayList<>();
+     private int initialLevel = 1;
+     private volatile int totalClearedLines = 0;
+     private volatile int level = 1;
+     private volatile int score = 0;
+-    private volatile AtomicInteger blockStatus = new AtomicInteger(0);
+-    private volatile AtomicIntegerArray leftTop = new AtomicIntegerArray(2);
++    private Timer dropTimer;
++    private volatile AtomicInteger blockStatus = new AtomicInteger(0); //record status of block rotation status(0, 1, 2, 3) maybe its better to use enum for future refactor
++    private volatile AtomicIntegerArray leftTop = new AtomicIntegerArray(2); //record the coordinate of tht top left corner of the current block
+     private Thread rightThread;
+     private Thread leftThread;
++    //private Thread rotateThread; // Remove this rotation thread
+     private Thread dropThread;
+     private Thread fastDropThread;
+     private boolean levelUp = false;
+     private boolean rightThreadStarted;
+     private boolean leftThreadStarted;
++    //private boolean rotateThreadStarted; //Remove this rotation thread start boolean
+     private boolean dropThreadStarted;
+     private boolean fastDropThreadStarted;
+ 
+     public static Game game = new Game();
+ 
+     private Game() {
+-        initializeThreads();
+-    }
+-
+-    private void initializeThreads() {
+         rightThread = new Thread(() -> {
+             leftTop = Board.getBoard().moveBlockRight(currentBlock, leftTop, blockStatus);
+             notifyObserversUpdate();
+@@ -54,100 +50,57 @@
+             leftTop = Board.getBoard().fastDropBlock(currentBlock, leftTop, blockStatus);
+             notifyObserversUpdate();
+         });
++
+     }
+ 
+     public static Game getGame() {
+         return game;
+     }
+ 
++
+     public void setInitialLevel(int initialLevel) {
+         this.initialLevel = initialLevel;
+         level = initialLevel;
+     }
+ 
+-    public synchronized void pause() {
+-        if (!isPaused) {
+-            isPaused = true;
+-            if (dropTimer != null) {
+-                dropTimer.cancel();
+-                dropTimer = null;
+-            }
+-            interruptAllThreads();
+-        }
+-    }
+-
+-    private void interruptAllThreads() {
+-        if (rightThread != null) rightThread.interrupt();
+-        if (leftThread != null) leftThread.interrupt();
+-        if (dropThread != null) dropThread.interrupt();
+-        if (fastDropThread != null) fastDropThread.interrupt();
+-    }
+-
+-    public synchronized void resume() {
+-        if (isPaused) {
+-            isPaused = false;
+-            initializeThreads();
+-            resetThreadFlags();
+-            scheduleTimer();
+-        }
+-    }
+-
+-    private void resetThreadFlags() {
+-        rightThreadStarted = false;
+-        leftThreadStarted = false;
+-        dropThreadStarted = false;
+-        fastDropThreadStarted = false;
+-    }
+-
++    /**
++     * Start a round of new game
++     * 1. generate new block
++     * 2. drop block
++     * Need refactor later
++     */
+     public void start() {
+-        isPaused = false;
+         notifyObserversClear(0, 0, initialLevel);
+         scheduleTimer();
+     }
+ 
+     private void scheduleTimer() {
+-        if (isPaused) return;
+-
+-        if (dropTimer != null) {
+-            dropTimer.cancel();
+-        }
+-
+         dropTimer = new Timer();
+         int period = (20 - level) * 50;
+-
+-        currentTask = new TimerTask() {
++        dropTimer.scheduleAtFixedRate(new TimerTask() {
+             @Override
+             public void run() {
+-                if (isPaused) return;
+-
+                 if (levelUp) {
+                     dropTimer.cancel();
+                     levelUp = false;
+                     scheduleTimer();
+-                    return;
+                 }
+-
+                 if (currentBlock == null) {
+                     leftTop = generateNewBlock();
+                     blockStatus.set(0);
+                 }
+-
+                 if (leftTop.get(0) == -100) {
+                     notifyObserversEnd(score);
+                     dropTimer.cancel();
+-                    return;
+                 }
+-
+                 leftTop = dropBlock();
+                 if (leftTop.get(0) == -10) {
+                     currentBlock = null;
+                 }
+-
+                 notifyObserversUpdate();
+             }
+-        };
+ 
+-        dropTimer.scheduleAtFixedRate(currentTask, period / 3, period);
++        }, period / 3, period);
+     }
+ 
+     private void updateGameInfo(int clearedLines) {
+@@ -165,31 +118,29 @@
+     }
+ 
+     public void end() {
+-        isPaused = false;
+-        if (dropTimer != null) {
+-            dropTimer.cancel();
+-            dropTimer = null;
+-        }
+-
+         levelUp = false;
++        dropTimer.cancel();
+         totalClearedLines = 0;
+         level = initialLevel;
+         score = 0;
+         currentBlock = null;
+-
+-        interruptAllThreads();
++        leftThread.interrupt();
++        rightThread.interrupt();
++        //rotateThread.interrupt(); // Remove this rotation thread interruption
++        dropThread.interrupt();
++        fastDropThread.interrupt();
+         Board.getBoard().clear();
+-        resetThreadFlags();
+-    }
+-
+-    public boolean isPaused() {
+-        return isPaused;
+     }
+ 
+     public int[][] getCurrentBoardMatrix() {
+         return Board.getBoard().getBoardMatrix();
+     }
+ 
++    /**
++     * Generate a new block
++     *
++     * @return left top coordinate of the block
++     */
+     private synchronized AtomicIntegerArray generateNewBlock() {
+         updateGameInfo(Board.getBoard().getClearedLines());
+         currentBlock = BlockGenerator.getBlockGenerator().generateBlock();
+@@ -197,10 +148,18 @@
+         return Board.getBoard().addBlock(currentBlock);
+     }
+ 
++    /**
++     * Drop current block by one unit
++     *
++     * @return left top coordinate of the block after dropping
++     */
+     private synchronized AtomicIntegerArray dropBlock() {
+         return Board.getBoard().dropBlock(currentBlock, leftTop, blockStatus);
+     }
+ 
++    /**
++     * Rotate the current block by 90 degree counter-clockwise
++     */
+     public synchronized void rotateBlock() {
+         if (leftTop.get(0) == 0 || leftTop.get(0) == -1 || leftTop.get(0) > 8) {
+             return;
+@@ -215,6 +174,9 @@
+         notifyObserversUpdate();
+     }
+ 
++    /**
++     * Move the current block left by one unit
++     */
+     public synchronized void moveBlockLeft() {
+         if (leftTop.get(0) < -2) {
+             return;
+@@ -227,6 +189,9 @@
+         }
+     }
+ 
++    /**
++     * Move the current block right by one unit
++     */
+     public synchronized void moveBlockRight() {
+         if (leftTop.get(0) < -2) {
+             return;
+@@ -237,7 +202,9 @@
+         } else {
+             rightThread.run();
+         }
++
+     }
++
+ 
+     public synchronized void moveBlockDown() {
+         if (leftTop.get(0) < -2 || leftTop.get(1) > 15) {
+@@ -251,6 +218,7 @@
+         }
+     }
+ 
++
+     public synchronized void moveBlockDownFast() {
+         if (leftTop.get(0) < -2 || leftTop.get(1) > 15) {
+             return;
+@@ -261,18 +229,34 @@
+         } else {
+             fastDropThread.run();
+         }
++
+     }
+ 
++    /**
++     * Attach observers to the board
++     *
++     * @param observer MainActivity (updating UI)
++     */
+     public void attach(GameObserver observer) {
+         observers.add(observer);
+     }
+ 
++    /**
++     * Detach observers
++     *
++     * @param observer currently no usage
++     */
+     public void detach(GameObserver observer) {
+         observers.remove(observer);
+     }
+ 
++    /**
++     * Notify observers that the status of the board has changed
++     * MainActivity (updating UI)
++     */
+     protected void notifyObserversUpdate() {
+         for (GameObserver observer : observers) {
++            // observer.updateCanvas();
+             if (observer instanceof Tetris_MainActivity) {
+                 ((Tetris_MainActivity) observer).runOnUiThread(() -> {
+                     observer.updateCanvas();
+@@ -283,6 +267,11 @@
+         }
+     }
+ 
++    /**
++     * Notify observers that a new block is generating, its time to update the next_block board
++     *
++     * @param shapeMatrix the shape of next block
++     */
+     protected void notifyObserversNew(int[][] shapeMatrix) {
+         for (GameObserver observer : observers) {
+             if (shapeMatrix.length == 4) {
+@@ -318,9 +307,11 @@
+             } else {
+                 observer.gameEnd(finalScore);
+             }
++
+         }
+     }
+ 
++    // Add these public getters to allow access from MainActivity
+     public AtomicIntegerArray getLeftTop() {
+         return leftTop;
+     }
+@@ -328,4 +319,5 @@
+     public Shape getCurrentBlock() {
+         return currentBlock;
+     }
++
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/zsinnovations/gamebox/ui/tetris/activity/Tetris_MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.zsinnovations.gamebox.ui.tetris.activity\r\n\r\nimport android.animation.ObjectAnimator\r\nimport android.content.Intent\r\nimport android.graphics.Canvas\r\nimport android.graphics.Paint\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.view.SurfaceHolder\r\nimport android.view.View\r\nimport android.widget.TextView\r\nimport androidx.appcompat.app.AlertDialog\r\nimport androidx.lifecycle.lifecycleScope\r\nimport com.zsinnovations.gamebox.databinding.TetrisActivityMainBinding\r\nimport com.zsinnovations.gamebox.ui.tetris.game.GameObserver\r\nimport com.zsinnovations.gamebox.ui.tetris.game.Game\r\nimport com.zsinnovations.gamebox.ui.tetris.constants.BlockColorTheme\r\nimport com.zsinnovations.gamebox.ui.tetris.database.AppDatabase\r\nimport com.zsinnovations.gamebox.ui.tetris.database.BlockThemeManager\r\nimport com.zsinnovations.gamebox.ui.tetris.database.LevelManager\r\nimport com.zsinnovations.gamebox.ui.tetris.database.Score\r\nimport kotlinx.coroutines.launch\r\nimport com.zsinnovations.gamebox.ui.tetris.constants.BoardInfo\r\nimport android.widget.Button\r\nimport androidx.activity.OnBackPressedCallback\r\n\r\nclass Tetris_MainActivity : AppCompatActivity(), GameObserver {\r\n    private var surfaceHolder: SurfaceHolder? = null\r\n    private var nextSurfaceHolder: SurfaceHolder? = null\r\n    private var paintArray: Array<Paint>? = null\r\n    private var canvasHeight: Float = 0F\r\n    private var canvasWidth: Float = 0F\r\n    private var lineWidth: Float = 0F\r\n    private var blockWidth: Float = 0F\r\n    private var nextCanvasHeight: Float = 0F\r\n    private var nextCanvasWidth: Float = 0F\r\n\r\n    private var initialLevel: Int = 1\r\n    private var lastClickLeft: Long = 0\r\n    private var lastClickRight: Long = 0\r\n    private var lastClickRotate: Long = 0\r\n    private var lastClickDown: Long = 0\r\n    private var lastClickUp: Long = 0\r\n    private var lines: TextView? = null\r\n    private var levels: TextView? = null\r\n    private var scores: TextView? = null\r\n    private var alertBuilder: AlertDialog.Builder? = null\r\n    private lateinit var binding: TetrisActivityMainBinding\r\n    private var themeName: String = BlockColorTheme.THEME_MODERN\r\n    private lateinit var lineAnimator: ObjectAnimator\r\n    private lateinit var scoreAnimator: ObjectAnimator\r\n    private lateinit var levelAnimator: ObjectAnimator\r\n    private val ROTATEDURATION: Long = 1000\r\n\r\n    private var isBlockOnRightEdge: Boolean = false\r\n    private var isGamePaused: Boolean = false\r\n    private lateinit var pauseDialog: AlertDialog\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?)\r\n    {\r\n        val pauseDialogBuilder = AlertDialog.Builder(this)\r\n        pauseDialogBuilder.apply {\r\n            setTitle(\"Pause Game\")\r\n            setMessage(\"Do you want to exit the game?\")\r\n            setCancelable(false)\r\n            setPositiveButton(\"Exit\") { _, _ ->\r\n                Game.getGame().end()\r\n                finish()\r\n            }\r\n            setNegativeButton(\"Continue\") { dialog, _ ->\r\n                dialog.dismiss()\r\n                resumeGame()\r\n            }\r\n        }\r\n        pauseDialog = pauseDialogBuilder.create()\r\n\r\n        // Handle back button press\r\n        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {\r\n            override fun handleOnBackPressed() {\r\n                handleBackPress()\r\n            }\r\n        })\r\n        super.onCreate(savedInstanceState)\r\n        binding = TetrisActivityMainBinding.inflate(layoutInflater)\r\n        val view = binding.root\r\n        setContentView(view)\r\n        val blockThemeManager = BlockThemeManager(this)\r\n        val levelManager = LevelManager(this)\r\n\r\n        lifecycleScope.launch {\r\n            themeName = blockThemeManager.getTheme()?.toString() ?: BlockColorTheme.THEME_MODERN\r\n            setPaint()\r\n\r\n            levelManager.getInitialLevel()?.let { initialLevel = it }\r\n            binding.LevelRealTime.text = initialLevel.toString()\r\n            Game.getGame().setInitialLevel(initialLevel)\r\n            Game.getGame().start()\r\n        }\r\n        binding.rotateButton.setOnClickListener {\r\n            if (!isBlockOnRightEdge && System.currentTimeMillis() - lastClickRotate > 200) {\r\n                Game.getGame().rotateBlock()\r\n            }\r\n            lastClickRotate = System.currentTimeMillis()\r\n        }\r\n        binding.leftButton.setOnClickListener {\r\n            if (System.currentTimeMillis() - lastClickLeft > 200) {\r\n                Game.getGame().moveBlockLeft()\r\n            }\r\n            lastClickLeft = System.currentTimeMillis()\r\n        }\r\n\r\n        binding.rightButton.setOnClickListener {\r\n            if (System.currentTimeMillis() - lastClickRight > 200) {\r\n                Game.getGame().moveBlockRight()\r\n            }\r\n            lastClickRight = System.currentTimeMillis()\r\n        }\r\n\r\n        binding.downButton.setOnClickListener {\r\n            if (System.currentTimeMillis() - lastClickDown > 200) {\r\n                Game.getGame().moveBlockDown()\r\n            }\r\n            lastClickDown = System.currentTimeMillis()\r\n        }\r\n\r\n        binding.upButton.setOnClickListener {\r\n            if (System.currentTimeMillis() - lastClickUp > 200) {\r\n                Game.getGame().moveBlockDownFast()\r\n            }\r\n            lastClickUp = System.currentTimeMillis()\r\n        }\r\n        lines = binding.RealTimeLines\r\n        levels = binding.LevelRealTime\r\n        scores = binding.ScoreRealTime\r\n        surfaceHolder = binding.board.holder\r\n        surfaceHolder?.addCallback(object : SurfaceHolder.Callback {\r\n            override fun surfaceCreated(holder: SurfaceHolder) {\r\n                val canvas = surfaceHolder!!.lockCanvas()\r\n\r\n                // Initialize canvas measure\r\n                canvasHeight = canvas.height.toFloat()\r\n                canvasWidth = canvas.width.toFloat()\r\n                lineWidth = canvasWidth / 61\r\n                blockWidth = lineWidth * 5\r\n\r\n                // Draw background and lines\r\n                drawInitialBoard(canvas)\r\n                surfaceHolder!!.unlockCanvasAndPost(canvas)\r\n            }\r\n\r\n            override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {\r\n\r\n            }\r\n\r\n            override fun surfaceDestroyed(holder: SurfaceHolder) {\r\n\r\n            }\r\n\r\n        })\r\n\r\n        nextSurfaceHolder = binding.nextBoard.holder\r\n        nextSurfaceHolder?.addCallback(object : SurfaceHolder.Callback {\r\n            override fun surfaceCreated(holder: SurfaceHolder) {\r\n                val canvas = nextSurfaceHolder!!.lockCanvas()\r\n\r\n                // Initialize canvas measure\r\n                nextCanvasHeight = canvas.height.toFloat()\r\n                nextCanvasWidth = canvas.width.toFloat()\r\n                drawInitialNextBoard(canvas)\r\n                nextSurfaceHolder!!.unlockCanvasAndPost(canvas)\r\n            }\r\n\r\n            override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {\r\n\r\n            }\r\n\r\n            override fun surfaceDestroyed(holder: SurfaceHolder) {\r\n\r\n            }\r\n\r\n        })\r\n        alertBuilder = AlertDialog.Builder(this)\r\n        alertBuilder!!.setTitle(\"Game End\")\r\n        alertBuilder?.apply {\r\n            setPositiveButton(\"Restart\"\r\n            ) { _, _ ->\r\n                Game.getGame().end()\r\n                Game.getGame().setInitialLevel(initialLevel)\r\n                Game.getGame().start()\r\n            }\r\n            setNegativeButton(\"Back\"\r\n            ) { _, _ ->\r\n                Game.getGame().end()\r\n                val intent = Intent(this@Tetris_MainActivity, StartActivity::class.java)\r\n                startActivity(intent)\r\n            }\r\n        }\r\n\r\n        // Create the AlertDialog\r\n        alertBuilder!!.create()\r\n\r\n        // Attach listener\r\n        Game.getGame().attach(this)\r\n        lineAnimator = ObjectAnimator.ofFloat(lines, View.ROTATION_X, -360f, 0f)\r\n        scoreAnimator = ObjectAnimator.ofFloat(scores, View.ROTATION_X, -360f, 0f)\r\n        levelAnimator = ObjectAnimator.ofFloat(levels, View.ROTATION_X, -360f, 0f)\r\n        lineAnimator.duration = ROTATEDURATION\r\n        scoreAnimator.duration = ROTATEDURATION\r\n        levelAnimator.duration = ROTATEDURATION\r\n\r\n    }\r\n    private fun handleBackPress() {\r\n        if (!isGamePaused) {\r\n            pauseGame()\r\n            pauseDialog.show()\r\n        }\r\n    }\r\n    private fun pauseGame() {\r\n        isGamePaused = true\r\n        Game.getGame().pause()\r\n\r\n        // Disable all game control buttons\r\n        binding.rotateButton.isEnabled = false\r\n        binding.leftButton.isEnabled = false\r\n        binding.rightButton.isEnabled = false\r\n        binding.downButton.isEnabled = false\r\n        binding.upButton.isEnabled = false\r\n    }\r\n    private fun resumeGame() {\r\n        isGamePaused = false\r\n        Game.getGame().resume()\r\n\r\n        // Re-enable all game control buttons\r\n        binding.rotateButton.isEnabled = true\r\n        binding.leftButton.isEnabled = true\r\n        binding.rightButton.isEnabled = true\r\n        binding.downButton.isEnabled = true\r\n        binding.upButton.isEnabled = true\r\n\r\n        // Special handling for rotate button based on edge condition\r\n        binding.rotateButton.isEnabled = !isBlockOnRightEdge\r\n    }\r\n\r\n\r\n    override fun onStop() {\r\n        Game.getGame().detach(this)\r\n        super.onStop()\r\n    }\r\n\r\n    override fun onDestroy() {\r\n        super.onDestroy()\r\n        Game.getGame().detach(this)\r\n        Game.getGame().end()\r\n    }\r\n\r\n    /**\r\n     * Draw initial background and lines\r\n     */\r\n    private fun drawInitialBoard(canvas: Canvas) {\r\n        canvas.drawRGB(BlockColorTheme.getTheme(themeName)[7][1], BlockColorTheme.getTheme(themeName)[7][2], BlockColorTheme.getTheme(themeName)[7][3])\r\n        val paint: Paint = Paint()\r\n        paint.setARGB(255, 255, 255, 255)\r\n        for (i in 0..10) {\r\n            canvas.drawRect(i * (blockWidth + lineWidth), 0F, i * (blockWidth + lineWidth) + lineWidth, canvasHeight, paint)\r\n        }\r\n        for (i in 0..20) {\r\n            canvas.drawRect(0F, i * (blockWidth + lineWidth), canvasWidth, i * (blockWidth + lineWidth) + lineWidth, paint)\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Draw current status of a canvas\r\n     */\r\n    private fun drawInstantBoard(canvas: Canvas, boardMatrix: Array<IntArray>, paintArray: Array<Paint>) {\r\n        for (i in 0..19) {\r\n            for (j in 0..9) {\r\n                if (boardMatrix[i][j] == 0) {\r\n                    continue\r\n                }\r\n                var left = j * blockWidth + (j + 1) * lineWidth\r\n                var top = i * blockWidth + (i + 1) * lineWidth\r\n                var right = left + blockWidth\r\n                var bottom = top + blockWidth\r\n                val colorIndex = boardMatrix[i][j] - 1\r\n                if (colorIndex >= 0 && colorIndex < paintArray.size) {\r\n                    canvas.drawRect(left, top, right, bottom, paintArray[colorIndex])\r\n                } else {\r\n                    //Optional, draw some color or skip to better handle this out-of-bound value\r\n                    //canvas.drawRect(left, top, right, bottom, paintArray[0])\r\n                }\r\n\r\n            }\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Draw initial background and lines for the board showing next block\r\n     */\r\n    private fun drawInitialNextBoard(canvas: Canvas) {\r\n        canvas.drawRGB(BlockColorTheme.getTheme(themeName)[7][1], BlockColorTheme.getTheme(themeName)[7][2], BlockColorTheme.getTheme(themeName)[7][3])\r\n        val paint: Paint = Paint()\r\n        paint.setARGB(255, 255, 255, 255)\r\n        for (i in 0..4) {\r\n            canvas.drawRect(i * (blockWidth + lineWidth), 0F, i * (blockWidth + lineWidth) + lineWidth, nextCanvasHeight, paint)\r\n        }\r\n        for (i in 0..4) {\r\n            canvas.drawRect(0F, i * (blockWidth + lineWidth), nextCanvasWidth, i * (blockWidth + lineWidth) + lineWidth, paint)\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Draw current status of a canvas for the board showing next block\r\n     */\r\n    private fun drawInstantNextBoard(canvas: Canvas, nextMatrix: Array<IntArray>, paintArray: Array<Paint>) {\r\n        for (i in 0..3) {\r\n            for (j in 0..3) {\r\n                if (nextMatrix[i][j] == 0) {\r\n                    continue\r\n                }\r\n                var left = j * blockWidth + (j + 1) * lineWidth\r\n                var top = i * blockWidth + (i + 1) * lineWidth\r\n                var right = left + blockWidth\r\n                var bottom = top + blockWidth\r\n                canvas.drawRect(left, top, right, bottom, paintArray[nextMatrix[i][j] - 1])\r\n            }\r\n        }\r\n    }\r\n\r\n    private fun setPaint() {\r\n        // Initialize colors of each block\r\n        val paintI: Paint = Paint()\r\n        paintI.setARGB(BlockColorTheme.getTheme(themeName)[0][0], BlockColorTheme.getTheme(themeName)[0][1], BlockColorTheme.getTheme(themeName)[0][2], BlockColorTheme.getTheme(themeName)[0][3])\r\n        val paintJ: Paint = Paint()\r\n        paintJ.setARGB(BlockColorTheme.getTheme(themeName)[1][0], BlockColorTheme.getTheme(themeName)[1][1], BlockColorTheme.getTheme(themeName)[1][2], BlockColorTheme.getTheme(themeName)[1][3])\r\n        val paintL: Paint = Paint()\r\n        paintL.setARGB(BlockColorTheme.getTheme(themeName)[2][0], BlockColorTheme.getTheme(themeName)[2][1], BlockColorTheme.getTheme(themeName)[2][2], BlockColorTheme.getTheme(themeName)[2][3])\r\n        val paintO: Paint = Paint()\r\n        paintO.setARGB(BlockColorTheme.getTheme(themeName)[3][0], BlockColorTheme.getTheme(themeName)[3][1], BlockColorTheme.getTheme(themeName)[3][2], BlockColorTheme.getTheme(themeName)[3][3])\r\n        val paintS: Paint = Paint()\r\n        paintS.setARGB(BlockColorTheme.getTheme(themeName)[4][0], BlockColorTheme.getTheme(themeName)[4][1], BlockColorTheme.getTheme(themeName)[4][2], BlockColorTheme.getTheme(themeName)[4][3])\r\n        val paintT: Paint = Paint()\r\n        paintT.setARGB(BlockColorTheme.getTheme(themeName)[5][0], BlockColorTheme.getTheme(themeName)[5][1], BlockColorTheme.getTheme(themeName)[5][2], BlockColorTheme.getTheme(themeName)[5][3])\r\n        val paintZ: Paint = Paint()\r\n        paintZ.setARGB(BlockColorTheme.getTheme(themeName)[6][0], BlockColorTheme.getTheme(themeName)[6][1], BlockColorTheme.getTheme(themeName)[6][2], BlockColorTheme.getTheme(themeName)[6][3])\r\n        paintArray = arrayOf(paintI, paintJ, paintL, paintO, paintS, paintT, paintZ)\r\n    }\r\n\r\n\r\n    /**\r\n     * Get board update\r\n     */\r\n    override fun updateCanvas() {\r\n        val matrix: Array<IntArray> = Game.getGame().currentBoardMatrix\r\n        val canvas = surfaceHolder!!.lockCanvas()\r\n        drawInitialBoard(canvas)\r\n        paintArray?.let { drawInstantBoard(canvas, matrix, it) }\r\n        surfaceHolder!!.unlockCanvasAndPost(canvas)\r\n\r\n        //check if block is at right edge\r\n        val currentBlockLeft = Game.getGame().getLeftTop()[0]\r\n        val currentBlockSize = Game.getGame().getCurrentBlock()?.matrixSize ?: 0\r\n        isBlockOnRightEdge = currentBlockLeft + currentBlockSize >= BoardInfo.BOARD_WIDTH\r\n        binding.rotateButton.isEnabled = !isBlockOnRightEdge\r\n    }\r\n\r\n    /**\r\n     * Get update, when a new block is generated, its next block shall change\r\n     */\r\n    override fun generateNewBlock(shapeNum: Array<IntArray>) {\r\n        val canvas = nextSurfaceHolder!!.lockCanvas()\r\n        drawInitialNextBoard(canvas)\r\n        paintArray?.let { drawInstantNextBoard(canvas, shapeNum, it) }\r\n        nextSurfaceHolder!!.unlockCanvasAndPost(canvas)\r\n    }\r\n\r\n    override fun updateGameInfo(totalClearedLines: Int, score: Int, level: Int) {\r\n        runOnUiThread {\r\n            if (lines?.text != totalClearedLines.toString()) {\r\n                lineAnimator.start()\r\n                lines?.text = totalClearedLines.toString()\r\n            }\r\n            if (scores?.text != score.toString()) {\r\n                scoreAnimator.start()\r\n                scores?.text = score.toString()\r\n            }\r\n            if (levels?.text != level.toString()) {\r\n                levelAnimator.start()\r\n                levels?.text = level.toString()\r\n            }\r\n        }\r\n    }\r\n\r\n    override fun gameEnd(finalScore: Int) {\r\n        if (finalScore > 0) {\r\n            lifecycleScope.launch {\r\n                val dao = AppDatabase(application).scoreDao()\r\n                dao.insert(Score(finalScore))\r\n            }\r\n        }\r\n        runOnUiThread { alertBuilder?.show() }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/zsinnovations/gamebox/ui/tetris/activity/Tetris_MainActivity.kt b/app/src/main/java/com/zsinnovations/gamebox/ui/tetris/activity/Tetris_MainActivity.kt
+--- a/app/src/main/java/com/zsinnovations/gamebox/ui/tetris/activity/Tetris_MainActivity.kt	(revision 15ab75f9568e59b86af283607a5d5582f199cfc9)
++++ b/app/src/main/java/com/zsinnovations/gamebox/ui/tetris/activity/Tetris_MainActivity.kt	(date 1735136781921)
+@@ -21,8 +21,6 @@
+ import com.zsinnovations.gamebox.ui.tetris.database.Score
+ import kotlinx.coroutines.launch
+ import com.zsinnovations.gamebox.ui.tetris.constants.BoardInfo
+-import android.widget.Button
+-import androidx.activity.OnBackPressedCallback
+ 
+ class Tetris_MainActivity : AppCompatActivity(), GameObserver {
+     private var surfaceHolder: SurfaceHolder? = null
+@@ -53,33 +51,9 @@
+     private val ROTATEDURATION: Long = 1000
+ 
+     private var isBlockOnRightEdge: Boolean = false
+-    private var isGamePaused: Boolean = false
+-    private lateinit var pauseDialog: AlertDialog
+ 
+-    override fun onCreate(savedInstanceState: Bundle?)
+-    {
+-        val pauseDialogBuilder = AlertDialog.Builder(this)
+-        pauseDialogBuilder.apply {
+-            setTitle("Pause Game")
+-            setMessage("Do you want to exit the game?")
+-            setCancelable(false)
+-            setPositiveButton("Exit") { _, _ ->
+-                Game.getGame().end()
+-                finish()
+-            }
+-            setNegativeButton("Continue") { dialog, _ ->
+-                dialog.dismiss()
+-                resumeGame()
+-            }
+-        }
+-        pauseDialog = pauseDialogBuilder.create()
+ 
+-        // Handle back button press
+-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+-            override fun handleOnBackPressed() {
+-                handleBackPress()
+-            }
+-        })
++    override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         binding = TetrisActivityMainBinding.inflate(layoutInflater)
+         val view = binding.root
+@@ -123,7 +97,7 @@
+             lastClickDown = System.currentTimeMillis()
+         }
+ 
+-        binding.upButton.setOnClickListener {
++        binding.upButton.setOnClickListener{
+             if (System.currentTimeMillis() - lastClickUp > 200) {
+                 Game.getGame().moveBlockDownFast()
+             }
+@@ -133,17 +107,17 @@
+         levels = binding.LevelRealTime
+         scores = binding.ScoreRealTime
+         surfaceHolder = binding.board.holder
+-        surfaceHolder?.addCallback(object : SurfaceHolder.Callback {
++        surfaceHolder?.addCallback(object: SurfaceHolder.Callback {
+             override fun surfaceCreated(holder: SurfaceHolder) {
+                 val canvas = surfaceHolder!!.lockCanvas()
+ 
+-                // Initialize canvas measure
++                //Initialize canvas measure
+                 canvasHeight = canvas.height.toFloat()
+                 canvasWidth = canvas.width.toFloat()
+                 lineWidth = canvasWidth / 61
+                 blockWidth = lineWidth * 5
+ 
+-                // Draw background and lines
++                //Draw background and lines
+                 drawInitialBoard(canvas)
+                 surfaceHolder!!.unlockCanvasAndPost(canvas)
+             }
+@@ -163,7 +137,7 @@
+             override fun surfaceCreated(holder: SurfaceHolder) {
+                 val canvas = nextSurfaceHolder!!.lockCanvas()
+ 
+-                // Initialize canvas measure
++                //Initialize canvas measure
+                 nextCanvasHeight = canvas.height.toFloat()
+                 nextCanvasWidth = canvas.width.toFloat()
+                 drawInitialNextBoard(canvas)
+@@ -199,7 +173,7 @@
+         // Create the AlertDialog
+         alertBuilder!!.create()
+ 
+-        // Attach listener
++        //Attach listener
+         Game.getGame().attach(this)
+         lineAnimator = ObjectAnimator.ofFloat(lines, View.ROTATION_X, -360f, 0f)
+         scoreAnimator = ObjectAnimator.ofFloat(scores, View.ROTATION_X, -360f, 0f)
+@@ -209,57 +183,22 @@
+         levelAnimator.duration = ROTATEDURATION
+ 
+     }
+-    private fun handleBackPress() {
+-        if (!isGamePaused) {
+-            pauseGame()
+-            pauseDialog.show()
+-        }
+-    }
+-    private fun pauseGame() {
+-        isGamePaused = true
+-        Game.getGame().pause()
+-
+-        // Disable all game control buttons
+-        binding.rotateButton.isEnabled = false
+-        binding.leftButton.isEnabled = false
+-        binding.rightButton.isEnabled = false
+-        binding.downButton.isEnabled = false
+-        binding.upButton.isEnabled = false
+-    }
+-    private fun resumeGame() {
+-        isGamePaused = false
+-        Game.getGame().resume()
+-
+-        // Re-enable all game control buttons
+-        binding.rotateButton.isEnabled = true
+-        binding.leftButton.isEnabled = true
+-        binding.rightButton.isEnabled = true
+-        binding.downButton.isEnabled = true
+-        binding.upButton.isEnabled = true
+-
+-        // Special handling for rotate button based on edge condition
+-        binding.rotateButton.isEnabled = !isBlockOnRightEdge
+-    }
+-
+-
+     override fun onStop() {
+         Game.getGame().detach(this)
+         super.onStop()
+     }
+-
+     override fun onDestroy() {
+         super.onDestroy()
+         Game.getGame().detach(this)
+         Game.getGame().end()
+     }
+-
+     /**
+      * Draw initial background and lines
+      */
+     private fun drawInitialBoard(canvas: Canvas) {
+         canvas.drawRGB(BlockColorTheme.getTheme(themeName)[7][1], BlockColorTheme.getTheme(themeName)[7][2], BlockColorTheme.getTheme(themeName)[7][3])
+         val paint: Paint = Paint()
+-        paint.setARGB(255, 255, 255, 255)
++        paint.setARGB(255,255,255,255)
+         for (i in 0..10) {
+             canvas.drawRect(i * (blockWidth + lineWidth), 0F, i * (blockWidth + lineWidth) + lineWidth, canvasHeight, paint)
+         }
+@@ -281,8 +220,8 @@
+                 var top = i * blockWidth + (i + 1) * lineWidth
+                 var right = left + blockWidth
+                 var bottom = top + blockWidth
+-                val colorIndex = boardMatrix[i][j] - 1
+-                if (colorIndex >= 0 && colorIndex < paintArray.size) {
++                val colorIndex = boardMatrix[i][j] -1
++                if(colorIndex >= 0 && colorIndex < paintArray.size) {
+                     canvas.drawRect(left, top, right, bottom, paintArray[colorIndex])
+                 } else {
+                     //Optional, draw some color or skip to better handle this out-of-bound value
+@@ -299,7 +238,7 @@
+     private fun drawInitialNextBoard(canvas: Canvas) {
+         canvas.drawRGB(BlockColorTheme.getTheme(themeName)[7][1], BlockColorTheme.getTheme(themeName)[7][2], BlockColorTheme.getTheme(themeName)[7][3])
+         val paint: Paint = Paint()
+-        paint.setARGB(255, 255, 255, 255)
++        paint.setARGB(255,255,255,255)
+         for (i in 0..4) {
+             canvas.drawRect(i * (blockWidth + lineWidth), 0F, i * (blockWidth + lineWidth) + lineWidth, nextCanvasHeight, paint)
+         }
+@@ -313,7 +252,7 @@
+      */
+     private fun drawInstantNextBoard(canvas: Canvas, nextMatrix: Array<IntArray>, paintArray: Array<Paint>) {
+         for (i in 0..3) {
+-            for (j in 0..3) {
++            for (j in 0.. 3) {
+                 if (nextMatrix[i][j] == 0) {
+                     continue
+                 }
+@@ -374,7 +313,7 @@
+     }
+ 
+     override fun updateGameInfo(totalClearedLines: Int, score: Int, level: Int) {
+-        runOnUiThread {
++        runOnUiThread{
+             if (lines?.text != totalClearedLines.toString()) {
+                 lineAnimator.start()
+                 lines?.text = totalClearedLines.toString()
+Index: app/src/main/res/layout/activity_sg_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/main\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"#0D0D0D\"\r\n    tools:context=\".ui.snakegame.SG_MainActivity\">\r\n\r\n    <ImageView\r\n        android:id=\"@+id/level_two_sound\"\r\n        android:layout_width=\"50dp\"\r\n        android:layout_height=\"50dp\"\r\n        android:layout_marginEnd=\"16dp\"\r\n\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.714\"\r\n        app:srcCompat=\"@drawable/level_two_sound\" />\r\n\r\n    <ImageView\r\n        android:id=\"@+id/level_one_sound\"\r\n\r\n        android:layout_width=\"50dp\"\r\n        android:layout_height=\"50dp\"\r\n        android:layout_marginEnd=\"16dp\"\r\n        android:visibility=\"invisible\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.714\"\r\n        app:srcCompat=\"@drawable/level_one_sound\" />\r\n\r\n    <ImageView\r\n        android:id=\"@+id/zero_sound\"\r\n        android:layout_width=\"50dp\"\r\n        android:layout_height=\"50dp\"\r\n        android:layout_marginEnd=\"27dp\"\r\n        android:visibility=\"invisible\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.714\"\r\n        app:srcCompat=\"@drawable/zero_sound\" />\r\n    <ImageView\r\n        android:id=\"@+id/imageView10\"\r\n        android:layout_width=\"140dp\"\r\n        android:layout_height=\"140dp\"\r\n        android:layout_marginTop=\"196dp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.498\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:srcCompat=\"@drawable/snake_logo\" />\r\n\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView4\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"80dp\"\r\n        android:text=\"Grow the Snake\"\r\n        android:textColor=\"@color/white\"\r\n        android:textSize=\"48sp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.498\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/imageView10\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/startButton\"\r\n        android:layout_width=\"325dp\"\r\n        android:layout_height=\"71dp\"\r\n        android:layout_marginTop=\"48dp\"\r\n        android:layout_marginBottom=\"32dp\"\r\n        android:backgroundTint=\"@color/playBtnColor\"\r\n        android:text=\"Play\"\r\n        android:textColor=\"@color/black\"\r\n        android:textColorLink=\"#D32A2A\"\r\n        android:textSize=\"28sp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/textView4\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_sg_main.xml b/app/src/main/res/layout/activity_sg_main.xml
+--- a/app/src/main/res/layout/activity_sg_main.xml	(revision 15ab75f9568e59b86af283607a5d5582f199cfc9)
++++ b/app/src/main/res/layout/activity_sg_main.xml	(date 1735127513996)
+@@ -5,7 +5,7 @@
+     android:id="@+id/main"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:background="#0D0D0D"
++    android:background="@color/material_dynamic_neutral_variant20"
+     tools:context=".ui.snakegame.SG_MainActivity">
+ 
+     <ImageView
+@@ -25,59 +25,51 @@
+         android:layout_width="50dp"
+         android:layout_height="50dp"
+         android:layout_marginEnd="16dp"
+-        android:visibility="invisible"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintVertical_bias="0.714"
+-        app:srcCompat="@drawable/level_one_sound" />
++        app:srcCompat="@drawable/level_one_sound"
++        android:visibility="invisible"/>
+ 
+     <ImageView
+         android:id="@+id/zero_sound"
++
+         android:layout_width="50dp"
+         android:layout_height="50dp"
+         android:layout_marginEnd="27dp"
+-        android:visibility="invisible"
++
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintVertical_bias="0.714"
+-        app:srcCompat="@drawable/zero_sound" />
+-    <ImageView
+-        android:id="@+id/imageView10"
+-        android:layout_width="140dp"
+-        android:layout_height="140dp"
+-        android:layout_marginTop="196dp"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintHorizontal_bias="0.498"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="parent"
+-        app:srcCompat="@drawable/snake_logo" />
++        app:srcCompat="@drawable/zero_sound"
++        android:visibility="invisible"/>
+ 
+ 
+     <TextView
+         android:id="@+id/textView4"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginTop="80dp"
++        android:layout_marginTop="312dp"
+         android:text="Grow the Snake"
+-        android:textColor="@color/white"
++        android:textColor="#EDE6E6"
+         android:textSize="48sp"
+         android:textStyle="bold"
+         app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintHorizontal_bias="0.498"
++        app:layout_constraintHorizontal_bias="0.495"
+         app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toBottomOf="@+id/imageView10" />
++        app:layout_constraintTop_toTopOf="parent" />
+ 
+     <Button
+         android:id="@+id/startButton"
++        android:layout_marginTop="48dp"
++        android:text="Play"
+         android:layout_width="325dp"
+         android:layout_height="71dp"
+-        android:layout_marginTop="48dp"
+         android:layout_marginBottom="32dp"
+         android:backgroundTint="@color/playBtnColor"
+-        android:text="Play"
+         android:textColor="@color/black"
+-        android:textColorLink="#D32A2A"
+         android:textSize="28sp"
++        android:textColorLink="#D32A2A"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/textView4" />
+Index: app/src/main/java/com/zsinnovations/gamebox/ui/mainscreen/FavouriteFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.zsinnovations.gamebox.ui.mainscreen;\r\n\r\nimport android.annotation.SuppressLint;\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.AdapterView;\r\nimport android.widget.GridView;\r\nimport android.widget.ListView;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.zsinnovations.gamebox.R;\r\nimport com.zsinnovations.gamebox.adapters.GameAdapter;\r\nimport com.zsinnovations.gamebox.ui.TZFE.tzfe_MainActivity;\r\nimport com.zsinnovations.gamebox.ui.balloonburst.BG_SplashScreen;\r\nimport com.zsinnovations.gamebox.ui.flappybird.FB_SplashScreen;\r\nimport com.zsinnovations.gamebox.ui.snakegame.SG_SplashScreen;\r\nimport com.zsinnovations.gamebox.ui.tetris.activity.StartActivity;\r\nimport com.zsinnovations.gamebox.ui.tictac.TT_SplashScreen;\r\nimport com.zsinnovations.gamebox.utils.FavoritesManager;\r\n\r\nimport java.util.List;\r\n\r\npublic class FavouriteFragment extends Fragment {\r\n    private GridView gridView;\r\n    private TextView emptyView;\r\n    private FavoritesManager favoritesManager;\r\n\r\n    @SuppressLint(\"MissingInflatedId\")\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {\r\n        View view = inflater.inflate(R.layout.fragment_favourite, container, false);\r\n\r\n        gridView = view.findViewById(R.id.gameGridView);\r\n        emptyView = view.findViewById(R.id.emptyFavouritesView);\r\n        favoritesManager = FavoritesManager.getInstance(requireContext());\r\n\r\n        updateFavoritesList();\r\n\r\n        return view;\r\n    }\r\n\r\n    @Override\r\n    public void onResume() {\r\n        super.onResume();\r\n        updateFavoritesList();\r\n    }\r\n\r\n    private void updateFavoritesList() {\r\n        List<String> favoriteGames = favoritesManager.getFavoriteGames();\r\n\r\n        if (favoriteGames.isEmpty()) {\r\n            gridView.setVisibility(View.GONE);\r\n            emptyView.setVisibility(View.VISIBLE);\r\n        } else {\r\n            gridView.setVisibility(View.VISIBLE);\r\n            emptyView.setVisibility(View.GONE);\r\n\r\n            String[] gameNames = favoriteGames.toArray(new String[0]);\r\n            int[] gameImages = new int[gameNames.length];\r\n\r\n            for (int i = 0; i < gameNames.length; i++) {\r\n                gameImages[i] = getGameImageResource(gameNames[i]);\r\n            }\r\n\r\n            GameAdapter adapter = new GameAdapter(requireContext(), gameNames, gameImages);\r\n            gridView.setAdapter(adapter);\r\n            gridView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {\r\n                String gameName = gameNames[position];\r\n\r\n                switch (gameName) {\r\n                    case \"Flappy Bird\":\r\n                        Intent fbIntent = new Intent(requireContext(), FB_SplashScreen.class);\r\n                        startActivity(fbIntent);\r\n                        break;\r\n                    case \"Balloon Zap\":\r\n                        Intent bzIntent = new Intent(requireContext(), BG_SplashScreen.class);\r\n                        startActivity(bzIntent);\r\n                        break;\r\n                    case \"Grow the Snake\":\r\n                        Intent gsIntent = new Intent(requireContext(), SG_SplashScreen.class);\r\n                        startActivity(gsIntent);\r\n                        break;\r\n                    case \"Tic-Tac-Toe\":\r\n                        Intent TtIntent = new Intent(requireContext(), TT_SplashScreen.class);\r\n                        startActivity(TtIntent);\r\n                        break;\r\n                    case \"Tetris\":\r\n                        Intent TetristIntent = new Intent(requireContext(), StartActivity.class);\r\n                        startActivity(TetristIntent);\r\n                        break;\r\n                    case \"2048\":\r\n                        Intent TZFEIntent = new Intent(requireContext(), tzfe_MainActivity.class);\r\n                        startActivity(TZFEIntent);\r\n                        break;\r\n\r\n                    default:\r\n\r\n                        break;\r\n                }\r\n            });\r\n        }\r\n    }\r\n\r\n    private int getGameImageResource(String gameName) {\r\n        switch (gameName) {\r\n            case \"Flappy Bird\":\r\n                return R.drawable.flappybird_hrz;\r\n\r\n            case \"Balloon Zap\":\r\n                return R.drawable.balloon_hrz;\r\n            case \"Grow the Snake\":\r\n                return R.drawable.snake_hrz;\r\n            case \"Tic-Tac-Toe\":\r\n                return R.drawable.tictac_hrz;\r\n            case \"Tetris\":\r\n                return R.drawable.tetris_hrz;\r\n            case \"2048\":\r\n                return R.drawable.tfze_hrz;\r\n            default:\r\n                return R.drawable.default_game;\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/zsinnovations/gamebox/ui/mainscreen/FavouriteFragment.java b/app/src/main/java/com/zsinnovations/gamebox/ui/mainscreen/FavouriteFragment.java
+--- a/app/src/main/java/com/zsinnovations/gamebox/ui/mainscreen/FavouriteFragment.java	(revision 15ab75f9568e59b86af283607a5d5582f199cfc9)
++++ b/app/src/main/java/com/zsinnovations/gamebox/ui/mainscreen/FavouriteFragment.java	(date 1735136781919)
+@@ -16,12 +16,9 @@
+ 
+ import com.zsinnovations.gamebox.R;
+ import com.zsinnovations.gamebox.adapters.GameAdapter;
+-import com.zsinnovations.gamebox.ui.TZFE.tzfe_MainActivity;
+ import com.zsinnovations.gamebox.ui.balloonburst.BG_SplashScreen;
+ import com.zsinnovations.gamebox.ui.flappybird.FB_SplashScreen;
+ import com.zsinnovations.gamebox.ui.snakegame.SG_SplashScreen;
+-import com.zsinnovations.gamebox.ui.tetris.activity.StartActivity;
+-import com.zsinnovations.gamebox.ui.tictac.TT_SplashScreen;
+ import com.zsinnovations.gamebox.utils.FavoritesManager;
+ 
+ import java.util.List;
+@@ -86,18 +83,6 @@
+                         Intent gsIntent = new Intent(requireContext(), SG_SplashScreen.class);
+                         startActivity(gsIntent);
+                         break;
+-                    case "Tic-Tac-Toe":
+-                        Intent TtIntent = new Intent(requireContext(), TT_SplashScreen.class);
+-                        startActivity(TtIntent);
+-                        break;
+-                    case "Tetris":
+-                        Intent TetristIntent = new Intent(requireContext(), StartActivity.class);
+-                        startActivity(TetristIntent);
+-                        break;
+-                    case "2048":
+-                        Intent TZFEIntent = new Intent(requireContext(), tzfe_MainActivity.class);
+-                        startActivity(TZFEIntent);
+-                        break;
+ 
+                     default:
+ 

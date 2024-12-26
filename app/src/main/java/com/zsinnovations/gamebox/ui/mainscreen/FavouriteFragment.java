@@ -16,12 +16,9 @@ import androidx.fragment.app.Fragment;
 
 import com.zsinnovations.gamebox.R;
 import com.zsinnovations.gamebox.adapters.GameAdapter;
-import com.zsinnovations.gamebox.ui.TZFE.tzfe_MainActivity;
 import com.zsinnovations.gamebox.ui.balloonburst.BG_SplashScreen;
 import com.zsinnovations.gamebox.ui.flappybird.FB_SplashScreen;
 import com.zsinnovations.gamebox.ui.snakegame.SG_SplashScreen;
-import com.zsinnovations.gamebox.ui.tetris.activity.StartActivity;
-import com.zsinnovations.gamebox.ui.tictac.TT_SplashScreen;
 import com.zsinnovations.gamebox.utils.FavoritesManager;
 
 import java.util.List;
@@ -85,18 +82,6 @@ public class FavouriteFragment extends Fragment {
                     case "Grow the Snake":
                         Intent gsIntent = new Intent(requireContext(), SG_SplashScreen.class);
                         startActivity(gsIntent);
-                        break;
-                    case "Tic-Tac-Toe":
-                        Intent TtIntent = new Intent(requireContext(), TT_SplashScreen.class);
-                        startActivity(TtIntent);
-                        break;
-                    case "Tetris":
-                        Intent TetristIntent = new Intent(requireContext(), StartActivity.class);
-                        startActivity(TetristIntent);
-                        break;
-                    case "2048":
-                        Intent TZFEIntent = new Intent(requireContext(), tzfe_MainActivity.class);
-                        startActivity(TZFEIntent);
                         break;
 
                     default:
